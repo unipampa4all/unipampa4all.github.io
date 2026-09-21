@@ -1,0 +1,55 @@
+/* ==========================================================================
+   /cppd/  ·  estilo exclusivo da página de progressão e promoção docente
+   --------------------------------------------------------------------------
+   Só o que não existe em site.css. A página tem cinco fluxogramas no mesmo
+   documento, e eles precisam de dois vocabulários que o site ainda não tinha:
+   hierarquia dentro da caixa (unidade e ação) e arestas com semântica de
+   deferimento e de recurso.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Caixa do fluxograma com duas vozes
+   O nome da unidade é o que o leitor procura ao varrer o desenho; a ação fica
+   em corpo menor logo abaixo. O número do passo vai no canto direito, para
+   amarrar o desenho à tabela de passos da seção correspondente.
+   -------------------------------------------------------------------------- */
+.flow .un{font-family:var(--font-body);font-weight:700;font-size:13.5px;fill:var(--ink)}
+.flow text{font-size:12px}
+.flow .st{font-family:var(--font-mono);font-size:10.5px;fill:var(--ink-faint);letter-spacing:.04em}
+
+/* --------------------------------------------------------------------------
+   2. Arestas com semântica
+   Verde é a via que efetiva o pedido, vermelho tracejado é a via recursal.
+   O neutro de site.css continua valendo para o trâmite comum.
+   -------------------------------------------------------------------------- */
+.flow .lna{fill:none;stroke:var(--accent);stroke-width:1.5}
+.flow .aha{fill:var(--accent)}
+.flow .al.ala{fill:var(--accent-ink)}
+
+.flow .lnr{fill:none;stroke:var(--danger);stroke-width:1.5;stroke-dasharray:5 4}
+.flow .ahr{fill:var(--danger)}
+.flow .al.ald{fill:var(--danger)}
+.flow .bxr{fill:var(--danger-soft);stroke:var(--danger);stroke-dasharray:5 4}
+
+/* --------------------------------------------------------------------------
+   3. Seletor de fluxo no topo da página
+   Reaproveita .pcard do índice do site, mas aponta para âncoras internas e
+   troca a data de revisão pelo tamanho do rito, que é o dado que faz o leitor
+   reconhecer o próprio caso.
+   -------------------------------------------------------------------------- */
+.pages.picker{grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px}
+.pages.picker .pcard{padding:18px 20px}
+.pages.picker .pcard h3{font-size:clamp(17px,2.2vw,19px);margin-bottom:6px}
+.pages.picker .pcard p{font-size:14px;margin-bottom:10px}
+.pages.picker .pcard .steps-n{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;color:var(--ink-faint)}
+
+/* --------------------------------------------------------------------------
+   4. Par de números lado a lado
+   Usado para pontuação mínima e interstício, que são os dois dados que o
+   docente confere antes de qualquer outra coisa.
+   -------------------------------------------------------------------------- */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:24px 0 8px}
+.facts div{background:var(--surface);padding:14px 16px}
+.facts dt{font-family:var(--font-mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:5px}
+.facts dd{margin:0;font-family:var(--font-display);font-weight:700;font-size:21px;line-height:1.15;letter-spacing:-.01em}
+.facts dd small{display:block;font-family:var(--font-body);font-weight:400;font-size:12.5px;color:var(--ink-soft);letter-spacing:0;margin-top:3px}

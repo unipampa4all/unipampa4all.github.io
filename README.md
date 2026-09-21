@@ -11,6 +11,7 @@ Este site é mantido pela comunidade e **não é um canal oficial da UNIPAMPA**.
 | Página | Área | Última revisão |
 | --- | --- | --- |
 | [Formalização de projetos com empresas e instituições](https://unipampa4all.github.io/nrfa/) | Administrativo | setembro de 2026 |
+| [Progressão e promoção na carreira docente](https://unipampa4all.github.io/cppd/) | Carreira docente | setembro de 2026 |
 
 ## Estrutura
 
@@ -18,12 +19,14 @@ Este site é mantido pela comunidade e **não é um canal oficial da UNIPAMPA**.
 /
 ├── index.html              índice do site, lista as páginas
 ├── nrfa/index.html         guia de formalização com fundações de apoio
+├── cppd/index.html         guia de progressão e promoção docente
 ├── 404.html                página de erro, servida pelo GitHub Pages
 ├── assets/
 │   ├── favicon.svg
 │   └── css/
 │       ├── site.css        tokens, tipografia e componentes de todas as páginas
-│       └── nrfa.css        estilo exclusivo de /nrfa/
+│       ├── nrfa.css        estilo exclusivo de /nrfa/
+│       └── cppd.css        estilo exclusivo de /cppd/
 ├── README.md
 └── LICENSE
 ```
@@ -43,6 +46,7 @@ Não há etapa de build. O GitHub Pages serve os arquivos como estão, e qualque
 - **Use caminhos relativos** (`../assets/...`), nunca absolutos. Absoluto quebra a abertura local pelo protocolo `file://`. A única exceção é o `404.html`, e o motivo está comentado no próprio arquivo.
 - **Nunca crie um diretório chamado `src/`.** O `.gitignore` já teve uma regra que o ignorava, herdada de outro projeto. A regra foi removida, mas o nome continua sendo má escolha para este repositório.
 - **Todo token de cor é declarado no `:root` sem condição** em `site.css`. Os blocos de tema escuro apenas redefinem tokens existentes. Declarar uma cor só dentro de um `@media` faz a página renderizar texto de um tema sobre o fundo do outro.
+- **Ids de `<marker>` são únicos por documento, não por SVG.** Uma página com mais de um fluxograma precisa sufixar o id de cada ponta de seta (`ah-abc`, `ah-d`, `ah-e`), senão todo `url(#ah)` aponta para o primeiro marker do documento. O erro é invisível enquanto as setas têm a mesma cor e aparece assim que uma delas precisa de cor própria. Veja `/cppd/`.
 - **Datas por extenso e sem abreviação ambígua**, e sempre atualize a última revisão quando mexer no conteúdo de um guia.
 
 ## Licença
