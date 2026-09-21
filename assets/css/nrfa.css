@@ -1,0 +1,30 @@
+/* ==========================================================================
+   /nrfa/  ·  estilo exclusivo do guia de formalização com fundações de apoio
+   --------------------------------------------------------------------------
+   Carregar SEMPRE depois de site.css.
+   Este arquivo é curto de propósito: quase tudo que a página usa já é
+   componente do sistema (.steps, .callout, .tbox, .linklist, .flow).
+   O único componente que não se generaliza é a faixa de vigência, porque a
+   oposição "norma vigente / norma revogada" só existe em página de norma.
+   ========================================================================== */
+
+.vigencia{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:var(--rule);border:1px solid var(--rule);
+  border-radius:10px;overflow:hidden;margin-top:28px;
+}
+.vigencia > div{background:var(--surface);padding:16px 18px}
+.vigencia .now{background:var(--accent-soft)}
+.vigencia .tag{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;display:block;margin-bottom:6px;
+}
+.vigencia .now .tag{color:var(--accent-ink)}
+.vigencia .old .tag{color:var(--danger)}
+.vigencia p{margin:0;font-size:14.5px;line-height:1.5}
+.vigencia .old p{color:var(--ink-soft)}
+.vigencia strong{font-weight:700}
+
+@media (max-width:720px){
+  .vigencia{grid-template-columns:1fr}
+}

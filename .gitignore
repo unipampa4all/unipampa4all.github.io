@@ -1,3 +1,12 @@
+# sistema operacional
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+*.log.*
+
+# binários e pacotes (não pertencem a um site estático)
 *.tar
 *.tar.*
 *.jar
@@ -6,9 +15,4 @@
 *.deb
 *.zip
 *.tgz
-*.log
-*.log.*
 *.sig
-
-pkg/
-src/
