@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>
+:root{color-scheme:light; box-sizing:border-box;}
+html{scroll-padding-top:1rem;}
+body{margin:0; padding:0;}
+img{max-width:100%;}
+[hidden]{display:none!important;}
+</style>
+</head>
+<body>
+<title>Fluxo simplificado e integrações</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#ffffff; --card:#ffffff; --sunk:#f4f6f5;
+  --ink:#151a18; --muted:#5f6b66; --line:#8b9691;
+  --rule:#e3e8e6; --rule-strong:#c3ccc8;
+  --accent:#0d6b52; --accent-wash:#eaf4f0;
+  --stop:#9c3a26; --stop-wash:#fbf0ed;
+  --warn:#8a6412;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10140f; --card:#171c1a; --sunk:#1b211e;
+    --ink:#e7ece9; --muted:#96a29d; --line:#7d8a85;
+    --rule:#262d2a; --rule-strong:#3a4340;
+    --accent:#56b696; --accent-wash:#15251f;
+    --stop:#dd8875; --stop-wash:#241816;
+    --warn:#d9ab4e;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10140f; --card:#171c1a; --sunk:#1b211e;
+  --ink:#e7ece9; --muted:#96a29d; --line:#7d8a85;
+  --rule:#262d2a; --rule-strong:#3a4340;
+  --accent:#56b696; --accent-wash:#15251f;
+  --stop:#dd8875; --stop-wash:#241816;
+  --warn:#d9ab4e;
+}
+body{background:var(--paper); color:var(--ink); font-family:"Source Serif 4",Georgia,"Times New Roman",serif; font-size:17px; line-height:1.6;}
+.wrap{max-width:1180px; margin:0 auto; padding-inline:24px; padding-block:0 72px;}
+h1,h2,h3,h4,.mono,.chip,th,.bd{font-family:Archivo,"Helvetica Neue",Arial,sans-serif;}
+.mono,.kv dt,.src code{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;}
+
+header.top{border-bottom:1px solid var(--rule); padding-block:56px 32px; display:flex; flex-direction:column; gap:18px;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted);}
+h1{font-size:clamp(34px,5.4vw,54px); font-weight:700; letter-spacing:-.022em; line-height:1.04; margin:0; text-wrap:balance;}
+.deck{font-size:19px; color:var(--muted); max-width:62ch; margin:0;}
+nav.jump{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
+nav.jump a{font-family:Archivo,sans-serif; font-size:12.5px; font-weight:500; text-decoration:none; color:var(--ink); border:1px solid var(--rule-strong); border-radius:2px; padding:6px 11px; background:var(--card);}
+nav.jump a:hover{border-color:var(--accent); color:var(--accent);}
+nav.jump a:focus-visible,a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+section{padding-block:56px 0; border-bottom:1px solid var(--rule);}
+section:last-of-type{border-bottom:0;}
+h2{font-size:clamp(23px,3vw,31px); font-weight:700; letter-spacing:-.015em; margin:8px 0 0; text-wrap:balance;}
+h3{font-size:13px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin:0 0 12px;}
+p{max-width:66ch;}
+.lede{margin:14px 0 0;}
+.legal{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--muted); margin:10px 0 0;}
+
+.scan{overflow-x:auto; margin-top:32px; border:1px solid var(--rule); border-radius:3px; background:var(--card);}
+table{border-collapse:collapse; width:100%; font-size:14.5px; table-layout:fixed;}
+th{font-size:11.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); text-align:left; padding:14px 16px; border-bottom:1px solid var(--rule-strong); white-space:nowrap;}
+td{padding:14px 16px; border-bottom:1px solid var(--rule); vertical-align:top;}
+tr:last-child td{border-bottom:0;}
+td.num{font-family:"IBM Plex Mono",monospace; font-size:13px; font-variant-numeric:tabular-nums; line-height:1.45;}
+td strong{font-weight:600;}
+
+figure{margin:36px 0 0;}
+.fig{overflow-x:auto; border:1px solid var(--rule); border-radius:3px; background:var(--card); padding:8px 4px;}
+svg{display:block; width:100%; min-width:920px; height:auto;}
+svg .nt{font-family:Archivo,sans-serif; font-size:15px; font-weight:600;}
+svg .ns{font-family:Archivo,sans-serif; font-size:12.5px;}
+svg .el{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--muted);}
+svg .el.el-acc{fill:var(--accent);}
+svg .el.el-stop{fill:var(--stop);}
+svg .bd{font-family:Archivo,sans-serif; font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;}
+figcaption{font-size:14.5px; color:var(--muted); margin-top:12px; max-width:72ch;}
+
+.cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:36px; margin-top:40px;}
+dl.kv{margin:0; display:grid; grid-template-columns:1fr; gap:0;}
+dl.kv div{display:grid; grid-template-columns:1fr auto; gap:14px; align-items:baseline; padding:11px 0; border-bottom:1px solid var(--rule);}
+dl.kv div:last-child{border-bottom:0;}
+dl.kv dt{font-family:Archivo,sans-serif; font-size:14.5px;}
+dl.kv dd{margin:0; font-family:"IBM Plex Mono",monospace; font-size:13px; font-variant-numeric:tabular-nums; text-align:right; color:var(--accent);}
+dl.kv dd.warn{color:var(--warn);}
+
+.note{margin-top:32px; border-left:3px solid var(--accent); background:var(--accent-wash); padding:16px 20px; border-radius:0 3px 3px 0;}
+.note p{margin:0; font-size:15.5px; max-width:74ch;}
+.note .tag{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:6px;}
+.note.stop{border-left-color:var(--stop); background:var(--stop-wash);}
+.note.stop .tag{color:var(--stop);}
+
+footer{padding-block:48px 0; border-top:1px solid var(--rule); margin-top:56px;}
+.src{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:10px 32px; margin:16px 0 0; padding:0; list-style:none;}
+.src li{font-size:14px; padding:7px 0; border-bottom:1px solid var(--rule);}
+.src a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--rule-strong);}
+.src a:hover{color:var(--accent); border-color:var(--accent);}
+.fine{font-size:13.5px; color:var(--muted); margin-top:28px; max-width:74ch;}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important;}}
+
+table.c2{min-width:820px;}
+table.c2 th:nth-child(1),table.c2 td:nth-child(1){width:32%;}
+table.c2 th:nth-child(2),table.c2 td:nth-child(2){width:68%;}
+table.c3{min-width:900px;}
+table.c3 th:nth-child(1),table.c3 td:nth-child(1){width:27%;}
+table.c3 th:nth-child(2),table.c3 td:nth-child(2){width:15%;}
+table.c3 th:nth-child(3),table.c3 td:nth-child(3){width:58%;}
+table.c4{min-width:1000px;}
+table.c4 th:nth-child(1),table.c4 td:nth-child(1){width:19%;}
+table.c4 th:nth-child(2),table.c4 td:nth-child(2){width:33%;}
+table.c4 th:nth-child(3),table.c4 td:nth-child(3){width:26%;}
+table.c4 th:nth-child(4),table.c4 td:nth-child(4){width:22%;}
+table.c5{min-width:1120px;}
+table.c5 th:nth-child(1),table.c5 td:nth-child(1){width:21%;}
+table.c5 th:nth-child(2),table.c5 td:nth-child(2){width:15%;}
+table.c5 th:nth-child(3),table.c5 td:nth-child(3){width:24%;}
+table.c5 th:nth-child(4),table.c5 td:nth-child(4){width:24%;}
+table.c5 th:nth-child(5),table.c5 td:nth-child(5){width:16%;}
+td .it{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--muted); display:block; letter-spacing:.06em;}
+td.yes{color:var(--accent);} td.no{color:var(--muted);}
+.cut{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0 28px; margin-top:36px; padding:0; list-style:none; border-top:1px solid var(--rule-strong);}
+.cut li{padding:16px 0 14px; border-bottom:1px solid var(--rule); font-size:15px;}
+.cut b{display:block; font-family:"IBM Plex Mono",monospace; font-size:22px; font-weight:500; color:var(--accent); font-variant-numeric:tabular-nums; margin-bottom:4px; letter-spacing:-.01em;}
+.cut em{font-style:normal; color:var(--muted); font-size:13.5px; display:block; margin-top:3px;}
+.phase{margin-top:40px; padding:0; list-style:none; counter-reset:f;}
+.phase li{counter-increment:f; position:relative; padding:18px 0 18px 54px; border-bottom:1px solid var(--rule);}
+.phase li::before{content:"fase " counter(f); position:absolute; left:0; top:21px; font-family:"IBM Plex Mono",monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); width:44px;}
+.phase h4{font-family:Archivo,sans-serif; font-size:16.5px; font-weight:600; margin:0 0 5px;}
+.phase p{margin:0; font-size:15px; color:var(--muted); max-width:78ch;}
+
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <span class="eyebrow">GT Progressão e Promoção · CPPD · PROGEPE · DTIC</span>
+  <h1>Do processo em papel ao processo que se monta sozinho</h1>
+  <p class="deck">Os cinco fluxos atuais de progressão docente existem porque o processo foi desenhado para ser montado à mão, folha por folha, dentro do SEI. Quase tudo o que eles pedem ao docente já está registrado em algum sistema da universidade. Esta é a proposta que sai da reunião do GT de 31 de agosto de 2026: um fluxo só, alimentado por integração, com o SEI no fim e não no meio.</p>
+  <nav class="jump">
+    <a href="#achados">O que trava hoje</a>
+    <a href="#fluxo">Fluxo único</a>
+    <a href="#classes">Variações por classe</a>
+    <a href="#integracoes">Integrações</a>
+    <a href="#origem">Origem de cada dado</a>
+    <a href="#regras">Três normas ao mesmo tempo</a>
+    <a href="#fases">Faseamento</a>
+  </nav>
+</header>
+
+<section id="achados">
+  <h3>Ponto de partida</h3>
+  <h2>O que o GT identificou como travamento</h2>
+  <p class="lede">A reunião não tratou de tela nem de tecnologia: tratou de onde o processo emperra. Cada linha abaixo é um problema levantado na reunião e o que o desenho proposto faz com ele. Nem todos são resolvíveis por software, e a distinção importa.</p>
+  <div class="scan">
+    <table class="c2">
+      <thead><tr><th>Travamento hoje</th><th>O que o desenho faz</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Encargo didático sem regra única</strong><span class="it">estágio, TCC e docência compartilhada contam diferente em cada campus</span></td><td>Não resolve. É pré-requisito de regulamentação, não de sistema: enquanto a regra não for explícita, a calculadora só reproduz a divergência em escala. É o item de caminho crítico que depende do CONSUNI, e não da DTIC.</td></tr>
+        <tr><td><strong>O docente descobre a pontuação tarde demais</strong><span class="it">no momento de montar o processo, sem tempo de reagir</span></td><td>Painel com a pontuação parcial visível a cada semestre, alimentado pelos dados já homologados. Quem está abaixo do mínimo descobre com semestres de antecedência, não com semanas.</td></tr>
+        <tr><td><strong>Redundância herdada do papel</strong><span class="it">a mesma informação repetida em formulário, planilha e comprovante</span></td><td>O dado é digitado uma vez, na origem, por quem tem competência para atestá-lo. Formulário, planilha e processo passam a ser projeções do mesmo registro.</td></tr>
+        <tr><td><strong>Pedir ao docente que clique em importar</strong><span class="it">dado institucional não deveria depender de ação do docente</span></td><td>Dado institucional entra sozinho e não é importável nem removível: encargos e projetos homologados já chegam postos. A escolha do docente fica onde ela é legítima, na produção intelectual e nos projetos que ele declara não ter executado.</td></tr>
+        <tr><td><strong>Homologar no fim, e não na origem</strong><span class="it">validar tudo na submissão é tardio e concentra o gargalo</span></td><td>A homologação migra para o sistema de origem, no momento em que o fato ocorre: o encargo é conferido no GURI a cada semestre, o projeto no SAP na aprovação. Chegando o interstício, não há o que homologar.</td></tr>
+        <tr><td><strong>Adjunto e Associado não são o mesmo problema</strong><span class="it">produção externa à universidade não está em sistema nenhum</span></td><td>O fluxo é um só, mas a origem dos dados muda: para a classe D em diante, a produção intelectual vem do XML do Lattes, com conferência por DOI, e é o único bloco em que o docente ainda declara.</td></tr>
+        <tr><td><strong>SEI usado como área de trabalho</strong><span class="it">documento faltante tramitado de um lado para outro até fechar</span></td><td>O SEI deixa de ser onde o processo se monta e passa a ser onde o processo pronto é assinado e arquivado. Pendência se resolve na plataforma, antes de existir processo no SEI.</td></tr>
+        <tr><td><strong>Conferir comprovante é trabalho humano caro</strong><span class="it">a conferência mecânica consome o tempo escasso de quem avalia</span></td><td>Pré-validação por modelo de IA executado dentro da instituição: ele cruza comprovante com item da tabela, devolve ao docente o que for corrigível na hora e entrega à CPPD um processo já conferido. Com isso a etapa da comissão examinadora local deixa de ser necessária, porque o que ela fazia era exatamente essa conferência.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note stop">
+    <span class="tag">O que software não resolve</span>
+    <p>Das oito linhas acima, uma não é problema de sistema. Sem regra institucional explícita para atribuição de encargo didático, a automação apenas propaga a divergência entre campi com mais velocidade e mais aparência de legitimidade. Esse item precisa correr em paralelo, pela via normativa, ou a primeira entrega já nasce contestável.</p>
+  </div>
+</section>
+
+<section id="fluxo">
+  <h3>Proposta</h3>
+  <h2>Um fluxo, quatro momentos</h2>
+  <p class="lede">O desenho troca cinco fluxos paralelos por um só, e o que antes distinguia um do outro vira parâmetro. A mudança estrutural não é a tela: é que o trabalho sai do momento da submissão e se distribui ao longo do interstício, feito por quem já tem a competência de atestar cada fato, no sistema em que o fato acontece. Sobram duas instâncias humanas, o docente e a CPPD, e uma máquina entre elas que só aponta divergência.</p>
+  <figure>
+    <div class="fig"><svg viewBox="0 0 1300 772" role="img" aria-label="Fluxo único em quatro faixas. Ao longo do interstício, GURI, SAP e SEI homologam os dados na origem e alimentam um painel em que o docente acompanha a pontuação a cada semestre. Na abertura automática, a plataforma da PROGEPE detecta o fim do interstício pela ficha funcional, monta o processo com a pontuação pronta, o docente apenas confere e envia. Na avaliação, um modelo de IA local cruza comprovante com item, devolve ao docente o que for corrigível na hora e entrega à CPPD um processo já conferido, para o parecer conclusivo, de onde sai a via recursal. Na efetivação, a portaria é gerada pela plataforma e só então o SEI recebe o processo pronto para assinatura, seguindo para a folha de pagamento.">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line)"/></marker>
+<marker id="ah-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+<marker id="ah-stop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--stop)"/></marker>
+</defs>
+<line x1="38" y1="96" x2="38" y2="244" stroke="var(--rule-strong)" stroke-width="1"/><text class="bd" x="22" y="170.0" text-anchor="middle" transform="rotate(-90 22 170.0)" fill="var(--muted)">1 · Interstício</text>
+<line x1="38" y1="286" x2="38" y2="394" stroke="var(--rule-strong)" stroke-width="1"/><text class="bd" x="22" y="340.0" text-anchor="middle" transform="rotate(-90 22 340.0)" fill="var(--muted)">2 · Abertura</text>
+<line x1="38" y1="452" x2="38" y2="560" stroke="var(--rule-strong)" stroke-width="1"/><text class="bd" x="22" y="506.0" text-anchor="middle" transform="rotate(-90 22 506.0)" fill="var(--muted)">3 · Avaliação</text>
+<line x1="38" y1="638" x2="38" y2="746" stroke="var(--rule-strong)" stroke-width="1"/><text class="bd" x="22" y="692.0" text-anchor="middle" transform="rotate(-90 22 692.0)" fill="var(--muted)">4 · Efetivação</text>
+<rect x="60" y="108" width="890" height="124" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="78" y="142" fill="var(--ink)">Sistemas institucionais homologam na origem</text>
+<text class="ns" x="78" y="162" fill="var(--muted)">GURI: encargos didáticos, conferidos pela coordenação acadêmica</text>
+<text class="ns" x="78" y="178" fill="var(--muted)">SAP: projetos de ensino, pesquisa, extensão e inovação já aprovados</text>
+<text class="ns" x="78" y="194" fill="var(--muted)">SEI: portarias de gestão, designação e representação</text>
+<rect x="990" y="108" width="270" height="124" rx="3" fill="var(--card)" stroke="var(--accent)" stroke-width="1.4"/>
+<text class="nt" x="1008" y="142" fill="var(--ink)">Painel do docente</text>
+<text class="ns" x="1008" y="162" fill="var(--muted)">pontuação parcial visível</text>
+<text class="ns" x="1008" y="178" fill="var(--muted)">a cada semestre</text>
+<rect x="60" y="298" width="270" height="84" rx="3" fill="var(--accent-wash)" stroke="var(--accent)" stroke-width="2"/>
+<rect x="60" y="298" width="5" height="84" fill="var(--accent)"/>
+<text class="nt" x="78" y="332" fill="var(--ink)">Plataforma PROGEPE</text>
+<text class="ns" x="78" y="352" fill="var(--muted)">a ficha funcional aponta</text>
+<text class="ns" x="78" y="368" fill="var(--muted)">o fim do interstício</text>
+<rect x="370" y="298" width="270" height="84" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="388" y="332" fill="var(--ink)">Processo pré-montado</text>
+<text class="ns" x="388" y="352" fill="var(--muted)">pontuação, comprovantes e</text>
+<text class="ns" x="388" y="368" fill="var(--muted)">formulários já preenchidos</text>
+<rect x="680" y="298" width="270" height="84" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="698" y="332" fill="var(--ink)">Docente confere</text>
+<text class="ns" x="698" y="352" fill="var(--muted)">desmarca o que não executou,</text>
+<text class="ns" x="698" y="368" fill="var(--muted)">importa o Lattes, anexa o resto</text>
+<rect x="990" y="298" width="270" height="84" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="1008" y="332" fill="var(--ink)">Envio</text>
+<text class="ns" x="1008" y="352" fill="var(--muted)">uma confirmação, sem montar</text>
+<text class="ns" x="1008" y="368" fill="var(--muted)">PDF nem abrir processo no SEI</text>
+<rect x="60" y="464" width="270" height="84" rx="3" fill="var(--card)" stroke="var(--accent)" stroke-width="1.4"/>
+<text class="nt" x="78" y="498" fill="var(--ink)">Pré-validação por IA local</text>
+<text class="ns" x="78" y="518" fill="var(--muted)">roda em servidor da Unipampa,</text>
+<text class="ns" x="78" y="534" fill="var(--muted)">cruza comprovante com item</text>
+<rect x="370" y="464" width="270" height="84" rx="3" fill="var(--stop-wash)" stroke="var(--stop)" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text class="nt" x="388" y="498" fill="var(--ink)">Correção pontual</text>
+<text class="ns" x="388" y="518" fill="var(--muted)">docente ajusta na plataforma</text>
+<text class="ns" x="388" y="534" fill="var(--muted)">e reenvia, sem abrir processo</text>
+<rect x="680" y="464" width="270" height="84" rx="3" fill="var(--accent-wash)" stroke="var(--accent)" stroke-width="2"/>
+<rect x="680" y="464" width="5" height="84" fill="var(--accent)"/>
+<text class="nt" x="698" y="502" fill="var(--ink)">CPPD</text>
+<text class="ns" x="698" y="524" fill="var(--muted)">parecer conclusivo</text>
+<rect x="990" y="464" width="270" height="84" rx="3" fill="var(--stop-wash)" stroke="var(--stop)" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text class="nt" x="1008" y="498" fill="var(--ink)">Recurso do docente</text>
+<text class="ns" x="1008" y="518" fill="var(--muted)">5 dias · CPPD reanalisa em 5 dias</text>
+<text class="ns" x="1008" y="534" fill="var(--muted)">CONSUNI em última instância</text>
+<rect x="60" y="650" width="270" height="84" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="78" y="684" fill="var(--ink)">Portaria gerada</text>
+<text class="ns" x="78" y="704" fill="var(--muted)">minuta automática a partir</text>
+<text class="ns" x="78" y="720" fill="var(--muted)">do parecer conclusivo</text>
+<rect x="370" y="650" width="270" height="84" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="388" y="684" fill="var(--ink)">SEI</text>
+<text class="ns" x="388" y="704" fill="var(--muted)">recebe o processo pronto, só</text>
+<text class="ns" x="388" y="720" fill="var(--muted)">para assinatura e arquivamento</text>
+<rect x="680" y="650" width="270" height="84" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="698" y="684" fill="var(--ink)">DCP/PROGEPE</text>
+<text class="ns" x="698" y="704" fill="var(--muted)">folha de pagamento e</text>
+<text class="ns" x="698" y="720" fill="var(--muted)">efeitos financeiros</text>
+<path d="M 954 170.0 L 984 170.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="908.5" y="83" width="122.9" height="17" fill="var(--paper)"/><text class="el" x="970.0" y="95" text-anchor="middle">dado já homologado</text>
+<path d="M 1125.0 236 L 1125.0 262 L 195.0 262 L 195.0 292" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="492.7" y="242" width="334.6" height="17" fill="var(--paper)"/><text class="el" x="660.0" y="254" text-anchor="middle">o docente chega ao interstício já sabendo a pontuação</text>
+<path d="M 334 340.0 L 364 340.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="306.7" y="269" width="86.6" height="17" fill="var(--paper)"/><text class="el" x="350.0" y="281" text-anchor="middle">abre sozinho</text>
+<path d="M 644 340.0 L 674 340.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="604.6" y="269" width="110.8" height="17" fill="var(--paper)"/><text class="el" x="660.0" y="281" text-anchor="middle">pontuação pronta</text>
+<path d="M 954 340.0 L 984 340.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="908.5" y="269" width="122.9" height="17" fill="var(--paper)"/><text class="el" x="970.0" y="281" text-anchor="middle">ajustes do docente</text>
+<path d="M 1125.0 386 L 1125.0 416 L 195.0 416 L 195.0 458" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="598.5" y="396" width="122.9" height="17" fill="var(--paper)"/><text class="el" x="660.0" y="408" text-anchor="middle">processo submetido</text>
+<path d="M 334 506.0 L 364 506.0" fill="none" stroke="var(--stop)" stroke-width="1.4" marker-end="url(#ah-stop)"/>
+<rect x="309.7" y="435" width="80.5" height="17" fill="var(--paper)"/><text class="el el-stop" x="350.0" y="447" text-anchor="middle">divergência</text>
+<path d="M 505 552 L 505 562 L 265 562 L 265 554" fill="none" stroke="var(--stop)" stroke-width="1.4" marker-end="url(#ah-stop)"/>
+<path d="M 195 552 L 195 588 L 750 588 L 750 554" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="392.4" y="568" width="159.2" height="17" fill="var(--paper)"/><text class="el" x="472" y="580" text-anchor="middle">conferido, sem pendência</text>
+<path d="M 954 506.0 L 984 506.0" fill="none" stroke="var(--stop)" stroke-width="1.4" marker-end="url(#ah-stop)"/>
+<rect x="926.7" y="435" width="86.6" height="17" fill="var(--paper)"/><text class="el el-stop" x="970.0" y="447" text-anchor="middle">improcedente</text>
+<path d="M 815.0 552 L 815.0 612 L 195.0 612 L 195.0 644" fill="none" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#ah-acc)"/>
+<rect x="467.8" y="592" width="74.5" height="17" fill="var(--paper)"/><text class="el el-acc" x="505.0" y="604" text-anchor="middle">procedente</text>
+<path d="M 334 692.0 L 364 692.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="285.5" y="621" width="128.9" height="17" fill="var(--paper)"/><text class="el" x="350.0" y="633" text-anchor="middle">documento assinável</text>
+<path d="M 644 692.0 L 674 692.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="598.5" y="621" width="122.9" height="17" fill="var(--paper)"/><text class="el" x="660.0" y="633" text-anchor="middle">processo concluído</text>
+</svg></div>
+    <figcaption>Saem do caminho crítico as duas passagens pelo Interface de RH do campus, as duas pela DAFA e a comissão examinadora local, cuja função era conferir documento contra planilha. A CPPD continua sendo o único ponto de decisão, e a via recursal permanece intacta: a simplificação é de instrução do processo, não de garantia do docente.</figcaption>
+  </figure>
+  <ul class="cut">
+    <li><b>10 → 3</b>passos visíveis ao docente<em>abrir, conferir, confirmar</em></li>
+    <li><b>9 → 2</b>documentos que ele monta<em>o resto é gerado</em></li>
+    <li><b>2 → 0</b>passagens pelo Interface de RH<em>o dado já vem conferido</em></li>
+    <li><b>2 → 1</b>instâncias que avaliam<em>fica só a CPPD</em></li>
+    <li><b>1 → 0</b>processos abertos no SEI pelo docente<em>o SEI recebe pronto</em></li>
+  </ul>
+  <div class="note stop">
+    <span class="tag">A supressão da comissão local exige norma</span>
+    <p>A comissão examinadora local não é praxe administrativa: ela está no art. 10 da Resolução 75/2014 e na Resolução 80/2014, com prazo de 15 dias e composição definida. Retirá-la do fluxo depende de alteração dessas resoluções, o que já está previsto de qualquer modo, porque a NT 01/2026 registra que ambas serão atualizadas para atender à Lei 15.141/2025. O encaminhamento prático é tratar as duas mudanças na mesma proposta ao CONSUNI, em vez de abrir duas frentes.</p>
+  </div>
+  <div class="note">
+    <span class="tag">O que não muda, e não deve mudar</span>
+    <p>A CPPD continua sendo quem avalia e emite o parecer conclusivo, e a PROGEPE continua apenas dando sequência à portaria e aos efeitos financeiros. O prazo de 5 dias para recurso e a competência do CONSUNI em última instância permanecem. O que sai do caminho é conferência de documento, nunca juízo de mérito: a decisão sobre deferir ou não continua inteira com a CPPD.</p>
+  </div>
+</section>
+
+<section id="classes">
+  <h3>Parametrização</h3>
+  <h2>O que ainda difere de uma classe para outra</h2>
+  <p class="lede">Com o fluxo unificado, a diferença entre os cinco caminhos antigos cabe em quatro colunas. Nenhuma delas justifica um fluxo próprio: todas são configuração do mesmo motor.</p>
+  <div class="scan">
+    <table class="c4">
+      <thead><tr><th>Caminho</th><th>O que acrescenta ao fluxo único</th><th>Pontuação e interstício</th><th>Base normativa</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Classes A, B e C</strong></td><td>avaliação docente com participação discente, anexada pela coordenação de curso, e avaliação da chefia imediata</td><td class="num">14 pts · mín. 8 no item I<br>interstício de 24 meses</td><td class="num">Res. CONSUNI 80/2014<br>NT CPPD 04/2014</td></tr>
+        <tr><td><strong>Classe D · Associado</strong></td><td>título de doutor na promoção, e obrigatoriedade de pontuar nos itens I e II; sai a avaliação discente</td><td class="num">32 pts na promoção<br>14 pts na progressão<br>mín. 8 no item I</td><td class="num">Res. CONSUNI 75/2014<br>Anexo I pela Res. 439/2025</td></tr>
+        <tr><td><strong>Classe E · Titular</strong></td><td>memorial ou tese inédita, comissão especial avaliadora e defesa pública</td><td class="num">21 pts · mín. 8 no item I<br>memorial em 30 dias</td><td class="num">Res. CONSUNI 327/2021</td></tr>
+        <tr><td><strong>Aceleração da promoção</strong></td><td>nada: o título é o único documento, e a plataforma o lê da ficha funcional</td><td class="num">não se aplica<br>efeitos da tramitação à CPPD</td><td class="num">Lei 12.772/2012<br>NT CPPD 02/2014</td></tr>
+        <tr><td><strong>Retribuição por titulação</strong></td><td>nada: mesmo caminho curto, sem alterar classe nem nível</td><td class="num">não se aplica<br>efeitos da tramitação à CPPD</td><td class="num">Lei 12.772/2012<br>NT CPPD 01/2013</td></tr>
+        <tr><td><strong>Transição da Lei 15.141/2025</strong></td><td>tramita direto à CPPD, com portaria de estabilidade e da última progressão</td><td class="num">17 pts em 36 meses<br>interstício de 36 meses</td><td class="num">Lei 15.141/2025<br>NT CPPD 01/2026</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="integracoes">
+  <h3>Arquitetura</h3>
+  <h2>De onde vem cada informação</h2>
+  <p class="lede">A plataforma não é um formulário com banco de dados: é um concentrador. O valor dela está em ler de sistemas que já existem, aplicar a regra vigente na data certa e devolver documento pronto. Escrever pouco e ler muito é o que mantém a integração barata.</p>
+  <figure>
+    <div class="fig"><svg viewBox="0 0 1300 694" role="img" aria-label="Mapa de integrações. À esquerda, cinco sistemas de origem alimentam a plataforma da PROGEPE: GURI com encargos didáticos, SAP com projetos aprovados, SIAPE e SIGEPE com a ficha funcional, Lattes e CNPq com a produção intelectual, e SEI com portarias. No centro, a plataforma concentra o motor de regras versionado por data, a calculadora de pontuação, o painel semestral e a geração de documentos. À direita, ela devolve o processo pronto ao SEI, a portaria à folha de pagamento e o status ao portal do docente. Abaixo, um modelo de IA local, rodando em servidor da própria universidade, faz a pré-validação dos comprovantes.">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--line)"/></marker>
+<marker id="ah-acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker>
+<marker id="ah-stop" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--stop)"/></marker>
+</defs>
+<line x1="38" y1="92" x2="38" y2="524" stroke="var(--rule-strong)" stroke-width="1"/><text class="bd" x="22" y="308.0" text-anchor="middle" transform="rotate(-90 22 308.0)" fill="var(--muted)">Sistemas de origem</text>
+<line x1="38" y1="548" x2="38" y2="660" stroke="var(--rule-strong)" stroke-width="1"/><text class="bd" x="22" y="604.0" text-anchor="middle" transform="rotate(-90 22 604.0)" fill="var(--muted)">Camada de confiança</text>
+<rect x="60" y="104" width="230" height="72" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="78" y="142" fill="var(--ink)">GURI</text>
+<text class="ns" x="78" y="164" fill="var(--muted)">encargos didáticos e turmas</text>
+<rect x="60" y="188" width="230" height="72" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="78" y="226" fill="var(--ink)">SAP</text>
+<text class="ns" x="78" y="248" fill="var(--muted)">projetos aprovados e vigentes</text>
+<rect x="60" y="272" width="230" height="72" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="78" y="310" fill="var(--ink)">SIAPE e SIGEPE</text>
+<text class="ns" x="78" y="332" fill="var(--muted)">ficha funcional, classe, nível</text>
+<rect x="60" y="356" width="230" height="72" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="78" y="394" fill="var(--ink)">Lattes e CNPq</text>
+<text class="ns" x="78" y="416" fill="var(--muted)">XML do currículo, DOI, grupos</text>
+<rect x="60" y="440" width="230" height="72" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="78" y="478" fill="var(--ink)">SEI</text>
+<text class="ns" x="78" y="500" fill="var(--muted)">portarias e designações</text>
+<rect x="430" y="122" width="430" height="372" rx="3" fill="var(--accent-wash)" stroke="var(--accent)" stroke-width="2"/>
+<rect x="430" y="122" width="5" height="372" fill="var(--accent)"/>
+<text class="nt" x="448" y="266.0" fill="var(--ink)">Plataforma PROGEPE</text>
+<text class="ns" x="448" y="286.0" fill="var(--muted)">motor de regras versionado por data de vigência</text>
+<text class="ns" x="448" y="302.0" fill="var(--muted)">calculadora do Anexo I vigente na data do interstício</text>
+<text class="ns" x="448" y="318.0" fill="var(--muted)">painel semestral e trilha de auditoria por item</text>
+<text class="ns" x="448" y="334.0" fill="var(--muted)">geração dos documentos do processo</text>
+<text class="ns" x="448" y="350.0" fill="var(--muted)">fila de pendências, resolvidas antes de existir processo no SEI</text>
+<text class="ns" x="448" y="366.0" fill="var(--muted)">notificação de prazo ao docente e à CPPD</text>
+<rect x="1000" y="188" width="240" height="72" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="1018" y="226" fill="var(--ink)">SEI</text>
+<text class="ns" x="1018" y="248" fill="var(--muted)">recebe o processo pronto</text>
+<rect x="1000" y="296" width="240" height="72" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="1018" y="334" fill="var(--ink)">DCP/PROGEPE</text>
+<text class="ns" x="1018" y="356" fill="var(--muted)">folha e efeitos financeiros</text>
+<rect x="1000" y="404" width="240" height="72" rx="3" fill="var(--card)" stroke="var(--rule-strong)" stroke-width="1.2"/>
+<text class="nt" x="1018" y="442" fill="var(--ink)">Portal do docente</text>
+<text class="ns" x="1018" y="464" fill="var(--muted)">acompanhamento e avisos</text>
+<rect x="430" y="560" width="430" height="88" rx="3" fill="var(--card)" stroke="var(--accent)" stroke-width="1.4"/>
+<text class="nt" x="448" y="594" fill="var(--ink)">Modelo de IA local</text>
+<text class="ns" x="448" y="614" fill="var(--muted)">roda em servidor da própria Unipampa, nenhum dado sai da instituição</text>
+<text class="ns" x="448" y="630" fill="var(--muted)">a saída é marcação de divergência, a decisão final é sempre humana</text>
+<path d="M 294 140.0 L 424 140.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="295.5" y="120.0" width="128.9" height="17" fill="var(--paper)"/><text class="el" x="360.0" y="132.0" text-anchor="middle">horas-aula/semestre</text>
+<path d="M 294 224.0 L 424 224.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="298.6" y="204.0" width="122.9" height="17" fill="var(--paper)"/><text class="el" x="360.0" y="216.0" text-anchor="middle">projetos por papel</text>
+<path d="M 294 308.0 L 424 308.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="301.6" y="288.0" width="116.8" height="17" fill="var(--paper)"/><text class="el" x="360.0" y="300.0" text-anchor="middle">posição funcional</text>
+<path d="M 294 392.0 L 424 392.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="310.6" y="372.0" width="98.7" height="17" fill="var(--paper)"/><text class="el" x="360.0" y="384.0" text-anchor="middle">produção e DOI</text>
+<path d="M 294 476.0 L 424 476.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="325.8" y="456.0" width="68.4" height="17" fill="var(--paper)"/><text class="el" x="360.0" y="468.0" text-anchor="middle">portarias</text>
+<path d="M 864 224.0 L 994 224.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="877.6" y="204.0" width="104.8" height="17" fill="var(--paper)"/><text class="el" x="930.0" y="216.0" text-anchor="middle">processo pronto</text>
+<path d="M 864 332.0 L 994 332.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="898.8" y="312.0" width="62.4" height="17" fill="var(--paper)"/><text class="el" x="930.0" y="324.0" text-anchor="middle">portaria</text>
+<path d="M 864 440.0 L 994 440.0" fill="none" stroke="var(--line)" stroke-width="1.4" marker-end="url(#ah)"/>
+<rect x="877.6" y="420.0" width="104.8" height="17" fill="var(--paper)"/><text class="el" x="930.0" y="432.0" text-anchor="middle">status e avisos</text>
+<path d="M 645.0 556 L 645.0 500" fill="none" stroke="var(--accent)" stroke-width="1.4" marker-end="url(#ah-acc)"/>
+<rect x="648.0" y="520.0" width="189.4" height="17" fill="var(--paper)"/><text class="el el-acc" x="655.0" y="532.0" text-anchor="start">pré-validação de comprovantes</text>
+</svg></div>
+    <figcaption>As setas da esquerda são leitura, e nenhuma delas exige alterar o sistema de origem. As da direita são escrita, e são as únicas que precisam de contrato formal. O modelo de IA fica fora do caminho de dados externos: ele lê o que já está na plataforma e escreve apenas marcações de divergência.</figcaption>
+  </figure>
+  <div class="scan">
+    <table class="c3">
+      <thead><tr><th>Integração</th><th>Custo estimado</th><th>Por que esse custo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>GURI</strong><span class="it">encargos didáticos</span></td><td class="num">baixo</td><td>Sistema interno, base acessível, dado já estruturado por semestre e componente curricular. O trabalho está na regra de cálculo da média semestral, não no acesso.</td></tr>
+        <tr><td><strong>SAP</strong><span class="it">projetos e produção</span></td><td class="num">baixo</td><td>Sistema interno da PROPPI, com o papel do docente por projeto já modelado. A importação de XML do Lattes já foi implementada ali para editais, e serve de referência pronta.</td></tr>
+        <tr><td><strong>SIAPE e SIGEPE</strong><span class="it">carga inicial</span></td><td class="num">baixo</td><td>Extração única de matrícula, classe, nível e data de exercício em CSV, suficiente para partir. A partir daí a própria plataforma mantém a posição funcional atualizada a cada processo concluído.</td></tr>
+        <tr><td><strong>Lattes e CNPq</strong><span class="it">produção intelectual</span></td><td class="num">baixo</td><td>Importação do XML do currículo, com conferência de existência por DOI. É o mesmo mecanismo já usado nos editais da PROPPI.</td></tr>
+        <tr><td><strong>SIAPE por API</strong><span class="it">sincronização contínua</span></td><td class="num">alto</td><td>Bloqueios de segurança, formato de retorno fora do desejado e dependência de terceiros. Não deve entrar no caminho crítico da primeira entrega: a carga inicial resolve o mesmo problema por ora.</td></tr>
+        <tr><td><strong>SEI, leitura de portarias</strong><span class="it">gestão e representação</span></td><td class="num">alto</td><td>A portaria é um PDF, não um registro estruturado, e extrair dela quem exerce qual função exige processamento de texto. O caminho barato é o inverso: o gabinete registra a designação em um cadastro no momento em que publica a portaria.</td></tr>
+        <tr><td><strong>SEI, escrita do processo</strong><span class="it">entrega do documento final</span></td><td class="num">médio</td><td>É a única escrita externa obrigatória, e já existe precedente na instituição: a calculadora do RSC dos técnicos gera o relatório e o deposita no SEI. O padrão pode ser reaproveitado.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">
+    <span class="tag">IA local, o desenho que dispensa a discussão de nuvem</span>
+    <p>O modelo roda em servidor da própria universidade, com ajuste fino sobre os itens da tabela de pontuação. Nenhum dado pessoal sai da instituição, o que mantém o tratamento dentro da LGPD sem depender de contrato com provedor externo. A saída do modelo é sempre uma marcação de divergência, nunca uma decisão: quem defere continua sendo a CPPD, e o parecer continua sendo humano e fundamentado.</p>
+  </div>
+</section>
+
+<section id="origem">
+  <h3>Contrato de dados</h3>
+  <h2>Item por item, quem é a fonte da verdade</h2>
+  <p class="lede">Esta é a planilha de rastreio proposta na reunião: para cada item da tabela de pontuação, de onde o dado vem, quem o homologa, em que momento, e se o docente pode ou não interferir. Ela é o documento que destrava a análise técnica, porque transforma a discussão de integração em uma lista fechada.</p>
+  <p class="legal">Anexo I da Resolução CONSUNI 75/2014, com a redação dada pela Resolução CONSUNI 439/2025 · dez itens · a numeração mudou em 2025, e o item III é novo</p>
+  <div class="scan">
+    <table class="c5">
+      <thead><tr><th>Item do Anexo I</th><th>Sistema de origem</th><th>Campo a ler</th><th>Quem homologa, e quando</th><th>Docente edita?</th></tr></thead>
+      <tbody>
+        <tr><td><strong>I · Ensino na educação superior</strong><span class="it">mín. 8,0 pts · 1,0 por hora-aula</span></td><td>GURI</td><td>horas-aula semanais por componente, por semestre do interstício, com a média já descontando afastamentos</td><td>coordenação acadêmica, a cada semestre</td><td class="no">não<span class="it">atribuição institucional</span></td></tr>
+        <tr><td><strong>II · Produção intelectual</strong><span class="it">livros, artigos, anais, prêmios</span></td><td>Lattes e CNPq<br>SISB</td><td>título, ano, ISSN ou ISBN, DOI, Qualis ou fator de impacto, vínculo declarado com a Unipampa</td><td>docente declara, IA local confere por DOI, CPPD valida</td><td class="yes">sim<span class="it">é declaração dele</span></td></tr>
+        <tr><td><strong>III · Inovação e empreendedorismo</strong><span class="it">item criado em 2025</span></td><td>SAP<br>INPI, MAPA, SisGen</td><td>registro, licenciamento ou título concedido, com titularidade ou cotitularidade da Unipampa</td><td>agência de inovação, no registro</td><td class="no">não<span class="it">registro é público</span></td></tr>
+        <tr><td><strong>IV · Projetos de ensino</strong></td><td>SAP</td><td>projeto, papel do docente, vigência dentro do interstício</td><td>PROGRAD, na aprovação do projeto</td><td class="yes">só desmarcar<span class="it">se não executou</span></td></tr>
+        <tr><td><strong>V · Projetos de pesquisa</strong></td><td>SAP</td><td>projeto, papel do docente, vigência dentro do interstício</td><td>PROPPI, na aprovação do projeto</td><td class="yes">só desmarcar<span class="it">se não executou</span></td></tr>
+        <tr><td><strong>VI · Projetos de extensão</strong></td><td>SAP</td><td>projeto, papel do docente, vigência dentro do interstício</td><td>PROEXT, na aprovação do projeto</td><td class="yes">só desmarcar<span class="it">se não executou</span></td></tr>
+        <tr><td><strong>VII · Gestão</strong><span class="it">direção, coordenação, chefia</span></td><td>cadastro de designações<br>SIAPE</td><td>função, período de exercício, portaria que designou</td><td>gabinete, ao publicar a portaria</td><td class="no">não<span class="it">consta em portaria</span></td></tr>
+        <tr><td><strong>VIII · Representação</strong><span class="it">colegiados e conselhos</span></td><td>cadastro de designações</td><td>colegiado, condição de indicado ou eleito, período</td><td>secretaria do colegiado, na posse</td><td class="no">não<span class="it">consta em portaria</span></td></tr>
+        <tr><td><strong>IX · Demais atividades de gestão</strong><span class="it">inclui representação sindical</span></td><td>declaração na plataforma</td><td>atividade, período, documento comprobatório anexado</td><td>CPPD, na avaliação</td><td class="yes">sim<span class="it">sem fonte institucional</span></td></tr>
+        <tr><td><strong>X · Outras atividades</strong><span class="it">bancas, orientações, grupos CNPq</span></td><td>GURI<br>SAP<br>diretório de grupos do CNPq</td><td>bancas registradas, orientações concluídas, bolsistas de iniciação, liderança ou participação em grupo</td><td>coordenação de curso e de programa, na conclusão</td><td class="yes">complementa<span class="it">o que não foi registrado</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">
+    <span class="tag">O caso dos encargos abaixo do mínimo</span>
+    <p>Quando a média semestral do item I fica abaixo das 8 horas exigidas, a CPPD pede hoje justificativa da coordenação acadêmica. Isso vira um gatilho automático: detectado o déficit, a plataforma solicita a justificativa diretamente a quem distribuiu a carga horária, sem que o docente precise intermediar um pedido sobre uma decisão que não foi dele.</p>
+  </div>
+</section>
+
+<section id="regras">
+  <h3>Requisito esquecido</h3>
+  <h2>Três normas valendo ao mesmo tempo</h2>
+  <p class="lede">A Lei 15.141, de 2 de junho de 2025, reestruturou a carreira do magistério federal e a Nota Técnica 01/2026 da CPPD estabeleceu as regras de transição. O efeito prático é que hoje não existe uma regra de progressão: existem três, e qual delas se aplica depende da data em que o docente fechou o interstício e de ele ter ou não avaliação homologada até 31 de dezembro de 2024.</p>
+  <div class="cols">
+    <div>
+      <h3>O que decide qual norma vale</h3>
+      <dl class="kv">
+        <div><dt>Requisitos completos até 31/12/2024</dt><dd>regras antigas</dd></div>
+        <div><dt>Interstício iniciado a partir de 01/01/2025</dt><dd>Lei 15.141/2025</dd></div>
+        <div><dt>Interstício a cavaleiro das duas datas</dt><dd class="warn">regra de transição</dd></div>
+        <div><dt>Interstício mínimo, regra nova</dt><dd>36 meses</dd></div>
+        <div><dt>Interstício mínimo, regra antiga</dt><dd>24 meses</dd></div>
+        <div><dt>Pontuação na nova classe B</dt><dd>17 pontos</dd></div>
+      </dl>
+    </div>
+    <div>
+      <h3>Consequência para o sistema</h3>
+      <p>A calculadora não pode ter a regra escrita no código. Ela precisa de um motor em que cada regra, cada pontuação mínima e cada tabela do Anexo I tenham data de início e de fim de vigência, e em que o processo seja avaliado pela regra vigente no seu interstício, não pela regra vigente hoje.</p>
+      <p>O mesmo vale para a própria tabela de pontuação: a Resolução 439/2025 reescreveu o Anexo I da 75/2014, criou o item III de inovação e empreendedorismo e empurrou a numeração de todos os itens seguintes. Um processo de 2024 e um de 2026 pontuam contra tabelas diferentes, com numeração diferente.</p>
+      <div class="note stop">
+        <span class="tag">Risco se isso for ignorado</span>
+        <p>Um motor com regra fixa acerta enquanto a legislação não muda, e passa a errar silenciosamente no dia seguinte a cada alteração, sem que ninguém perceba, porque o número continua saindo.</p>
+      </div>
+    </div>
+  </div>
+  <p class="legal">A própria NT 01/2026 registra que as Resoluções 80/2014, 75/2014 e 327/2021 ainda serão atualizadas para atender à Lei 15.141/2025, ou seja, haverá pelo menos mais uma versão de regra para o motor acomodar.</p>
+</section>
+
+<section id="fases">
+  <h3>Encaminhamento</h3>
+  <h2>O que dá para entregar, e em que ordem</h2>
+  <p class="lede">A reunião ficou dividida entre entregar cedo sem integração e esperar para entregar completo. As duas posições convergem se o corte não for por camada técnica, e sim por completude do caminho do docente: cada fase abaixo entrega um processo que tramita de ponta a ponta, mudando apenas o quanto dele já vem preenchido.</p>
+  <ol class="phase">
+    <li>
+      <h4>Carga funcional e painel de acompanhamento</h4>
+      <p>Extração única do SIAPE com matrícula, classe, nível e data de exercício, mais a leitura de encargos no GURI e de projetos no SAP. Entrega o painel semestral, que é o item de maior efeito percebido e o de menor risco: não altera fluxo nenhum, não depende de norma nova e já responde à ansiedade que hoje chega à CPPD por e-mail.</p>
+    </li>
+    <li>
+      <h4>Abertura automática e processo pré-montado</h4>
+      <p>Detecção do fim do interstício pela ficha funcional, geração da planilha de pontuação com os itens institucionais preenchidos e importação do XML do Lattes para a produção intelectual. O docente confere, ajusta e envia. A partir daqui o SEI recebe processo pronto, e não processo em construção.</p>
+    </li>
+    <li>
+      <h4>Homologação na origem e cadastro de designações</h4>
+      <p>Conferência do encargo pela coordenação acadêmica dentro do GURI, a cada semestre, e registro das designações pelo gabinete no momento da publicação da portaria. É a fase que depende de acordo entre setores, não de código, e por isso deve começar a ser negociada junto com a fase 1.</p>
+    </li>
+    <li>
+      <h4>Pré-validação por IA local</h4>
+      <p>Modelo executado em infraestrutura da própria universidade, ajustado aos itens da tabela, cruzando comprovante com atividade declarada. Entra depois porque o valor dele depende de já haver volume de processos padronizados para aprender, e porque precisa de alinhamento prévio com a DTIC quanto ao tratamento de dados pessoais.</p>
+    </li>
+  </ol>
+  <div class="note">
+    <span class="tag">O que precisa de decisão antes da próxima reunião</span>
+    <p>Três coisas, e nenhuma delas é técnica: se a CPPD aceita validar processo instruído pela plataforma antes de a integração estar completa, quem conduz a regulamentação do encargo didático no CONSUNI, e se o cadastro de designações fica no gabinete ou vira obrigação de quem publica cada portaria. Sem essas respostas, o cronograma de implantação é estimativa sobre estimativa.</p>
+  </div>
+</section>
+
+<footer>
+  <h3>Fontes</h3>
+  <p class="fine">Proposta construída a partir da transcrição da reunião do GT Progressão e Promoção de 31 de agosto de 2026, das bases de conhecimento da CPPD e da PROGEPE e das resoluções abaixo, consultadas em 22 de setembro de 2026. É documento de trabalho para discussão no GT, não normativo: em caso de divergência, prevalecem as resoluções do CONSUNI e a legislação federal.</p>
+  <ul class="src">
+    <li><a href="https://sites.unipampa.edu.br/cppd/procedimentos-promocaoprogressao/">Procedimentos de promoção e progressão · CPPD</a></li>
+    <li><a href="https://sites.unipampa.edu.br/progepe/files/2010/08/res-75_2014-promocao_progressao-professor-associado.pdf">Resolução CONSUNI 75/2014 · classe D e Anexo I</a></li>
+    <li><a href="https://sites.unipampa.edu.br/consuni/files/2025/05/res--439_2025-alterar-a-resolucao-no-75.pdf">Resolução CONSUNI 439/2025 · novo Anexo I</a></li>
+    <li><a href="https://sites.unipampa.edu.br/cppd/files/2026/02/sei_1976353_nota_tecnica_1.pdf">Nota Técnica CPPD 01/2026 · transição da Lei 15.141/2025</a></li>
+    <li><a href="https://sites.unipampa.edu.br/progepe/files/2020/05/base-de-conhecimento-promocao-progressao-classe-a-b-e-c.pdf">Base de conhecimento · classes A, B e C</a></li>
+    <li><a href="https://sites.unipampa.edu.br/progepe/files/2020/05/base-de-conhecimento-promocao-progressao-classe-d.pdf">Base de conhecimento · classe D</a></li>
+    <li><a href="https://sites.unipampa.edu.br/progepe/files/2022/01/base_de_conhecimento_promocao_docente_classe_e_professor_titular_versao_1.pdf">Base de conhecimento · classe E</a></li>
+    <li><a href="https://sites.unipampa.edu.br/progepe/files/2018/12/bc-aceleracao-de-promocao.pdf">Base de conhecimento · aceleração da promoção</a></li>
+    <li><a href="https://sites.unipampa.edu.br/progepe/files/2018/12/bc-alteracao-de-retribuicao-por-titulacao.pdf">Base de conhecimento · retribuição por titulação</a></li>
+    <li><a href="https://sites.unipampa.edu.br/progepe/files/2023/04/passo-a-passo-docente_v2-docx.pdf">Passo a passo no SEI · classes A a D</a></li>
+  </ul>
+</footer>
+
+</div>
+
+</body>
+</html>
