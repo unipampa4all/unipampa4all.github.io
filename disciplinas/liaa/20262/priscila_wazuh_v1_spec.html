@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Especificação Agêntica Wazuh</title>
+<meta name="description" content="Especificação técnica para implementação do fluxo agêntico de avaliação de regras Wazuh por LLMs (condições E0 a E4), com contratos de ferramentas, esquemas de dados, orquestração, isolamento e métricas.">
+<style>
+:root {
+  --bg: #ffffff; --fg: #1d1d1f; --muted: #5f6368; --line: #e3e3e6; --soft: #f6f7f9;
+  --accent: #1f5fbf; --crit: #b3261e; --warn: #a15c00; --ok: #1e7a3c;
+  --node: #ffffff; --node-line: #9aa3ad; --tool: #eef4fc; --tool-line: #1f5fbf; --gate: #fff6e8; --gate-line: #a15c00;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a; --fg: #e8eaed; --muted: #a0a6ad; --line: #30343a; --soft: #1c1f23;
+    --accent: #7fb0ff; --crit: #ff8a80; --warn: #f0b45a; --ok: #7fd09a;
+    --node: #1c1f23; --node-line: #5c636b; --tool: #182638; --tool-line: #7fb0ff; --gate: #2d2414; --gate-line: #f0b45a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171a; --fg: #e8eaed; --muted: #a0a6ad; --line: #30343a; --soft: #1c1f23;
+  --accent: #7fb0ff; --crit: #ff8a80; --warn: #f0b45a; --ok: #7fd09a;
+  --node: #1c1f23; --node-line: #5c636b; --tool: #182638; --tool-line: #7fb0ff; --gate: #2d2414; --gate-line: #f0b45a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 960px; margin: 0 auto; padding: 40px 16px 80px; }
+header { border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 24px; }
+.kicker { color: var(--muted); font-size: 14px; letter-spacing: .04em; text-transform: uppercase; }
+h1 { font-size: 32px; line-height: 1.2; margin: 6px 0 10px; }
+h2 { font-size: 24px; margin: 52px 0 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+h3 { font-size: 19px; margin: 28px 0 8px; }
+h4 { font-size: 17px; margin: 20px 0 6px; }
+p, li { max-width: 76ch; }
+.meta { color: var(--muted); font-size: 15px; }
+code { font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--soft); padding: 1px 5px; border-radius: 4px; }
+pre { background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; overflow-x: auto; font: 13.5px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+pre code { background: none; padding: 0; font-size: inherit; }
+.note { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin: 16px 0; }
+.risk { border-left: 3px solid var(--warn); padding: 4px 0 4px 16px; margin: 16px 0; }
+.table-wrap { overflow-x: auto; margin: 14px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; font-size: 14px; }
+td code { white-space: nowrap; }
+.tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 1px 7px; border-radius: 3px; border: 1px solid currentColor; }
+.must { color: var(--crit); } .should { color: var(--warn); } .may { color: var(--ok); }
+nav.toc { columns: 2; column-gap: 32px; font-size: 15px; margin: 8px 0 0; padding: 0; }
+nav.toc a { color: var(--accent); text-decoration: none; display: block; padding: 2px 0; break-inside: avoid; }
+nav.toc a:hover { text-decoration: underline; }
+figure { margin: 20px 0; }
+.diagram { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; padding: 12px; }
+.diagram svg { display: block; min-width: 760px; width: 100%; height: auto; }
+figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; }
+svg text { fill: var(--fg); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+svg .t { font-size: 14px; font-weight: 600; } svg .s { font-size: 12.5px; fill: var(--muted); }
+svg .L { font-size: 12px; font-weight: 700; letter-spacing: .06em; fill: var(--muted); }
+svg .n { fill: var(--node); stroke: var(--node-line); stroke-width: 1.2; }
+svg .tool { fill: var(--tool); stroke: var(--tool-line); stroke-width: 1.2; }
+svg .gate { fill: var(--gate); stroke: var(--gate-line); stroke-width: 1.2; }
+svg .band { fill: none; stroke: var(--line); stroke-width: 1; }
+svg .a { stroke: var(--node-line); stroke-width: 1.4; fill: none; marker-end: url(#arr); }
+@media (max-width: 640px) { h1 { font-size: 26px; } h2 { font-size: 21px; } body { font-size: 16px; } nav.toc { columns: 1; } }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <div class="kicker">PPGES · UNIPAMPA · LIAA · Especificação técnica v0.1 · 20 de outubro de 2026</div>
+  <h1>Especificação técnica: fluxo agêntico para avaliação de regras Wazuh</h1>
+  <div class="meta">Projeto: Avaliação da Qualidade de Regras de Detecção SIEM com LLMs · Discente: Priscila Schafhauzer · Orientador: Prof. Diego Kreutz</div>
+  <div class="meta">Documento-base: <code>avaliacao_tecnica_A7_A8_Wazuh.html</code> (seções 5 e 6). Status: rascunho para implementação.</div>
+  <nav class="toc" aria-label="Sumário">
+    <a href="#s1">1. Objetivo e escopo</a>
+    <a href="#s2">2. Requisitos</a>
+    <a href="#s3">3. Visão de componentes</a>
+    <a href="#s4">4. Stack e estrutura do repositório</a>
+    <a href="#s5">5. Modelo de dados</a>
+    <a href="#s6">6. Contratos das ferramentas</a>
+    <a href="#s7">7. Sandbox Wazuh</a>
+    <a href="#s8">8. Especificação dos agentes</a>
+    <a href="#s9">9. Orquestração</a>
+    <a href="#s10">10. Isolamento e anti-vazamento</a>
+    <a href="#s11">11. Execução experimental</a>
+    <a href="#s12">12. Registro e reprodutibilidade</a>
+    <a href="#s13">13. Pipeline de métricas</a>
+    <a href="#s14">14. Configuração</a>
+    <a href="#s15">15. Testes e aceitação</a>
+    <a href="#s16">16. Plano de implementação</a>
+    <a href="#s17">17. Riscos e questões em aberto</a>
+  </nav>
+</header>
+
+<section id="s1">
+  <h2 style="border-top:0;margin-top:8px">1. Objetivo e escopo</h2>
+  <p>Implementar um sistema que avalia regras Wazuh segundo a rubrica C1 a C5 em cinco condições experimentais (E0 a E4), registra cada avaliação de forma imutável e calcula as métricas de RQ1 a RQ4 contra o padrão-ouro humano.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Condição</th><th>O que o sistema faz</th><th>Componentes usados</th></tr>
+    <tr><td>E0</td><td>Julgamento único, sem perfil ACME-LAB</td><td>Runner, adaptador LLM, juiz único</td></tr>
+    <tr><td>E1</td><td>Julgamento único com perfil e rubrica (linha de base da proposta)</td><td>Runner, adaptador LLM, juiz único</td></tr>
+    <tr><td>E2</td><td>E1 + evidência pré-computada injetada no prompt</td><td>E1 + validador, cache de evidências</td></tr>
+    <tr><td>E3</td><td>Fluxo agêntico com ferramentas, sem verificador</td><td>Orquestrador, agentes, ferramentas, sandbox</td></tr>
+    <tr><td>E4</td><td>E3 + verificador de outra família de modelo</td><td>E3 + verificador</td></tr>
+  </table></div>
+  <p><strong>Fora do escopo:</strong> geração ou correção de regras, interface de rotulação humana (especificada à parte), implantação em SOC real.</p>
+  <p class="note">Convenção de requisitos: <span class="tag must">deve</span> obrigatório, <span class="tag should">deveria</span> recomendado, <span class="tag may">pode</span> opcional.</p>
+</section>
+
+<section id="s2">
+  <h2>2. Requisitos</h2>
+  <h3>2.1 Funcionais</h3>
+  <div class="table-wrap"><table>
+    <tr><th>ID</th><th>Requisito</th><th>Nível</th></tr>
+    <tr><td>RF01</td><td>Carregar o dataset a partir de um manifesto (<code>items.yaml</code>) com XML, categoria, regra-base e pseudônimo de cada item.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF02</td><td>Resolver a cadeia de regras pai (<code>if_sid</code>, <code>if_matched_sid</code>, <code>if_group</code>) e os decoders envolvidos.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF03</td><td>Validar cada regra no motor Wazuh e produzir C1 sem LLM.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF04</td><td>Executar eventos de teste contra a regra em sandbox, individualmente e em sequência.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF05</td><td>Calcular estatísticas de disparo da regra sobre o corpus de replay sem expor rótulos manuais.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF06</td><td>Executar os agentes C2 a C5 e o caçador de defeitos em paralelo, com ferramentas restritas por agente.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF07</td><td>Verificar citações de forma determinística e, em E4, por um verificador LLM com no máximo uma rodada de revisão.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF08</td><td>Produzir um registro por avaliação conforme <code>evaluation.schema.json</code>.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF09</td><td>Executar a matriz itens × modelos × condições × repetições com ordem aleatória por semente e retomada após falha.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF10</td><td>Calcular as métricas da seção 13 e gerar tabelas e figuras.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RF11</td><td>Gerar mutantes a partir de operadores declarados e filtrar mutantes equivalentes.</td><td><span class="tag should">deveria</span></td></tr>
+    <tr><td>RF12</td><td>Suportar modelo de pesos abertos servido localmente.</td><td><span class="tag should">deveria</span></td></tr>
+  </table></div>
+  <h3>2.2 Não funcionais</h3>
+  <div class="table-wrap"><table>
+    <tr><th>ID</th><th>Requisito</th><th>Nível</th></tr>
+    <tr><td>RNF01</td><td>Reprodutibilidade: identificador de modelo versionado, parâmetros de amostragem, hashes de prompts e artefatos no manifesto de cada execução.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RNF02</td><td>Isolamento: nenhum caminho de código entrega <code>catalog.csv</code>, rótulos humanos ou <code>severidade_manual</code> a um LLM (verificado por teste automático).</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RNF03</td><td>Segurança: o LLM nunca executa shell; só chama funções tipadas. A sandbox não tem rede.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RNF04</td><td>Imutabilidade: registros brutos em JSONL apenas com anexação, com hash por linha e hash encadeado.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RNF05</td><td>Orçamento: limites por agente de chamadas de ferramenta, tokens e tempo, configuráveis.</td><td><span class="tag must">deve</span></td></tr>
+    <tr><td>RNF06</td><td>Independência de provedor: adaptador único para Anthropic, OpenAI, Google e servidor compatível com OpenAI (vLLM, Ollama).</td><td><span class="tag should">deveria</span></td></tr>
+    <tr><td>RNF07</td><td>Observabilidade: rastreio por avaliação (tempo, tokens, custo, chamadas de ferramenta).</td><td><span class="tag should">deveria</span></td></tr>
+  </table></div>
+</section>
+
+<section id="s3">
+  <h2>3. Visão de componentes</h2>
+  <figure>
+    <div class="diagram">
+    <svg viewBox="0 0 960 600" role="img" aria-label="Diagrama de camadas do sistema">
+      <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--node-line)"/></marker></defs>
+
+      <rect class="band" x="8" y="8" width="944" height="96" rx="6"/>
+      <text class="L" x="22" y="30">EXPERIMENTO</text>
+      <rect class="n" x="150" y="36" width="210" height="54" rx="6"/><text class="t" x="255" y="59" text-anchor="middle">Runner</text><text class="s" x="255" y="77" text-anchor="middle">matriz, semente, retomada</text>
+      <rect class="n" x="380" y="36" width="210" height="54" rx="6"/><text class="t" x="485" y="59" text-anchor="middle">Gerador de mutantes</text><text class="s" x="485" y="77" text-anchor="middle">operadores, equivalentes</text>
+      <rect class="n" x="610" y="36" width="210" height="54" rx="6"/><text class="t" x="715" y="59" text-anchor="middle">Pipeline de métricas</text><text class="s" x="715" y="77" text-anchor="middle">κw, α, AC2, recall, G-theory</text>
+      <path class="a" d="M255 90 V128"/>
+
+      <rect class="band" x="8" y="114" width="944" height="96" rx="6"/>
+      <text class="L" x="22" y="136">ORQUESTRAÇÃO</text>
+      <rect class="n" x="150" y="142" width="300" height="54" rx="6"/><text class="t" x="300" y="165" text-anchor="middle">Orquestrador (máquina de estados)</text><text class="s" x="300" y="183" text-anchor="middle">E3/E4; E0–E2 usam o juiz único</text>
+      <rect class="tool" x="470" y="142" width="170" height="54" rx="6"/><text class="t" x="555" y="165" text-anchor="middle">Montador de contexto</text><text class="s" x="555" y="183" text-anchor="middle">pacote por condição</text>
+      <rect class="tool" x="660" y="142" width="170" height="54" rx="6"/><text class="t" x="745" y="165" text-anchor="middle">Agregador</text><text class="s" x="745" y="183" text-anchor="middle">schema, hash</text>
+      <path class="a" d="M300 196 V234"/>
+
+      <rect class="band" x="8" y="220" width="944" height="110" rx="6"/>
+      <text class="L" x="22" y="242">AGENTES (LLM)</text>
+      <rect class="n" x="150" y="250" width="118" height="64" rx="6"/><text class="t" x="209" y="278" text-anchor="middle">C2 Lógica</text><text class="s" x="209" y="297" text-anchor="middle">logtest</text>
+      <rect class="n" x="278" y="250" width="118" height="64" rx="6"/><text class="t" x="337" y="278" text-anchor="middle">C3 Correlação</text><text class="s" x="337" y="297" text-anchor="middle">sequências</text>
+      <rect class="n" x="406" y="250" width="118" height="64" rx="6"/><text class="t" x="465" y="278" text-anchor="middle">C4 Severidade</text><text class="s" x="465" y="297" text-anchor="middle">sem ferramenta</text>
+      <rect class="n" x="534" y="250" width="118" height="64" rx="6"/><text class="t" x="593" y="278" text-anchor="middle">C5 Ruído</text><text class="s" x="593" y="297" text-anchor="middle">corpus</text>
+      <rect class="n" x="662" y="250" width="118" height="64" rx="6"/><text class="t" x="721" y="278" text-anchor="middle">Defeitos</text><text class="s" x="721" y="297" text-anchor="middle">logtest</text>
+      <rect class="gate" x="790" y="250" width="150" height="64" rx="6"/><text class="t" x="865" y="278" text-anchor="middle">Verificador</text><text class="s" x="865" y="297" text-anchor="middle">outra família</text>
+      <path class="a" d="M480 314 V352"/>
+
+      <rect class="band" x="8" y="340" width="944" height="96" rx="6"/>
+      <text class="L" x="22" y="362">FERRAMENTAS</text>
+      <rect class="tool" x="150" y="368" width="150" height="54" rx="6"/><text class="t" x="225" y="391" text-anchor="middle">validate_rule</text><text class="s" x="225" y="409" text-anchor="middle">C1</text>
+      <rect class="tool" x="310" y="368" width="150" height="54" rx="6"/><text class="t" x="385" y="391" text-anchor="middle">run_events</text><text class="s" x="385" y="409" text-anchor="middle">eventos isolados</text>
+      <rect class="tool" x="470" y="368" width="150" height="54" rx="6"/><text class="t" x="545" y="391" text-anchor="middle">run_sequence</text><text class="s" x="545" y="409" text-anchor="middle">correlação</text>
+      <rect class="tool" x="630" y="368" width="150" height="54" rx="6"/><text class="t" x="705" y="391" text-anchor="middle">corpus_stats</text><text class="s" x="705" y="409" text-anchor="middle">sem rótulos</text>
+      <rect class="tool" x="790" y="368" width="150" height="54" rx="6"/><text class="t" x="865" y="391" text-anchor="middle">find_in_artifact</text><text class="s" x="865" y="409" text-anchor="middle">citações</text>
+      <path class="a" d="M480 422 V458"/>
+
+      <rect class="band" x="8" y="446" width="944" height="146" rx="6"/>
+      <text class="L" x="22" y="468">INFRAESTRUTURA</text>
+      <rect class="tool" x="150" y="478" width="250" height="60" rx="6"/><text class="t" x="275" y="502" text-anchor="middle">Pool de sandboxes Wazuh</text><text class="s" x="275" y="521" text-anchor="middle">containers sem rede, versão fixa</text>
+      <rect class="tool" x="420" y="478" width="250" height="60" rx="6"/><text class="t" x="545" y="502" text-anchor="middle">Corpus de replay</text><text class="s" x="545" y="521" text-anchor="middle">1.000 eventos, sem rótulos</text>
+      <rect class="tool" x="690" y="478" width="250" height="60" rx="6"/><text class="t" x="815" y="502" text-anchor="middle">Armazenamento de execução</text><text class="s" x="815" y="521" text-anchor="middle">JSONL imutável + manifesto</text>
+      <text class="s" x="545" y="572" text-anchor="middle">Cofre de rótulos (catalog.csv, padrão-ouro, severidade_manual): acessível apenas pelo pipeline de métricas</text>
+    </svg>
+    </div>
+    <figcaption>Cada camada só chama a camada imediatamente abaixo. O cofre de rótulos é lido exclusivamente pelo pipeline de métricas, depois que todas as avaliações foram registradas.</figcaption>
+  </figure>
+</section>
+
+<section id="s4">
+  <h2>4. Stack e estrutura do repositório</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Camada</th><th>Escolha recomendada</th><th>Justificativa</th></tr>
+    <tr><td>Linguagem</td><td>Python 3.12</td><td>Ecossistema de métricas (scikit-learn, krippendorff, irrCAC) e SDKs de todos os provedores</td></tr>
+    <tr><td>Orquestração</td><td>Máquina de estados própria com <code>asyncio</code></td><td>Fluxo pequeno e fixo; transparência total para o artigo. LangGraph é alternativa aceitável</td></tr>
+    <tr><td>Validação de dados</td><td>Pydantic v2 + <code>jsonschema</code></td><td>Mesma definição gera o JSON Schema e valida as saídas</td></tr>
+    <tr><td>LLM</td><td>SDKs oficiais atrás de um adaptador único</td><td>Uso de ferramentas e saída estruturada em todos os provedores</td></tr>
+    <tr><td>Sandbox</td><td>Docker, imagem <code>wazuh/wazuh-manager</code> na mesma versão do replay</td><td>Comportamento idêntico ao do ambiente que gerou a evidência</td></tr>
+    <tr><td>Estatística avançada</td><td>R (<code>ordinal::clmm</code>, <code>gtheory</code>) chamado por script</td><td>Implementações de referência para CLMM e G-theory</td></tr>
+  </table></div>
+<pre><code>wazuh-judge/
+├── config/
+│   ├── experiment.yaml          # matriz, semente, condições, orçamentos
+│   ├── models.yaml              # identificadores versionados e parâmetros
+│   └── severity_table.yaml      # tabela de decisão P1–P4 (C4)
+├── data/
+│   ├── items/                   # XML por item + items.yaml (manifesto)
+│   ├── calibration/             # regras de calibração fora do dataset
+│   ├── corpus/                  # eventos do replay SEM rótulos
+│   └── vault/                   # catalog.csv, padrão-ouro, severidade_manual (fora do alcance dos agentes)
+├── prompts/                     # templates versionados (um arquivo por agente e condição)
+├── rubric/
+│   ├── rubric_evaluator.md      # versão do avaliador (sem exemplos do dataset)
+│   └── taxonomy.yaml            # categorias de defeito (nomes e definições apenas)
+├── schemas/
+│   └── evaluation.schema.json
+├── src/wazuh_judge/
+│   ├── models.py                # Pydantic: Item, ContextPackage, Verdict, Problem, EvaluationRecord
+│   ├── context.py               # montador de contexto e resolvedor de cadeia de pais
+│   ├── sandbox/                 # pool de containers, carga de regra, logtest
+│   ├── tools/                   # funções expostas aos agentes
+│   ├── llm/                     # adaptador de provedores
+│   ├── agents/                  # agentes C2–C5, caçador, verificador, juiz único
+│   ├── orchestrator.py
+│   ├── runner.py
+│   ├── mutation.py
+│   ├── store.py                 # JSONL imutável e manifesto
+│   └── metrics/
+├── analysis/                    # scripts R e notebooks de figuras
+├── tests/
+└── runs/                        # saídas por execução (somente anexação)</code></pre>
+</section>
+
+<section id="s5">
+  <h2>5. Modelo de dados</h2>
+  <h3>5.1 Entidades</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Entidade</th><th>Campos principais</th><th>Observação</th></tr>
+    <tr><td><code>Item</code></td><td><code>item_id</code> (pseudônimo, ex. <code>IT-07</code>), <code>xml</code>, <code>category</code>, <code>base_item_id</code>, <code>mutation_op</code>, <code>sha256</code></td><td><code>category</code> nunca é enviada ao LLM</td></tr>
+    <tr><td><code>ContextPackage</code></td><td><code>profile</code>, <code>severity_bands</code>, <code>principles</code>, <code>rubric</code>, <code>parent_chain[]</code>, <code>decoders[]</code>, <code>precomputed_evidence?</code></td><td>Composição varia por condição (seção 11)</td></tr>
+    <tr><td><code>ToolCall</code></td><td><code>agent</code>, <code>tool</code>, <code>args</code>, <code>result</code>, <code>duration_ms</code>, <code>call_id</code></td><td>Toda chamada é registrada e citável</td></tr>
+    <tr><td><code>Evidence</code></td><td><code>source</code> (<code>xml</code> | <code>tool</code> | <code>context</code>), <code>ref</code>, <code>quote</code></td><td><code>ref</code> é <code>call_id</code> quando a fonte é ferramenta</td></tr>
+    <tr><td><code>CriterionVerdict</code></td><td><code>id</code>, <code>applicable</code>, <code>label</code>, <code>justification</code>, <code>evidence[]</code></td><td><code>label</code> nulo quando <code>applicable=false</code></td></tr>
+    <tr><td><code>Problem</code></td><td><code>category</code>, <code>description</code>, <code>location</code> (atributo XML ou XPath)</td><td>Alimenta RQ3</td></tr>
+    <tr><td><code>EvaluationRecord</code></td><td>Ver esquema abaixo</td><td>Uma linha JSONL por avaliação</td></tr>
+  </table></div>
+
+  <h3>5.2 <code>evaluation.schema.json</code> (resumo)</h3>
+<pre><code>{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "evaluation.schema.json",
+  "type": "object",
+  "required": ["run_id", "item_id", "condition", "model", "rep", "criteria", "problems", "meta"],
+  "properties": {
+    "run_id":    { "type": "string" },
+    "item_id":   { "type": "string", "pattern": "^IT-[0-9]{2,3}$" },
+    "condition": { "enum": ["E0", "E1", "E2", "E3", "E4"] },
+    "model":     { "type": "string", "description": "identificador versionado do provedor" },
+    "rep":       { "type": "integer", "minimum": 1 },
+    "criteria": {
+      "type": "array", "minItems": 5, "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["id", "applicable", "label", "justification", "evidence"],
+        "properties": {
+          "id":            { "enum": ["C1", "C2", "C3", "C4", "C5"] },
+          "applicable":    { "type": "boolean" },
+          "label":         { "enum": ["A", "PA", "I", null] },
+          "justification": { "type": "string", "minLength": 20 },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["source", "quote"],
+              "properties": {
+                "source": { "enum": ["xml", "tool", "context"] },
+                "ref":    { "type": "string" },
+                "quote":  { "type": "string" }
+              }
+            }
+          },
+          "c4_expected_band": { "enum": ["low", "medium", "high", "critical", null] },
+          "c4_band_distance": { "type": ["integer", "null"], "minimum": 0, "maximum": 3 }
+        }
+      }
+    },
+    "problems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["category", "description", "location"],
+        "properties": {
+          "category":    { "type": "string" },
+          "description": { "type": "string" },
+          "location":    { "type": "string" }
+        }
+      }
+    },
+    "verifier": {
+      "type": "object",
+      "properties": {
+        "citation_check": { "type": "object", "properties": { "total": {"type": "integer"}, "grounded": {"type": "integer"} } },
+        "status":         { "enum": ["approved", "revised", "rejected", "skipped"] },
+        "objections":     { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": ["started_at", "duration_ms", "tokens_in", "tokens_out", "tool_calls", "prompt_hashes"],
+      "properties": {
+        "started_at":    { "type": "string", "format": "date-time" },
+        "duration_ms":   { "type": "integer" },
+        "tokens_in":     { "type": "integer" },
+        "tokens_out":    { "type": "integer" },
+        "cost_usd":      { "type": "number" },
+        "tool_calls":    { "type": "integer" },
+        "prompt_hashes": { "type": "object", "additionalProperties": { "type": "string" } },
+        "errors":        { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}</code></pre>
+  <p>Regras de consistência verificadas pelo agregador (além do schema): os cinco critérios aparecem uma vez cada; <code>applicable=false</code> implica <code>label=null</code>; C1 sempre <code>applicable=true</code>; se C1 = <code>I</code>, então C2 a C5 têm <code>applicable=false</code>; C3 só pode ser NA se a regra não tiver <code>frequency</code>.</p>
+</section>
+
+<section id="s6">
+  <h2>6. Contratos das ferramentas</h2>
+  <p>Ferramentas são funções Python tipadas, expostas ao LLM como definições de ferramenta (JSON Schema). Nenhuma recebe caminho de arquivo, comando ou XML arbitrário vindo do LLM: o item avaliado é fixado pelo orquestrador no momento da criação do agente.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Ferramenta</th><th>Entrada (do LLM)</th><th>Saída</th><th>Agentes</th></tr>
+    <tr><td><code>validate_rule</code></td><td>nenhuma</td><td><code>{loads, errors[], warnings[], engine_version}</code></td><td>Orquestrador (não exposta)</td></tr>
+    <tr><td><code>get_parent_chain</code></td><td>nenhuma</td><td>XML das regras pai e decoders</td><td>Montador de contexto (não exposta)</td></tr>
+    <tr><td><code>run_events</code></td><td><code>events[]</code> (1–20): <code>{log, location?, log_format?}</code></td><td>Por evento: <code>{decoder, fired_rule_id, level, groups, target_fired, matched_fields}</code></td><td>C2, Defeitos</td></tr>
+    <tr><td><code>run_sequence</code></td><td><code>steps[]</code> (1–50): <code>{log, offset_s}</code></td><td>Por passo: igual a <code>run_events</code> + <code>firedtimes</code></td><td>C3, Defeitos</td></tr>
+    <tr><td><code>corpus_stats</code></td><td><code>group_by?</code> ∈ {srcip, user, hour, parent_rule}</td><td><code>{n_events, n_target_fired, top[]: {key, count}}</code></td><td>C5</td></tr>
+    <tr><td><code>find_in_artifact</code></td><td><code>quote</code></td><td><code>{found, source, location}</code></td><td>Verificador</td></tr>
+  </table></div>
+  <h4>Exemplo de definição exposta ao LLM</h4>
+<pre><code>{
+  "name": "run_events",
+  "description": "Executa eventos de log contra a regra em avaliação numa sandbox Wazuh e informa, para cada evento, qual decoder e qual regra dispararam e se a regra-alvo disparou. Use para testar over-match (eventos que NÃO deveriam disparar) e under-match (variantes que DEVERIAM disparar).",
+  "input_schema": {
+    "type": "object",
+    "required": ["events"],
+    "properties": {
+      "events": {
+        "type": "array", "minItems": 1, "maxItems": 20,
+        "items": {
+          "type": "object",
+          "required": ["log"],
+          "properties": {
+            "log":        { "type": "string", "maxLength": 2000 },
+            "log_format": { "enum": ["syslog", "json", "audit"], "default": "syslog" },
+            "location":   { "type": "string", "default": "/var/log/auth.log" },
+            "intent":     { "enum": ["should_fire", "should_not_fire"] }
+          }
+        }
+      }
+    }
+  }
+}</code></pre>
+  <p>O campo <code>intent</code> não altera a execução; ele é registrado para medir a qualidade dos testes que o agente escreve (taxa de casos em que a intenção declarada coincide com o resultado).</p>
+</section>
+
+<section id="s7">
+  <h2>7. Sandbox Wazuh</h2>
+  <h3>7.1 Ciclo de vida</h3>
+  <ol>
+    <li>Pool de N containers (padrão 4) da imagem <code>wazuh/wazuh-manager</code> fixada por digest, iniciados com <code>--network none</code>, sistema de arquivos somente leitura exceto <code>/var/ossec/etc/rules</code> e <code>/var/ossec/logs</code>.</li>
+    <li>Para cada item: copiar o XML para <code>/var/ossec/etc/rules/item.xml</code>. Mutantes de regras nativas usam <code>overwrite="yes"</code> com o mesmo id.</li>
+    <li>Executar <code>wazuh-analysisd -t</code>; capturar saída para <code>validate_rule</code>.</li>
+    <li>Reiniciar o analisador e abrir sessão de logtest. A execução é feita pelo binário <code>wazuh-logtest</code> ou pelo endpoint <code>PUT /logtest</code> da API local; a sessão (token) preserva o estado de correlação entre eventos.</li>
+    <li>Ao final do item: encerrar sessão, remover o arquivo, devolver o container ao pool. Um container nunca avalia dois itens ao mesmo tempo.</li>
+  </ol>
+  <h3>7.2 Correlação e tempo</h3>
+  <div class="risk"><p><strong>Ponto a validar no spike S1.</strong> Regras com <code>frequency</code> e <code>timeframe</code> dependem do tempo de processamento dos eventos, e não necessariamente do carimbo de tempo do log. Simular <code>timeframe</code> de minutos ou horas exige uma estratégia. Duas opções, em ordem de preferência:</p>
+  <ol>
+    <li><strong>Escala temporal:</strong> criar cópia da regra só para a sandbox com <code>timeframe</code> dividido por um fator k (ex. 60) e enviar os eventos com atrasos reais <code>offset_s / k</code>. O agente sempre vê e raciocina sobre os valores originais.</li>
+    <li><strong>Atraso real</strong> para <code>timeframe</code> ≤ 120 s, com limite de tempo por chamada.</li>
+  </ol>
+  <p>O spike deve confirmar empiricamente que <code>firedtimes</code> e o disparo coincidem entre a versão escalada e a original em pelo menos 3 regras do dataset.</p></div>
+  <h3>7.3 Evidência pré-computada e cache</h3>
+  <p>Para cada item, antes de qualquer execução experimental, o sistema calcula e grava em <code>runs/evidence/IT-xx.json</code>: resultado de <code>validate_rule</code>, cadeia de pais, <code>corpus_stats</code> nos quatro agrupamentos. Esse arquivo é a evidência injetada em E2 e o cache das chamadas equivalentes em E3/E4 (mesmos argumentos, mesmo resultado, sem nova execução).</p>
+</section>
+
+<section id="s8">
+  <h2>8. Especificação dos agentes</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Agente</th><th>Objetivo</th><th>Ferramentas</th><th>Orçamento padrão</th><th>Saída</th></tr>
+    <tr><td>Juiz único</td><td>Avaliar C1 a C5 e listar problemas num único passo (E0, E1, E2)</td><td>Nenhuma</td><td>1 chamada, 8k tokens de saída</td><td><code>EvaluationRecord</code> parcial</td></tr>
+    <tr><td>C2 Lógica</td><td>Decidir over-match e under-match</td><td><code>run_events</code></td><td>8 chamadas, 180 s</td><td><code>CriterionVerdict</code> C2</td></tr>
+    <tr><td>C3 Correlação</td><td>Avaliar plausibilidade de frequency, timeframe e agrupamento</td><td><code>run_sequence</code></td><td>6 chamadas, 300 s</td><td><code>CriterionVerdict</code> C3</td></tr>
+    <tr><td>C4 Severidade</td><td>Derivar faixa esperada pela tabela P1–P4 e comparar com o nível</td><td>Nenhuma</td><td>1 chamada</td><td><code>CriterionVerdict</code> C4 + faixa e distância</td></tr>
+    <tr><td>C5 Ruído</td><td>Estimar ruído e necessidade de supressão nível 0</td><td><code>corpus_stats</code></td><td>4 chamadas, 60 s</td><td><code>CriterionVerdict</code> C5</td></tr>
+    <tr><td>Caçador de defeitos</td><td>Listar defeitos com categoria e localização</td><td><code>run_events</code>, <code>run_sequence</code></td><td>8 chamadas, 300 s</td><td><code>Problem[]</code></td></tr>
+    <tr><td>Verificador</td><td>Checar ancoragem e consistência; aprovar ou objetar</td><td><code>find_in_artifact</code></td><td>10 chamadas, 1 rodada de revisão</td><td>Bloco <code>verifier</code></td></tr>
+  </table></div>
+  <h3>8.1 Estrutura comum de prompt</h3>
+<pre><code>[SISTEMA]
+Você é avaliador(a) de regras de detecção Wazuh. Avalie SOMENTE o critério {CRITERIO}.
+Use exclusivamente: o XML da regra, a cadeia de regras pai, o perfil da organização
+e os resultados das ferramentas. Não presuma comportamento que não possa citar.
+Toda afirmação da justificativa deve ter evidência com citação literal (do XML) ou
+referência a uma chamada de ferramenta (call_id).
+
+[RUBRICA DO CRITÉRIO]
+{definição e descritores A / PA / I / NA do critério, versão do avaliador}
+
+[CONTEXTO]
+{perfil ACME-LAB} {faixas e princípios P1–P4} {cadeia de pais} {decoders}
+
+[REGRA EM AVALIAÇÃO: {item_id}]
+{xml}
+
+[FORMATO]
+Responda apenas com JSON válido conforme o schema fornecido.
+Preencha justification e evidence ANTES de decidir label.</code></pre>
+  <p>Templates ficam em <code>prompts/</code>, um por agente e condição, versionados e com hash SHA-256 registrado em cada avaliação. As regras de calibração fornecem os exemplos ilustrativos quando a condição prevê <em>few-shot</em>.</p>
+
+  <h3>8.2 Agente C4 e a tabela de decisão</h3>
+  <p>A tabela vive em <code>config/severity_table.yaml</code> e é calibrada no piloto. O agente classifica o evento (tentativa ou impacto efetivo) e os agravantes presentes; o cálculo da faixa esperada é feito pelo código, não pelo LLM, para que a distância em faixas seja determinística dado o julgamento do agente.</p>
+<pre><code># config/severity_table.yaml (valores iniciais, a calibrar no piloto)
+bands: { low: [1, 4], medium: [5, 8], high: [9, 12], critical: [13, 16] }
+base:
+  attempt: medium          # P1: tentativa
+  effective_impact: high   # P1: impacto efetivo
+aggravators:               # cada agravante presente sobe uma faixa
+  - P2_anomalous_geo
+  - P3_volume_persistence
+  - P4_privileged_account
+cap: critical
+label_rule:
+  A:  "distance == 0"
+  PA: "distance == 1"
+  I:  "distance >= 2 or contradicts_principle"</code></pre>
+
+  <h3>8.3 Verificador</h3>
+  <ol>
+    <li><strong>Etapa determinística</strong> (todas as condições): para cada <code>evidence</code> com <code>source=xml</code>, procurar a citação literal no XML (normalizando espaços); com <code>source=tool</code>, conferir que o <code>call_id</code> existe e que a citação aparece no resultado. Gravar <code>citation_check</code>.</li>
+    <li><strong>Etapa LLM</strong> (E4): recebe as saídas dos agentes, o XML e os resultados das ferramentas; aponta afirmações sem evidência, contradições entre critérios (ex. C1 = I com C2 avaliado) e rótulos incompatíveis com o descritor. Objeções voltam ao agente de origem uma única vez; a segunda resposta é final.</li>
+    <li>O verificador usa modelo de família diferente da do agente avaliado (configurável por par).</li>
+  </ol>
+</section>
+
+<section id="s9">
+  <h2>9. Orquestração</h2>
+  <h3>9.1 Máquina de estados (E3 e E4)</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Estado</th><th>Ação</th><th>Transição</th></tr>
+    <tr><td><code>INIT</code></td><td>Carregar item, reservar sandbox, carregar evidência em cache</td><td>→ <code>CONTEXT</code></td></tr>
+    <tr><td><code>CONTEXT</code></td><td>Montar <code>ContextPackage</code> da condição</td><td>→ <code>STRUCT</code></td></tr>
+    <tr><td><code>STRUCT</code></td><td><code>validate_rule</code> → C1</td><td>C1 = I → <code>SHORTCUT</code>; senão → <code>FANOUT</code></td></tr>
+    <tr><td><code>SHORTCUT</code></td><td>C2–C5 com <code>applicable=false</code> e justificativa padrão</td><td>→ <code>AGGREGATE</code></td></tr>
+    <tr><td><code>FANOUT</code></td><td>Disparar C2, C3, C4, C5 e caçador em paralelo, isolados entre si</td><td>Todos concluídos ou expirados → <code>VERIFY</code></td></tr>
+    <tr><td><code>VERIFY</code></td><td>Checagem de citações; em E4, verificador LLM</td><td>Objeções → <code>REVISE</code>; senão → <code>AGGREGATE</code></td></tr>
+    <tr><td><code>REVISE</code></td><td>Reenviar objeções aos agentes afetados (1 rodada)</td><td>→ <code>AGGREGATE</code></td></tr>
+    <tr><td><code>AGGREGATE</code></td><td>Montar registro, validar schema e regras de consistência</td><td>Válido → <code>PERSIST</code>; inválido → <code>REPAIR</code></td></tr>
+    <tr><td><code>REPAIR</code></td><td>Pedir ao agente responsável a correção do JSON (máx. 2 tentativas)</td><td>→ <code>AGGREGATE</code> ou <code>FAILED</code></td></tr>
+    <tr><td><code>PERSIST</code></td><td>Anexar ao JSONL com hash encadeado; liberar sandbox</td><td>Fim</td></tr>
+    <tr><td><code>FAILED</code></td><td>Registrar falha com motivo; o item conta como ausente nas métricas</td><td>Fim</td></tr>
+  </table></div>
+  <h3>9.2 Esboço do núcleo</h3>
+<pre><code>async def evaluate(item: Item, cond: Condition, model: ModelSpec, rep: int) -> EvaluationRecord:
+    async with sandbox_pool.acquire() as sb:
+        ctx = build_context(item, cond)                    # nunca lê data/vault
+        c1 = c1_from_validation(evidence_cache.validate(item, sb))
+        if c1.label == "I":
+            verdicts = [c1, *not_applicable(["C2", "C3", "C4", "C5"], reason="C1=I")]
+            problems = []
+        else:
+            tools = ToolBox(sb, item, cache=evidence_cache)  # item fixado aqui
+            tasks = [run_agent(spec, ctx, tools, model) for spec in AGENTS]
+            results = await gather_with_budget(tasks, timeout=cond.timeout_s)
+            verdicts = [c1, *collect_verdicts(results)]
+            problems = collect_problems(results)
+        check = citation_check(verdicts, item.xml, tools.log)
+        if cond.verifier:
+            verdicts, problems, vinfo = await verify_and_revise(verdicts, problems, ctx, tools)
+        record = aggregate(item, cond, model, rep, verdicts, problems, check, tools.log)
+        store.append(record)                               # valida schema antes de gravar
+        return record</code></pre>
+  <h3>9.3 Falhas e repetição</h3>
+  <ul>
+    <li>Erros transitórios do provedor (limite de taxa, 5xx): até 5 tentativas com espera exponencial e variação aleatória; não contam como repetição experimental.</li>
+    <li>Recusa ou resposta vazia do modelo: registrar como está; não reamostrar (seria viés de seleção).</li>
+    <li>Ferramenta que excede o tempo: devolver ao agente <code>{"error": "timeout"}</code> e seguir.</li>
+    <li>Agente que excede o orçamento: o orquestrador pede a resposta final imediatamente, sem ferramentas.</li>
+  </ul>
+</section>
+
+<section id="s10">
+  <h2>10. Isolamento e anti-vazamento</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Controle</th><th>Implementação</th><th>Teste automático</th></tr>
+    <tr><td>Cofre de rótulos</td><td><code>data/vault/</code> lido só por <code>metrics/</code>; módulo de agentes não importa o carregador do cofre</td><td>Teste de importação: nenhum módulo em <code>agents/</code>, <code>tools/</code>, <code>context.py</code> referencia <code>vault</code></td></tr>
+    <tr><td>Prompts limpos</td><td>Varredura de cada prompt renderizado antes do envio</td><td>Falha se o prompt contém: IDs internos (N1…, S1…, M1…, C1…C3 de controle), nomes de categoria do item, trechos de <code>catalog.csv</code>, a palavra "mutante"</td></tr>
+    <tr><td>Rubrica do avaliador</td><td>Arquivo separado sem exemplos do dataset</td><td>Interseção vazia entre IDs e descrições do dataset e o texto da rubrica do avaliador</td></tr>
+    <tr><td>Corpus sem rótulos</td><td>Arquivo do corpus sem colunas de rótulo; <code>corpus_stats</code> só agrega</td><td>Schema do corpus rejeita colunas <code>severidade_*</code></td></tr>
+    <tr><td>Agentes isolados</td><td>Cada agente recebe contexto próprio; não vê saídas dos demais antes do verificador</td><td>Inspeção do histórico de mensagens no log</td></tr>
+    <tr><td>Sessão limpa</td><td>Chamadas de API sem histórico, sem memória, sem busca na web</td><td>Asserção no adaptador: lista de mensagens começa vazia</td></tr>
+    <tr><td>Item fixado</td><td>Ferramentas não aceitam id de regra nem XML vindo do LLM</td><td>Teste de schema das ferramentas</td></tr>
+  </table></div>
+</section>
+
+<section id="s11">
+  <h2>11. Execução experimental</h2>
+  <h3>11.1 Conteúdo do contexto por condição</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Elemento</th><th>E0</th><th>E1</th><th>E2</th><th>E3</th><th>E4</th></tr>
+    <tr><td>XML da regra e cadeia de pais</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+    <tr><td>Perfil ACME-LAB e P1–P4</td><td></td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+    <tr><td>Rubrica do avaliador</td><td>✓</td><td>✓</td><td>✓</td><td>✓ (por critério)</td><td>✓ (por critério)</td></tr>
+    <tr><td>Evidência pré-computada</td><td></td><td></td><td>✓</td><td></td><td></td></tr>
+    <tr><td>Ferramentas</td><td></td><td></td><td></td><td>✓</td><td>✓</td></tr>
+    <tr><td>Verificador LLM</td><td></td><td></td><td></td><td></td><td>✓</td></tr>
+  </table></div>
+  <h3>11.2 Matriz e aleatorização</h3>
+  <ul>
+    <li>Unidades: itens × modelos × condições × repetições. Exemplo com o dataset atual: 20 × 4 × 5 × 3 = 1.200 avaliações (com mutantes automáticos, o número de itens cresce).</li>
+    <li>Ordem embaralhada com semente registrada; repetições do mesmo par item × modelo nunca consecutivas.</li>
+    <li>Temperatura fixa por modelo (0 quando suportado); onde o provedor não aceita temperatura, registrar o valor efetivo.</li>
+    <li>Execução retomável: o runner pula combinações já presentes no JSONL com status final.</li>
+    <li>Execução de ensaio (<code>--dry-run</code>) usa as regras de calibração e um modelo barato, sem gravar em <code>runs/</code> oficial.</li>
+  </ul>
+  <h3>11.3 Estimativa de custo</h3>
+  <p>Custo ≈ Σ<sub>condições</sub> (avaliações × chamadas médias por avaliação × tokens médios por chamada × preço do modelo). Medir as médias no piloto e projetar antes de liberar a execução completa; o runner deve recusar iniciar se a projeção ultrapassar <code>budget_usd</code> de <code>experiment.yaml</code>.</p>
+</section>
+
+<section id="s12">
+  <h2>12. Registro e reprodutibilidade</h2>
+  <ul>
+    <li><strong><code>runs/&lt;run_id&gt;/manifest.json</code></strong>: commit do repositório, digest da imagem Wazuh, versão do Python e das bibliotecas, identificadores de modelo, parâmetros de amostragem, semente, SHA-256 de rubrica, perfil, tabela de severidade, prompts, itens e corpus.</li>
+    <li><strong><code>evaluations.jsonl</code></strong>: um <code>EvaluationRecord</code> por linha, com <code>prev_hash</code> e <code>hash</code> (SHA-256 da linha anterior concatenada à atual). Somente anexação.</li>
+    <li><strong><code>transcripts/</code></strong>: mensagens completas trocadas com cada modelo e cada <code>ToolCall</code>, por avaliação.</li>
+    <li><strong>Pré-registro</strong>: o hash do manifesto sem resultados é publicado (ex. OSF) antes da primeira execução oficial.</li>
+    <li>Script <code>verify_run.py</code> recalcula a cadeia de hashes e compara com o manifesto.</li>
+  </ul>
+</section>
+
+<section id="s13">
+  <h2>13. Pipeline de métricas</h2>
+  <p>Executado somente depois de encerrada a coleta. Único componente que lê <code>data/vault/</code>.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Métrica</th><th>Implementação</th><th>Unidade de reamostragem</th></tr>
+    <tr><td>κ ponderado quadrático</td><td><code>sklearn.metrics.cohen_kappa_score(weights="quadratic")</code>, itens com <code>applicable=true</code> nos dois lados</td><td>Regra (bootstrap por cluster, 2.000, semente fixa)</td></tr>
+    <tr><td>α de Krippendorff ordinal</td><td>pacote <code>krippendorff</code>, NA como ausente</td><td>Regra</td></tr>
+    <tr><td>AC2 de Gwet</td><td>pacote <code>irrCAC</code>, pesos quadráticos</td><td>Regra</td></tr>
+    <tr><td>Concordância bruta, matriz de confusão, viés direcional</td><td>Código próprio; Stuart-Maxwell via <code>statsmodels</code></td><td>Regra</td></tr>
+    <tr><td>Erro em faixas (C4)</td><td>Média de <code>c4_band_distance</code> contra a faixa de referência</td><td>Regra</td></tr>
+    <tr><td>Recall de defeitos / mutation score</td><td>Casamento problema × defeito do catálogo por categoria e localização (regra de casamento pré-registrada)</td><td>Regra-base</td></tr>
+    <tr><td>Precisão das alegações</td><td>Alegações não casadas vão para adjudicação cega humana (legítimo, alucinação, duvidoso)</td><td>Regra</td></tr>
+    <tr><td>Falso alarme</td><td>Problemas alegados em controles e originais pareados</td><td>Regra-base</td></tr>
+    <tr><td>Taxa de ancoragem</td><td><code>citation_check.grounded / total</code></td><td>Avaliação</td></tr>
+    <tr><td>Estabilidade</td><td>Taxa de inversão entre repetições; α intra-modelo</td><td>Regra</td></tr>
+    <tr><td>G-theory, CLMM</td><td>Scripts R em <code>analysis/</code></td><td>Modelo hierárquico</td></tr>
+    <tr><td>Custo e latência</td><td>Agregação de <code>meta</code></td><td>Avaliação</td></tr>
+  </table></div>
+  <p>Agregação das repetições para RQ1: moda das k repetições como análise principal (empate resolvido pelo rótulo mais severo, regra pré-registrada); análise por repetição como sensibilidade.</p>
+</section>
+
+<section id="s14">
+  <h2>14. Configuração</h2>
+<pre><code># config/experiment.yaml
+run_name: e1-e4-v1
+seed: 20261020
+reps: 3
+budget_usd: 150
+conditions: [E0, E1, E2, E3, E4]
+items_manifest: data/items/items.yaml
+sandbox:
+  image: wazuh/wazuh-manager@sha256:&lt;digest&gt;
+  pool_size: 4
+  network: none
+  time_scale_factor: 60        # ver seção 7.2
+budgets:
+  C2:      { max_tool_calls: 8, timeout_s: 180, max_output_tokens: 4000 }
+  C3:      { max_tool_calls: 6, timeout_s: 300, max_output_tokens: 4000 }
+  C4:      { max_tool_calls: 0, timeout_s: 60,  max_output_tokens: 3000 }
+  C5:      { max_tool_calls: 4, timeout_s: 60,  max_output_tokens: 3000 }
+  defects: { max_tool_calls: 8, timeout_s: 300, max_output_tokens: 6000 }
+  verifier:{ max_tool_calls: 10, timeout_s: 180, revise_rounds: 1 }
+verifier_pairing: different_family   # verificador sempre de família diferente
+
+# config/models.yaml (preencher com identificadores versionados na data da execução)
+models:
+  - { key: claude, provider: anthropic, id: "&lt;id-versionado&gt;", temperature: 0 }
+  - { key: gpt,    provider: openai,    id: "&lt;id-versionado&gt;", temperature: 0 }
+  - { key: gemini, provider: google,    id: "&lt;id-versionado&gt;", temperature: 0 }
+  - { key: open,   provider: openai_compatible, base_url: "http://localhost:8000/v1", id: "&lt;modelo-aberto&gt;", temperature: 0 }</code></pre>
+</section>
+
+<section id="s15">
+  <h2>15. Testes e critérios de aceitação</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Tipo</th><th>O que cobre</th><th>Critério de aceitação</th></tr>
+    <tr><td>Unitário</td><td>Modelos Pydantic, regras de consistência, hash encadeado, tabela C4</td><td>100% dos casos do schema; cálculo da faixa C4 confere com tabela escrita à mão para 10 casos</td></tr>
+    <tr><td>Integração sandbox</td><td><code>validate_rule</code>, <code>run_events</code>, <code>run_sequence</code> em regras de calibração</td><td>Resultados idênticos ao <code>wazuh-logtest</code> manual; mutantes M1–M5 reproduzem o defeito esperado</td></tr>
+    <tr><td>Equivalência temporal</td><td>Escala temporal (seção 7.2)</td><td>Disparos idênticos entre versão escalada e original em ≥ 3 regras</td></tr>
+    <tr><td>Anti-vazamento</td><td>Seção 10</td><td>Todos os testes passam em CI; um prompt com vazamento injetado de propósito é bloqueado</td></tr>
+    <tr><td>Ponta a ponta</td><td>E0–E4 nas regras de calibração com modelo barato</td><td>100% dos registros válidos no schema; cadeia de hashes íntegra; retomada após interrupção forçada sem duplicatas</td></tr>
+    <tr><td>Métricas</td><td>Funções de concordância</td><td>Valores conferem com exemplos publicados (Gwet 2014) e com cálculo em R para um conjunto sintético</td></tr>
+    <tr><td>Determinismo</td><td>Ferramentas e cache</td><td>Mesma entrada, mesmo resultado em 2 execuções</td></tr>
+  </table></div>
+</section>
+
+<section id="s16">
+  <h2>16. Plano de implementação</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Marco</th><th>Entregas</th><th>Depende de</th></tr>
+    <tr><td>S1: spike sandbox</td><td>Container, carga de regra, logtest, teste de correlação e escala temporal</td><td>Nada</td></tr>
+    <tr><td>S2: spike provedores</td><td>Adaptador com uso de ferramentas e saída estruturada nos 4 provedores</td><td>Nada</td></tr>
+    <tr><td>M1: dados e schema</td><td>Pydantic, <code>evaluation.schema.json</code>, manifesto de itens, cofre, rubrica do avaliador</td><td>Correções da rubrica (P1–P11)</td></tr>
+    <tr><td>M2: linha de base</td><td>Juiz único, runner, store, E0 e E1 ponta a ponta</td><td>M1, S2</td></tr>
+    <tr><td>M3: evidência</td><td>Ferramentas, cache de evidência, E2</td><td>M2, S1</td></tr>
+    <tr><td>M4: métricas</td><td>Pipeline completo sobre dados sintéticos</td><td>M1</td></tr>
+    <tr><td>M5: agentes</td><td>Orquestrador, agentes C2–C5, caçador, checagem de citações, E3</td><td>M3</td></tr>
+    <tr><td>M6: verificador</td><td>Verificador LLM, rodada de revisão, E4</td><td>M5</td></tr>
+    <tr><td>M7: piloto</td><td>Execução nas regras de calibração, ajuste de prompts e orçamentos, projeção de custo</td><td>M2–M6</td></tr>
+    <tr><td>M8: congelamento</td><td>Manifesto pré-registrado com hashes</td><td>M7 e padrão-ouro humano</td></tr>
+    <tr><td>M9: execução oficial</td><td>Matriz completa e relatório de métricas</td><td>M8</td></tr>
+  </table></div>
+  <p class="note">Se o prazo apertar, M1 a M4 já entregam E0, E1 e E2, que respondem RQ1 a RQ3 e a pergunta "evidência ajuda?". M5 e M6 ficam para a extensão.</p>
+</section>
+
+<section id="s17">
+  <h2>17. Riscos e questões em aberto</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Risco ou questão</th><th>Impacto</th><th>Mitigação ou decisão pendente</th></tr>
+    <tr><td>Correlação dependente do tempo de processamento</td><td>C3 não testável de forma fiel</td><td>Spike S1; se falhar, C3 em E3 usa só raciocínio + <code>run_events</code></td></tr>
+    <tr><td>Recarga do analisador lenta</td><td>Execução longa</td><td>Pool de containers; medir no S1</td></tr>
+    <tr><td>Logs sintéticos que o decoder não reconhece</td><td>Testes de C2 inválidos</td><td>Fornecer ao agente 3 exemplos reais de log por decoder (do corpus, sem rótulo); medir taxa de logs aceitos</td></tr>
+    <tr><td>Diferenças de suporte a ferramentas entre provedores</td><td>Condições não comparáveis</td><td>Spike S2; restringir a recursos comuns aos quatro</td></tr>
+    <tr><td>Autopreferência (regras geradas pelo Claude)</td><td>Viés em favor das regras SBSeg</td><td>Interação modelo × origem no CLMM; verificador de outra família</td></tr>
+    <tr><td>Custo de E3/E4</td><td>Orçamento estourado</td><td>Projeção no piloto; limite <code>budget_usd</code></td></tr>
+    <tr><td>Regra de casamento problema × defeito</td><td>RQ3 sensível à regra</td><td>Pré-registrar; reportar casamento estrito (categoria e local) e frouxo (categoria)</td></tr>
+    <tr><td>Versão do Wazuh do replay</td><td>Sandbox diferente do ambiente original</td><td>Confirmar versão e fixar digest da imagem</td></tr>
+  </table></div>
+</section>
+
+</main>
+</body>
+</html>
