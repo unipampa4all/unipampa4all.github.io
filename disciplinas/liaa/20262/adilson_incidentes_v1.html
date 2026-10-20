@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Incidentes CESUP: Análise e Proposta</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --fg: #16202e;
+  --muted: #5a6575;
+  --line: #dfe3e8;
+  --soft: #f5f7f9;
+  --accent: #1f4fd1;
+  --accent-soft: #e8eefc;
+  --crit: #b42318;
+  --crit-soft: #fdecea;
+  --warn: #9a5b00;
+  --warn-soft: #fdf3e2;
+  --ok: #1d7a3e;
+  --ok-soft: #e7f5ec;
+  --code-bg: #f3f5f8;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151b; --fg: #e6eaf0; --muted: #9aa5b4; --line: #2a313b; --soft: #181d25;
+    --accent: #7ea2ff; --accent-soft: #1b2540; --crit: #ff8a80; --crit-soft: #3a1d1b;
+    --warn: #f0b85a; --warn-soft: #362a16; --ok: #6fd39a; --ok-soft: #16301f; --code-bg: #1a2029;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151b; --fg: #e6eaf0; --muted: #9aa5b4; --line: #2a313b; --soft: #181d25;
+  --accent: #7ea2ff; --accent-soft: #1b2540; --crit: #ff8a80; --crit-soft: #3a1d1b;
+  --warn: #f0b85a; --warn-soft: #362a16; --ok: #6fd39a; --ok-soft: #16301f; --code-bg: #1a2029;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 32px 16px 80px; }
+header.top { border-bottom: 1px solid var(--line); padding-bottom: 24px; margin-bottom: 8px; }
+.eyebrow { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+h1 { font-size: clamp(28px, 5vw, 40px); line-height: 1.15; margin: 8px 0 12px; letter-spacing: -.01em; }
+h2 { font-size: 26px; line-height: 1.25; margin: 56px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+h3 { font-size: 19px; margin: 28px 0 8px; }
+p, li { max-width: 72ch; }
+.lead { font-size: 19px; color: var(--muted); }
+.meta { font-size: 14px; color: var(--muted); }
+a { color: var(--accent); }
+nav.toc { margin: 24px 0 0; font-size: 15px; columns: 2; column-gap: 32px; }
+nav.toc a { display: block; text-decoration: none; padding: 2px 0; }
+nav.toc a:hover { text-decoration: underline; }
+@media (max-width: 640px) { nav.toc { columns: 1; } }
+.callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+.callout p { margin: 6px 0; }
+.verdict { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin: 20px 0; }
+.verdict div { border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.verdict b { display: block; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; }
+.tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; vertical-align: 2px; margin-right: 6px; }
+.t-crit { background: var(--crit-soft); color: var(--crit); }
+.t-warn { background: var(--warn-soft); color: var(--warn); }
+.t-ok { background: var(--ok-soft); color: var(--ok); }
+.t-info { background: var(--accent-soft); color: var(--accent); }
+ol.issues { padding-left: 22px; }
+ol.issues li { margin: 0 0 16px; }
+ol.issues li p { margin: 4px 0 0; color: var(--muted); }
+.table-wrap { overflow-x: auto; margin: 16px 0; -webkit-overflow-scrolling: touch; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; min-width: 560px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+th { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; background: var(--soft); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 14px; }
+code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre { background: var(--code-bg); padding: 14px 16px; border-radius: 8px; overflow-x: auto; line-height: 1.5; }
+.formula { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 15px; background: var(--code-bg); padding: 12px 16px; border-radius: 8px; overflow-x: auto; white-space: nowrap; }
+
+/* Arquitetura em camadas */
+.arch { border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin: 20px 0; }
+.layer { display: grid; grid-template-columns: 150px 1fr; gap: 12px; align-items: stretch; }
+.layer + .arrow { text-align: center; color: var(--muted); font-size: 18px; line-height: 1; margin: 6px 0; }
+.layer-name { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); padding-top: 10px; }
+.layer-name small { display: block; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--muted); font-size: 13px; }
+.boxes { display: flex; flex-wrap: wrap; gap: 8px; }
+.box { flex: 1 1 150px; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 14px; line-height: 1.4; background: var(--bg); }
+.box b { display: block; font-size: 14px; }
+.box span { color: var(--muted); font-size: 13px; }
+.box.hl { border-color: var(--accent); }
+.box.gpu { border-style: dashed; }
+.side-note { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.side-note .box { border-style: dashed; }
+@media (max-width: 640px) { .layer { grid-template-columns: 1fr; gap: 4px; } .layer-name { padding-top: 0; } .side-note { grid-template-columns: 1fr; } }
+
+/* Fluxograma */
+.flow-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; margin: 20px 0; padding: 8px; -webkit-overflow-scrolling: touch; }
+.flow-wrap svg { display: block; min-width: 760px; width: 100%; height: auto; }
+.flow-wrap .n { fill: var(--bg); stroke: var(--fg); stroke-width: 1.3; }
+.flow-wrap .n-acc { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+.flow-wrap .n-crit { fill: var(--crit-soft); stroke: var(--crit); stroke-width: 1.5; }
+.flow-wrap .n-ok { fill: var(--ok-soft); stroke: var(--ok); stroke-width: 1.3; }
+.flow-wrap .n-mute { fill: var(--soft); stroke: var(--muted); stroke-width: 1.1; stroke-dasharray: 4 3; }
+.flow-wrap text { fill: var(--fg); font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+.flow-wrap text.b { font-weight: 700; }
+.flow-wrap text.lbl { fill: var(--muted); font-size: 13px; font-weight: 600; }
+.flow-wrap .e { stroke: var(--muted); stroke-width: 1.4; fill: none; }
+.flow-wrap .e-fb { stroke: var(--accent); stroke-width: 1.4; fill: none; stroke-dasharray: 6 4; }
+.flow-wrap .ah { fill: var(--muted); }
+.flow-wrap .ah-fb { fill: var(--accent); }
+
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.cols > div { border-top: 2px solid var(--line); padding-top: 8px; }
+.cols h3 { margin-top: 4px; }
+#resumo h2 { border-top: 0; margin-top: 24px; }
+footer { margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+
+<header class="top">
+  <div class="eyebrow">Análise técnica e proposta · outubro de 2026</div>
+  <h1>Registro e acompanhamento de incidentes no Datacenter CESUP/UFRGS</h1>
+  <p class="lead">Leitura crítica da apresentação “Sistema de Registro de Incidentes: Alinhamento Operacional GLPI &amp; Zabbix” (Adilson, PPGES/UNIPAMPA) e proposta de um sistema novo, multimodal, integrado ao Zabbix e orientado a dados para o planejamento.</p>
+  <nav class="toc" aria-label="Sumário">
+    <a href="#resumo">1. Resumo executivo</a>
+    <a href="#trabalho">2. O que o trabalho propõe</a>
+    <a href="#critica">3. Análise crítica</a>
+    <a href="#principios">4. Princípios da nova solução</a>
+    <a href="#arquitetura">5. Arquitetura</a>
+    <a href="#fluxo">6. Fluxograma do ciclo de vida</a>
+    <a href="#tecnologias">7. Tecnologias</a>
+    <a href="#agentes">8. Agentes: onde ajudam e onde não</a>
+    <a href="#correlacao">9. Processamento e correlação</a>
+    <a href="#falsos">10. Como evitar falsos positivos</a>
+    <a href="#prioridade">11. Priorização</a>
+    <a href="#pessoas">12. Pouca gente: o que atender primeiro</a>
+    <a href="#planejamento">13. Dados para o planejamento</a>
+    <a href="#roteiro">14. Roteiro em fases</a>
+    <a href="#avaliacao">15. Avaliação e contribuição acadêmica</a>
+    <a href="#decisoes">16. Decisões pendentes</a>
+  </nav>
+</header>
+
+<section id="resumo">
+<h2>1. Resumo executivo</h2>
+<p>A apresentação acerta no diagnóstico do ambiente (restrições, prontidão da infraestrutura, papéis), mas ainda não é uma proposta de sistema: são três slides de conteúdo, sem problema quantificado, sem requisitos, sem arquitetura e com fases citadas e não definidas. O próprio último slide reconhece isso ao apontar o levantamento de requisitos como próximo passo, o que significa que a escolha GLPI + Zabbix foi feita antes de saber o que precisa ser resolvido.</p>
+<div class="verdict">
+  <div><b>Veredito sobre o trabalho</b>Bom ponto de partida de contexto; insuficiente como proposta técnica. Precisa de linha de base, requisitos, arquitetura e critério de sucesso.</div>
+  <div><b>Recomendação central</b>Sistema novo e enxuto para o ciclo do incidente (captura, correlação, prioridade, plantão, aprendizado), usando o Zabbix como fonte de sinais e o inventário (GLPI ou equivalente) como fonte da verdade dos ativos.</div>
+  <div><b>Papel da IA</b>Útil na entrada (voz, foto, vídeo virando registro estruturado) e como assistente do técnico. Prioridade e acionamento do plantão ficam em regras determinísticas e auditáveis.</div>
+</div>
+<div class="callout">
+<p><b>Três riscos que precisam ser resolvidos antes de escrever código:</b> (1) o plantão fora do horário é incompatível com “sem VPN e sem nuvem” do jeito que está descrito; (2) o sistema de incidentes e o Zabbix rodam dentro do datacenter que monitoram, então ficam cegos exatamente quando há falta de energia ou de rede; (3) sem um mapa de dependências entre ativos, nenhuma correlação automática é possível.</p>
+</div>
+</section>
+
+<section id="trabalho">
+<h2>2. O que o trabalho propõe</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Slide</th><th>Conteúdo</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Título: Sistema de Registro de Incidentes. Alinhamento Operacional GLPI &amp; Zabbix. Outubro de 2026, lead Adilson. AI Horizon Labs, UNIPAMPA, PPGES.</td></tr>
+<tr><td>2</td><td>Situação atual: detecção visual ou relato manual. Futuro: sistema estruturado com login via LDAP institucional, incluindo terceirizados. Matriz de permissões com cinco perfis (técnico interno, técnico terceirizado, gestor, somente leitura, administrador) e quatro ações (registrar, gerenciar, consultar/relatórios, configurar).</td></tr>
+<tr><td>3</td><td>Escopo e restrições: Datacenter CESUP/UFRGS, 100% on-premises, um único datacenter, sem nuvem, sem VPN externa, Wi-Fi liberado, interface responsiva, uso livre de câmera e celular no DC, plantão acionado sob demanda fora do horário com notificações automáticas.</td></tr>
+<tr><td>4</td><td>Prontidão: duas VMs (GLPI e Zabbix), servidor de backup, SMTP institucional, celular/tablet e computador próximo ao DC, inventário e contratos de garantia documentados, cluster com GPU (IA na Fase 3). Lacunas: Zabbix ainda não instalado e configurado, estoque reduzido e sem controle formal, impressora de QR Code a confirmar. MVP sem aquisição de hardware nas Fases 1 e 2.</td></tr>
+<tr><td>5</td><td>Próximo passo: levantamento detalhado de negócios, requisitos e restrições.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="critica">
+<h2>3. Análise crítica</h2>
+
+<h3>Pontos fortes</h3>
+<ul>
+<li><b>Restrições explícitas e realistas.</b> On-premises, rede fechada e um único DC definem o espaço de solução cedo, o que evita propostas inviáveis (por exemplo, depender de APIs de IA em nuvem).</li>
+<li><b>Scorecard honesto.</b> Mostrar lacunas ao lado do que está pronto é uma boa prática de gestão de projeto.</li>
+<li><b>Ativos valiosos já existem.</b> Inventário e contratos de garantia documentados são a matéria-prima do planejamento de renovação; o cluster com GPU viabiliza IA local, coerente com a restrição “sem nuvem”.</li>
+<li><b>QR Code.</b> Etiquetar racks e equipamentos liga o mundo físico ao registro digital e é o atalho mais eficaz para um registro rápido e preciso.</li>
+<li><b>Identidade institucional.</b> Login via LDAP, incluindo terceirizados, evita contas locais e facilita auditoria.</li>
+</ul>
+
+<h3>Problemas e lacunas</h3>
+<ol class="issues">
+<li><span class="tag t-crit">Crítico</span><b>Não há problema quantificado nem linha de base.</b><p>Quantos incidentes ocorrem por mês? Qual o tempo médio até alguém perceber (MTTA) e até resolver (MTTR)? Quantos foram descobertos por usuários antes da equipe? Sem esses números, não há como justificar o projeto nem demonstrar ganho ao final.</p></li>
+<li><span class="tag t-crit">Crítico</span><b>Solução escolhida antes dos requisitos, e sem diferencial explícito.</b><p>O GLPI já tem chamados, inventário, abertura por e-mail e plugins de integração com o Zabbix. Se o objetivo for apenas instalar e configurar os dois, é um trabalho de implantação, não de engenharia de software. O diferencial precisa ser declarado: captura multimodal em segundos, correlação entre relatos humanos e alertas, priorização explicável sob escassez de pessoal e uso dos dados para planejamento.</p></li>
+<li><span class="tag t-crit">Crítico</span><b>Plantão fora do horário contradiz “sem VPN e sem nuvem”.</b><p>Se o plantonista está em casa, como recebe o alerta, confirma que viu (ACK) e acompanha o incidente? E-mail institucional pode até chegar, mas não acorda ninguém às 3h e não permite confirmar nem escalonar. É preciso um canal fora da rede interna (SMS ou ligação via modem GSM local, por exemplo) e uma decisão institucional sobre um ponto mínimo de acesso externo.</p></li>
+<li><span class="tag t-crit">Crítico</span><b>O monitor está dentro do monitorado.</b><p>GLPI e Zabbix em VMs no mesmo DC ficam indisponíveis justamente em falta de energia, falha de refrigeração severa ou queda do núcleo de rede, que são os incidentes mais graves. Falta um “vigia do vigia” (dead man's switch) fora do domínio de falha.</p></li>
+<li><span class="tag t-warn">Importante</span><b>A integração depende da maior lacuna.</b><p>O Zabbix ainda não está instalado e a cobertura não foi definida. Em datacenter, os sinais que mais importam são físicos: temperatura e umidade por corredor, refrigeração (CRAC), UPS, PDUs, detecção de água e fumaça. Nada disso aparece na proposta.</p></li>
+<li><span class="tag t-warn">Importante</span><b>Matriz de permissões incoerente.</b><p>O terceirizado gerencia chamados, mas não pode registrar (quem descobre a falha em campo não pode relatá-la?). O gestor não pode registrar. O técnico interno não consulta relatórios, mas precisa do histórico do ativo para diagnosticar. Faltam dois atores: o sistema (Zabbix como origem automática) e o usuário do serviço (pesquisador do cluster que percebe lentidão). Também falta restrição por atributo: o terceirizado deveria ver apenas os ativos do seu contrato.</p></li>
+<li><span class="tag t-warn">Importante</span><b>Fases citadas e não definidas; “IA na Fase 3” sem função.</b><p>O slide 4 menciona Fases 1, 2 e 3, mas nenhuma é descrita. Não se sabe o que a IA faria, com quais dados e como seria avaliada.</p></li>
+<li><span class="tag t-warn">Importante</span><b>Inventário sem topologia.</b><p>Ter a lista de ativos não basta. Para correlacionar, é preciso saber dependências: qual PDU alimenta qual rack, qual switch atende quais servidores, qual VM roda em qual host, qual serviço depende de qual storage.</p></li>
+<li><span class="tag t-warn">Importante</span><b>Câmera liberada sem política de uso.</b><p>Fotos e vídeos dentro do DC podem capturar telas com credenciais, números de série sensíveis e pessoas. É preciso política de retenção, controle de acesso às mídias e conformidade com a LGPD.</p></li>
+<li><span class="tag t-info">Ajuste</span><b>Acabamento.</b><p>Texto duplicado no slide 2 (“Detecção visual ou Detecção visual ou relato manual”), slide 2 sem título, marca d'água da ferramenta de geração em todos os slides e menção a “AI Horizon Labs” sem explicar a relação com UNIPAMPA e UFRGS.</p></li>
+<li><span class="tag t-info">Ajuste</span><b>Estoque tratado só como lacuna.</b><p>É também uma oportunidade: se cada incidente registrar a peça consumida, o próprio sistema calcula o estoque mínimo (seção 13).</p></li>
+</ol>
+
+<h3>Perguntas que o Adilson deve conseguir responder</h3>
+<ul>
+<li>Quantos incidentes por mês, de que tipos, com que MTTA e MTTR hoje? Quantos fora do horário?</li>
+<li>Quem são as pessoas da equipe, em que horários, e quem está de plantão? Quanto custa uma hora de indisponibilidade do cluster para os grupos de pesquisa?</li>
+<li>Qual é o diferencial em relação a configurar bem o GLPI com o plugin do Zabbix?</li>
+<li>Como o plantonista será acordado e como confirmará o recebimento sem acesso externo?</li>
+<li>O que acontece com o sistema de incidentes quando o DC perde energia?</li>
+<li>Como será medido o sucesso?</li>
+</ul>
+</section>
+
+<section id="principios">
+<h2>4. Princípios da nova solução</h2>
+<div class="cols">
+<div><h3>Registrar em 10 segundos</h3><p>Um botão “Relatar problema”. A pessoa fala, fotografa, filma ou escreve, como preferir. Lê o QR Code do rack e o local e o ativo são preenchidos sozinhos. Nenhum formulário obrigatório na hora da emergência.</p></div>
+<div><h3>A máquina organiza, a pessoa confirma</h3><p>A IA transforma a entrada em registro estruturado e mostra “Entendi assim: …” com botões Confirmar e Corrigir. Nunca inventa ativo: só aceita identificadores existentes no inventário.</p></div>
+<div><h3>Um problema, um incidente</h3><p>Dez alertas do Zabbix e três relatos sobre a mesma queda de energia viram um único incidente com várias evidências. Ao relatar, a pessoa vê “Já sabemos disso, acompanhe aqui”.</p></div>
+<div><h3>Decisões críticas são explicáveis</h3><p>Prioridade e acionamento do plantão saem de regras e pesos visíveis, auditáveis e ajustáveis. A IA sugere, não decide quem será acordado.</p></div>
+<div><h3>Funciona quando tudo falha</h3><p>Fila offline no celular, canal de alerta fora da rede do DC e vigia externo do próprio sistema.</p></div>
+<div><h3>Cada incidente ensina</h3><p>No encerramento, três toques registram causa, peça usada e se foi falso positivo. Esses dados alimentam a calibração e o planejamento.</p></div>
+</div>
+</section>
+
+<section id="arquitetura">
+<h2>5. Arquitetura</h2>
+<p>Arquitetura em camadas, toda on-premises, com processamento assíncrono por fila. A inferência de IA roda no cluster com GPU já existente e é consumida como serviço interno; se a GPU estiver indisponível, o sistema continua funcionando com texto e fotos sem interpretação automática (degradação graciosa).</p>
+
+<div class="arch" role="figure" aria-label="Diagrama de arquitetura em camadas">
+  <div class="layer">
+    <div class="layer-name">Entradas<small>quem gera sinais</small></div>
+    <div class="boxes">
+      <div class="box hl"><b>App PWA</b><span>celular e desktop: texto, voz, foto, vídeo, QR Code, fila offline</span></div>
+      <div class="box"><b>Zabbix</b><span>webhook de problemas e recuperações; API para reconciliação</span></div>
+      <div class="box"><b>E-mail</b><span>caixa de entrada para relatos e avisos de fornecedores</span></div>
+      <div class="box"><b>Inventário / CMDB</b><span>GLPI ou equivalente: ativos, topologia, garantias</span></div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+  <div class="layer">
+    <div class="layer-name">Ingestão<small>receber e guardar</small></div>
+    <div class="boxes">
+      <div class="box"><b>API (FastAPI)</b><span>autenticação OIDC, validação, idempotência</span></div>
+      <div class="box"><b>Keycloak</b><span>federação com LDAP institucional, perfis e atributos</span></div>
+      <div class="box"><b>Armazenamento de mídia</b><span>objeto S3 compatível, criptografado, com retenção</span></div>
+      <div class="box"><b>Fila (Redis/Valkey)</b><span>desacopla captura de processamento</span></div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+  <div class="layer">
+    <div class="layer-name">Compreensão<small>multimodal para estruturado</small></div>
+    <div class="boxes">
+      <div class="box gpu"><b>Fala → texto</b><span>Whisper (faster-whisper), PT-BR</span></div>
+      <div class="box gpu"><b>Imagem e vídeo</b><span>quadros-chave + modelo de visão: LEDs, displays, etiquetas</span></div>
+      <div class="box gpu"><b>Extração</b><span>LLM local com saída em JSON Schema</span></div>
+      <div class="box"><b>Normalizador</b><span>tudo vira o evento canônico (seção 9)</span></div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+  <div class="layer">
+    <div class="layer-name">Decisão<small>o núcleo</small></div>
+    <div class="boxes">
+      <div class="box hl"><b>Supressão</b><span>manutenção, mudança planejada, oscilação, duplicata</span></div>
+      <div class="box hl"><b>Correlação</b><span>topologia + tempo + local + semântica</span></div>
+      <div class="box hl"><b>Prioridade</b><span>regras: segurança, impacto, urgência, confiança</span></div>
+      <div class="box"><b>Escalonamento</b><span>escala de plantão, ACK, reescalonamento</span></div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+  <div class="layer">
+    <div class="layer-name">Ação<small>pessoas atendem</small></div>
+    <div class="boxes">
+      <div class="box"><b>Painel do técnico</b><span>fila priorizada, linha do tempo, evidências</span></div>
+      <div class="box gpu"><b>Agentes assistentes</b><span>diagnóstico somente leitura, resumo de passagem de turno</span></div>
+      <div class="box"><b>Notificações</b><span>SMTP, SMS e ligação via modem GSM local</span></div>
+      <div class="box"><b>Retorno ao Zabbix</b><span>ACK e comentário no evento de origem</span></div>
+    </div>
+  </div>
+  <div class="arrow">↓</div>
+  <div class="layer">
+    <div class="layer-name">Aprendizado<small>dados para decidir</small></div>
+    <div class="boxes">
+      <div class="box"><b>PostgreSQL + pgvector</b><span>incidentes, eventos, embeddings, topologia (CTE recursiva)</span></div>
+      <div class="box"><b>Painéis (Grafana)</b><span>operação e gestão, lendo do Postgres e do Zabbix</span></div>
+      <div class="box gpu"><b>Agente analista</b><span>rascunho de relatório trimestral para revisão humana</span></div>
+    </div>
+  </div>
+  <div class="side-note">
+    <div class="box"><b>Vigia externo (fora do domínio de falha)</b><span>Dispositivo pequeno com nobreak próprio e modem 4G/GSM, em outro circuito elétrico ou prédio. Recebe batimentos do Zabbix e da API a cada minuto; se pararem, envia SMS ao plantão. Atende a restrição “sem nuvem”.</span></div>
+    <div class="box"><b>Cluster com GPU (serviço interno)</b><span>vLLM (API compatível com OpenAI), Whisper, modelo de visão e embeddings. Componentes com borda tracejada dependem dele e têm alternativa sem IA.</span></div>
+  </div>
+</div>
+
+<h3>Relação com o GLPI</h3>
+<p>Recomendação: não reimplementar inventário. O novo sistema é dono do ciclo do incidente; o GLPI (ou outro CMDB) continua dono dos ativos, contratos e garantias, sincronizado pela API REST do GLPI. Se, no levantamento de requisitos, o GLPI se mostrar suficiente para o inventário, ele fica; se não, o inventário pode migrar depois sem mudar o núcleo. Essa separação também torna a contribuição do trabalho clara: o que é novo é captura, correlação, priorização e aprendizado.</p>
+</section>
+
+<section id="fluxo">
+<h2>6. Fluxograma do ciclo de vida do incidente</h2>
+<p>Do sinal ao aprendizado. As setas tracejadas em azul fecham o ciclo: o encerramento calibra as regras de supressão, os pesos da correlação e os gatilhos do Zabbix.</p>
+<div class="flow-wrap">
+<svg viewBox="0 0 940 1250" role="img" aria-label="Fluxograma: sinais de pessoas e do Zabbix são normalizados, filtrados, correlacionados, priorizados, atendidos e encerrados, alimentando planejamento e calibração">
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah"/></marker>
+  <marker id="afb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ah-fb"/></marker>
+</defs>
+
+<!-- Inícios -->
+<rect x="150" y="16" width="220" height="44" rx="22" class="n-acc"/>
+<text x="260" y="43" text-anchor="middle" class="b">Pessoa relata</text>
+<rect x="530" y="16" width="220" height="44" rx="22" class="n-acc"/>
+<text x="640" y="43" text-anchor="middle" class="b">Zabbix dispara</text>
+
+<!-- Captura / filtro de origem -->
+<line x1="260" y1="60" x2="260" y2="92" class="e" marker-end="url(#a)"/>
+<line x1="640" y1="60" x2="640" y2="92" class="e" marker-end="url(#a)"/>
+<rect x="120" y="94" width="280" height="70" rx="6" class="n"/>
+<text x="260" y="122" text-anchor="middle" class="b">Captura multimodal</text>
+<text x="260" y="144" text-anchor="middle">texto, voz, foto, vídeo, QR Code</text>
+<rect x="500" y="94" width="280" height="70" rx="6" class="n"/>
+<text x="640" y="122" text-anchor="middle" class="b">Filtro na origem</text>
+<text x="640" y="144" text-anchor="middle">histerese, dependências, duração</text>
+
+<!-- Normalização -->
+<path d="M260,164 L260,190 L420,190 L420,212" class="e" marker-end="url(#a)"/>
+<path d="M640,164 L640,190 L480,190 L480,212" class="e" marker-end="url(#a)"/>
+<rect x="250" y="214" width="400" height="70" rx="6" class="n"/>
+<text x="450" y="242" text-anchor="middle" class="b">Compreender e normalizar</text>
+<text x="450" y="264" text-anchor="middle">transcrição, visão, extração → evento canônico</text>
+
+<!-- Decisão: manutenção -->
+<line x1="450" y1="284" x2="450" y2="310" class="e" marker-end="url(#a)"/>
+<polygon points="450,312 640,357 450,402 260,357" class="n"/>
+<text x="450" y="352" text-anchor="middle">Manutenção ou mudança</text>
+<text x="450" y="372" text-anchor="middle">planejada em curso?</text>
+<line x1="640" y1="357" x2="688" y2="357" class="e" marker-end="url(#a)"/>
+<text x="662" y="347" text-anchor="middle" class="lbl">sim</text>
+<rect x="690" y="327" width="190" height="60" rx="6" class="n-mute"/>
+<text x="785" y="352" text-anchor="middle">Registrar como</text>
+<text x="785" y="372" text-anchor="middle">esperado, sem acionar</text>
+<text x="464" y="422" class="lbl">não</text>
+
+<!-- Decisão: duplicata/oscilação -->
+<line x1="450" y1="402" x2="450" y2="438" class="e" marker-end="url(#a)"/>
+<polygon points="450,440 640,485 450,530 260,485" class="n"/>
+<text x="450" y="480" text-anchor="middle">Duplicata ou alerta</text>
+<text x="450" y="500" text-anchor="middle">oscilando (flapping)?</text>
+<line x1="640" y1="485" x2="688" y2="485" class="e" marker-end="url(#a)"/>
+<text x="662" y="475" text-anchor="middle" class="lbl">sim</text>
+<rect x="690" y="455" width="190" height="60" rx="6" class="n-mute"/>
+<text x="785" y="480" text-anchor="middle">Agrupar e contar,</text>
+<text x="785" y="500" text-anchor="middle">sem novo alerta</text>
+<text x="464" y="550" class="lbl">não</text>
+
+<!-- Enriquecer -->
+<line x1="450" y1="530" x2="450" y2="566" class="e" marker-end="url(#a)"/>
+<rect x="250" y="568" width="400" height="70" rx="6" class="n"/>
+<text x="450" y="596" text-anchor="middle" class="b">Enriquecer</text>
+<text x="450" y="618" text-anchor="middle">topologia, garantia, histórico, telemetria</text>
+
+<!-- Decisão: correlação -->
+<line x1="450" y1="638" x2="450" y2="664" class="e" marker-end="url(#a)"/>
+<polygon points="450,666 620,711 450,756 280,711" class="n-acc"/>
+<text x="450" y="706" text-anchor="middle" class="b">Score de</text>
+<text x="450" y="726" text-anchor="middle" class="b">correlação S</text>
+<line x1="280" y1="711" x2="232" y2="711" class="e" marker-end="url(#a)"/>
+<text x="256" y="701" text-anchor="middle" class="lbl">≥ 0,75</text>
+<rect x="20" y="681" width="210" height="60" rx="6" class="n"/>
+<text x="125" y="706" text-anchor="middle">Anexar ao incidente</text>
+<text x="125" y="726" text-anchor="middle">aberto (evidência)</text>
+<line x1="620" y1="711" x2="668" y2="711" class="e" marker-end="url(#a)"/>
+<text x="644" y="672" text-anchor="middle" class="lbl">0,45–0,75</text>
+<rect x="670" y="681" width="210" height="60" rx="6" class="n"/>
+<text x="775" y="706" text-anchor="middle">Sugerir ao técnico</text>
+<text x="775" y="726" text-anchor="middle">(decide com 1 toque)</text>
+<text x="464" y="776" class="lbl">&lt; 0,45: novo incidente</text>
+
+<!-- Prioridade -->
+<line x1="450" y1="756" x2="450" y2="792" class="e" marker-end="url(#a)"/>
+<path d="M125,741 L125,830 L248,830" class="e" marker-end="url(#a)"/>
+<path d="M775,741 L775,830 L652,830" class="e" marker-end="url(#a)"/>
+<rect x="250" y="794" width="400" height="70" rx="6" class="n"/>
+<text x="450" y="822" text-anchor="middle" class="b">Calcular prioridade</text>
+<text x="450" y="844" text-anchor="middle">segurança → impacto × urgência × confiança</text>
+
+<!-- Decisão: P1 -->
+<line x1="450" y1="864" x2="450" y2="890" class="e" marker-end="url(#a)"/>
+<polygon points="450,892 620,937 450,982 280,937" class="n"/>
+<text x="450" y="932" text-anchor="middle">P1 ou risco</text>
+<text x="450" y="952" text-anchor="middle">à segurança?</text>
+<line x1="280" y1="937" x2="232" y2="937" class="e" marker-end="url(#a)"/>
+<text x="256" y="927" text-anchor="middle" class="lbl">sim</text>
+<rect x="20" y="897" width="210" height="80" rx="6" class="n-crit"/>
+<text x="125" y="922" text-anchor="middle" class="b">Acionar plantão já</text>
+<text x="125" y="942" text-anchor="middle">SMS + ligação + e-mail</text>
+<text x="125" y="962" text-anchor="middle">sem ACK em 10 min: escala</text>
+<line x1="620" y1="937" x2="668" y2="937" class="e" marker-end="url(#a)"/>
+<text x="644" y="927" text-anchor="middle" class="lbl">não</text>
+<rect x="670" y="897" width="210" height="80" rx="6" class="n"/>
+<text x="775" y="922" text-anchor="middle" class="b">Fila do turno</text>
+<text x="775" y="942" text-anchor="middle">P2 agora no horário;</text>
+<text x="775" y="962" text-anchor="middle">P3–P4 próximo dia útil</text>
+
+<!-- Atendimento -->
+<path d="M125,977 L125,1040 L248,1040" class="e" marker-end="url(#a)"/>
+<path d="M775,977 L775,1040 L652,1040" class="e" marker-end="url(#a)"/>
+<rect x="250" y="1005" width="400" height="70" rx="6" class="n"/>
+<text x="450" y="1033" text-anchor="middle" class="b">Atender</text>
+<text x="450" y="1055" text-anchor="middle">agente sugere, técnico age e atualiza por voz/foto</text>
+
+<!-- Encerrar -->
+<line x1="450" y1="1075" x2="450" y2="1101" class="e" marker-end="url(#a)"/>
+<rect x="250" y="1103" width="400" height="70" rx="6" class="n"/>
+<text x="450" y="1131" text-anchor="middle" class="b">Encerrar em 3 toques</text>
+<text x="450" y="1153" text-anchor="middle">causa, peça usada, era falso positivo?</text>
+
+<!-- Planejamento -->
+<line x1="450" y1="1173" x2="450" y2="1195" class="e" marker-end="url(#a)"/>
+<rect x="250" y="1197" width="400" height="44" rx="22" class="n-ok"/>
+<text x="450" y="1224" text-anchor="middle" class="b">Base para planejamento</text>
+
+<!-- Retroalimentação -->
+<path d="M650,1138 L905,1138 L905,129 L782,129" class="e-fb" marker-end="url(#afb)"/>
+<text x="925" y="640" text-anchor="middle" class="lbl" transform="rotate(-90 925 640)" style="fill: var(--accent)">calibra gatilhos, supressão e pesos</text>
+</svg>
+</div>
+</section>
+
+<section id="tecnologias">
+<h2>7. Tecnologias</h2>
+<p>Critérios: software livre, maduro, operável por uma equipe pequena, executável sem internet e com o menor número possível de peças. A regra é “Postgres para quase tudo” e nada de microsserviços no MVP: um monólito modular (API + workers) é suficiente para um único datacenter.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Camada</th><th>Escolha</th><th>Por quê</th><th>Alternativa</th></tr></thead>
+<tbody>
+<tr><td>Interface</td><td>PWA em React + Vite (TypeScript), service worker com Workbox, IndexedDB</td><td>Instalável no celular sem loja de apps; acesso a câmera e microfone (getUserMedia, MediaRecorder); leitura de QR; fila offline para pontos sem Wi-Fi entre racks</td><td>SvelteKit</td></tr>
+<tr><td>API e workers</td><td>Python 3.12+, FastAPI, Pydantic, Celery</td><td>Mesmo ecossistema das bibliotecas de IA; validação forte de esquemas</td><td>Dramatiq</td></tr>
+<tr><td>Identidade</td><td>Keycloak federado ao LDAP</td><td>OIDC, perfis (RBAC) e atributos (ABAC, por exemplo contrato do terceirizado), MFA, auditoria</td><td>Autenticação LDAP direta na API</td></tr>
+<tr><td>Dados</td><td>PostgreSQL 16+ com pgvector</td><td>Transações, consultas de topologia com CTE recursiva, busca semântica no mesmo banco, fila de eventos particionada por data</td><td>Banco de grafos só se a topologia crescer muito</td></tr>
+<tr><td>Fila e cache</td><td>Valkey (ou Redis)</td><td>Simples, rápido, já conhecido</td><td>Fila no próprio Postgres (SKIP LOCKED)</td></tr>
+<tr><td>Mídia</td><td>Armazenamento de objetos S3 compatível (Garage ou SeaweedFS)</td><td>Fotos e vídeos fora do banco, com política de retenção e criptografia; incluído no backup existente</td><td>Sistema de arquivos + backup</td></tr>
+<tr><td>Monitoramento</td><td>Zabbix LTS (7.0 ou a LTS mais recente)</td><td>Já previsto; webhooks, tags, dependências de gatilho, correlação global de eventos, API JSON-RPC</td><td>Prometheus + Alertmanager para métricas de aplicação</td></tr>
+<tr><td>Inferência</td><td>vLLM no cluster com GPU</td><td>API compatível com OpenAI, alto desempenho, troca de modelo sem mudar código</td><td>Ollama no MVP</td></tr>
+<tr><td>Fala</td><td>faster-whisper (Whisper large-v3 ou turbo)</td><td>Bom desempenho em português; roda até em CPU para áudios curtos</td><td>whisper.cpp</td></tr>
+<tr><td>Visão e linguagem</td><td>Modelos abertos multilíngues (por exemplo, famílias Qwen, Gemma ou gpt-oss) escolhidos por um conjunto de avaliação local</td><td>Executam sem nuvem; a escolha deve ser feita com casos reais do CESUP, não por ranking genérico</td><td>Modelos menores quantizados</td></tr>
+<tr><td>Embeddings</td><td>bge-m3 ou multilingual-e5</td><td>Bons em português; alimentam deduplicação e busca de incidentes parecidos</td><td>-</td></tr>
+<tr><td>Ferramentas dos agentes</td><td>MCP (Model Context Protocol) com servidores internos para Zabbix, inventário e runbooks</td><td>Padroniza o acesso das IAs às ferramentas, com permissões somente leitura</td><td>Chamada de funções direta</td></tr>
+<tr><td>Notificação</td><td>SMTP institucional + modem GSM com Gammu (SMS e ligação)</td><td>Alcança o plantonista fora da rede sem depender de nuvem</td><td>Push via app, se houver acesso externo aprovado</td></tr>
+<tr><td>Painéis</td><td>Grafana</td><td>Lê Postgres e Zabbix; um painel para operação e outro para gestão</td><td>Metabase</td></tr>
+<tr><td>Implantação</td><td>Docker Compose nas duas VMs existentes; GPU como serviço separado</td><td>Sem Kubernetes no MVP; backup do Postgres com pgBackRest no servidor de backup</td><td>Podman</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="agentes">
+<h2>8. Agentes: onde ajudam e onde não</h2>
+<p><b>Sim, agentes são úteis</b>, mas como assistentes com ferramentas limitadas, não como operadores autônomos. A linha divisória é simples: agentes preparam informação e reduzem trabalho de digitação e investigação; decisões que acordam pessoas, mudam prioridade ou alteram infraestrutura ficam com regras determinísticas e com humanos.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Agente</th><th>O que faz</th><th>Ferramentas</th><th>Limite</th></tr></thead>
+<tbody>
+<tr><td><b>Recepção</b></td><td>Transforma voz, foto, vídeo e texto em registro estruturado; faz no máximo uma ou duas perguntas de esclarecimento (“A luz âmbar é na fonte ou no disco?”)</td><td>ASR, visão, inventário (busca), incidentes abertos</td><td>Não cria ativo; mostra a interpretação para confirmação</td></tr>
+<tr><td><b>Triagem</b></td><td>Explica por que um evento foi associado a um incidente e sugere categoria</td><td>Topologia, histórico, Zabbix (leitura)</td><td>Sugere; o score e a prioridade vêm das regras</td></tr>
+<tr><td><b>Diagnóstico</b></td><td>Monta o contexto para o técnico: gráficos do Zabbix do ativo, últimos incidentes parecidos, garantia vigente, runbook aplicável, contato do fornecedor</td><td>Zabbix API, inventário, contratos, base de conhecimento</td><td>Somente leitura; nunca executa comandos em equipamentos</td></tr>
+<tr><td><b>Passagem de turno</b></td><td>Resume o que está aberto, o que mudou e o que aguarda fornecedor</td><td>Incidentes, linha do tempo</td><td>Texto revisável</td></tr>
+<tr><td><b>Pós-incidente</b></td><td>Rascunha o relatório (linha do tempo, causa provável, ações)</td><td>Linha do tempo, evidências</td><td>Revisão humana obrigatória</td></tr>
+<tr><td><b>Analista de planejamento</b></td><td>Rascunho trimestral: ativos mais problemáticos, tendências, recomendações de compra e estoque</td><td>Consultas SQL pré-aprovadas (somente leitura)</td><td>Números vêm das consultas, não do modelo</td></tr>
+</tbody></table></div>
+<h3>Salvaguardas obrigatórias</h3>
+<ul>
+<li>Saída sempre em JSON validado por esquema; campos de ativo e local só aceitam identificadores existentes.</li>
+<li>Registro de cada chamada de ferramenta, entrada e saída, para auditoria.</li>
+<li>Conjunto de avaliação com 100 a 200 casos reais rotulados do CESUP; nenhuma troca de modelo entra em produção sem rodar esse conjunto.</li>
+<li>Indicador de confiança visível ao usuário e caminho manual sempre disponível.</li>
+<li>Se a GPU cair, o sistema segue sem agentes; nenhum fluxo crítico depende de IA.</li>
+</ul>
+</section>
+
+<section id="correlacao">
+<h2>9. Processamento e correlação de entradas</h2>
+
+<h3>Pipeline por tipo de entrada</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Entrada</th><th>Processamento</th><th>Resultado</th></tr></thead>
+<tbody>
+<tr><td>Texto</td><td>LLM extrai sintoma, ativo, local, urgência percebida</td><td>Evento canônico</td></tr>
+<tr><td>Voz</td><td>Whisper transcreve; o texto segue o caminho acima; o áudio original fica como evidência</td><td>Evento + transcrição para o usuário conferir</td></tr>
+<tr><td>Foto</td><td>Modelo de visão descreve (LEDs, displays de PDU e UPS, mensagens de erro, etiquetas); leitura de QR e de número de série</td><td>Evento + descrição + ativo identificado</td></tr>
+<tr><td>Vídeo</td><td>ffmpeg separa o áudio (vai para o Whisper) e extrai quadros-chave por mudança de cena (vão para o modelo de visão); som de alarme ou ventilação anormal vira indício</td><td>Evento + resumo + quadros relevantes</td></tr>
+<tr><td>Zabbix</td><td>Webhook com host, gatilho, severidade, tags e IDs; reconciliação periódica pela API para não perder eventos</td><td>Evento com confiança base pela severidade e histórico do gatilho</td></tr>
+</tbody></table></div>
+
+<h3>Evento canônico</h3>
+<p>Toda entrada, humana ou automática, vira o mesmo formato. É isso que torna a correlação possível.</p>
+<pre>{
+  "id": "evt_01JAX...",
+  "fonte": "pessoa | zabbix | email",
+  "recebido_em": "2026-10-20T03:12:44-03:00",
+  "ativo_id": "srv-hpc-node-117",          // validado contra o inventário
+  "local": { "sala": "DC1", "fileira": "B", "rack": "B07", "u": 22 },
+  "sintoma": "temperatura_alta",           // vocabulário controlado
+  "descricao": "Display do rack B07 mostra 38 °C e ventoinhas altas",
+  "severidade_fonte": 4,
+  "confianca": 0.82,
+  "seguranca_pessoas": false,
+  "evidencias": ["s3://midia/evt_01JAX/foto1.jpg"],
+  "zabbix": { "eventid": "123456", "triggerid": "9876", "tags": {"servico": "hpc"} },
+  "embedding": [/* vetor semântico */]
+}</pre>
+
+<h3>Algoritmo de correlação</h3>
+<p>Para cada evento novo, comparar com os incidentes abertos (ou recém-resolvidos) das últimas horas usando quatro sinais, cada um entre 0 e 1:</p>
+<div class="formula">S = 0,35·topologia + 0,25·tempo + 0,20·local + 0,20·semântica</div>
+<ul>
+<li><b>Topologia:</b> 1,0 se for o mesmo ativo; 0,8 se houver dependência direta (o rack depende da PDU com alarme); decai com a distância no grafo de dependências.</li>
+<li><b>Tempo:</b> <code>exp(−Δt / τ)</code> com τ inicial de 10 minutos.</li>
+<li><b>Local:</b> mesmo rack 1,0; mesma fileira 0,6; mesma sala 0,3.</li>
+<li><b>Semântica:</b> similaridade de cosseno entre embeddings das descrições.</li>
+</ul>
+<p>Limiares iniciais: <b>S ≥ 0,75</b> anexa automaticamente; <b>0,45 a 0,75</b> sugere ao técnico com um toque; <b>abaixo de 0,45</b> abre incidente novo. Pesos e limiares são hipóteses iniciais: devem ser calibrados com dados rotulados (cada aceitação ou rejeição de sugestão é um rótulo gratuito).</p>
+<p><b>Causa raiz por topologia:</b> quando vários ativos com dependência comum alarmam juntos (dez servidores do mesmo rack), o incidente é aberto no ancestral comum (a PDU ou o switch de topo de rack), e os demais eventos viram sintomas. Isso replica, na plataforma, o que as dependências de gatilho fazem no Zabbix, mas incluindo os relatos humanos.</p>
+</section>
+
+<section id="falsos">
+<h2>10. Como evitar falsos positivos</h2>
+<p>Falso positivo em datacenter tem custo duplo: acorda o plantonista sem motivo e, com o tempo, ensina a equipe a ignorar alertas (fadiga de alertas). A defesa é em três camadas.</p>
+<div class="cols">
+<div><h3>1. Na origem (Zabbix)</h3><ul>
+<li>Duração mínima: gatilhos com <code>min()</code> ou <code>avg()</code> em janela (por exemplo 5 min), não valor instantâneo.</li>
+<li>Histerese: expressão de recuperação diferente da de disparo (dispara a 32 °C, só recupera abaixo de 29 °C).</li>
+<li>Dependências de gatilho: se o switch caiu, não alertar os 40 hosts atrás dele.</li>
+<li>Janelas de manutenção cadastradas.</li>
+<li>Correlação global de eventos para pares problema/recuperação.</li>
+</ul></div>
+<div><h3>2. Na plataforma</h3><ul>
+<li>Impressão digital (fingerprint) por ativo + sintoma para deduplicar.</li>
+<li>Detecção de oscilação: mais de N mudanças de estado em M minutos vira um único incidente “instável”.</li>
+<li>Período de carência de 2 a 5 minutos para auto-recuperação antes de notificar, exceto P1 e segurança.</li>
+<li>Corroboração: duas fontes independentes (Zabbix + foto, ou dois relatos) elevam a confiança; fonte única de baixa confiança espera.</li>
+<li>Verificação cruzada de relatos: “servidor X caiu” é conferido no Zabbix; se tudo estiver verde, o agente pergunta antes de escalar.</li>
+<li>Calendário de mudanças: alertas esperados durante mudança aprovada não acionam.</li>
+</ul></div>
+<div><h3>3. No aprendizado</h3><ul>
+<li>No encerramento, o técnico marca “falso positivo” e o motivo.</li>
+<li>Relatório semanal dos 10 gatilhos mais ruidosos, com sugestão de ajuste.</li>
+<li>Metas: mais de 80% dos acionamentos do plantão devem ser acionáveis; menos de 2 acionamentos noturnos por semana sem ação necessária.</li>
+<li>Para a IA: medir precisão da extração e da sugestão de correlação no conjunto de avaliação.</li>
+</ul></div>
+</div>
+<div class="callout"><p><b>Regra assimétrica:</b> nada que envolva segurança de pessoas (fumaça, cheiro de queimado, água no piso, choque elétrico) passa por período de carência ou desconto de confiança. Nesses casos, um falso positivo é aceitável; um falso negativo, não.</p></div>
+</section>
+
+<section id="prioridade">
+<h2>11. Priorização</h2>
+<p>Base ITIL (impacto × urgência), adaptada a datacenter com três ajustes: segurança como sobreposição absoluta, urgência medida como <b>tempo até o dano</b> e confiança como multiplicador.</p>
+<div class="formula">se segurança_pessoas: P1<br>senão: score = Impacto (1–5) × Urgência (1–5) × Confiança (0,5–1,0)</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Dimensão</th><th>Como calcular</th></tr></thead>
+<tbody>
+<tr><td><b>Impacto</b></td><td>Criticidade do serviço no inventário (núcleo de rede, storage, refrigeração, energia = 5; nó de computação isolado = 2), número de grupos de pesquisa afetados, perda de redundância (um N+1 virando N sobe um nível mesmo sem queda)</td></tr>
+<tr><td><b>Urgência</b></td><td>Tempo estimado até o dano: menos de 15 min = 5; até 1 h = 4; até 4 h = 3; até 24 h = 2; mais = 1. Estimado por tendência do Zabbix (temperatura subindo 1 °C a cada 5 min, disco enchendo, autonomia da bateria do UPS)</td></tr>
+<tr><td><b>Confiança</b></td><td>Severidade e histórico do gatilho, número de fontes concordantes, confiança da extração da IA</td></tr>
+</tbody></table></div>
+<div class="table-wrap"><table>
+<thead><tr><th>Classe</th><th class="num">Score</th><th>Resposta</th></tr></thead>
+<tbody>
+<tr><td><span class="tag t-crit">P1</span></td><td class="num">≥ 18 ou segurança</td><td>Aciona plantão a qualquer hora; ACK em até 10 min ou escala para o próximo da lista</td></tr>
+<tr><td><span class="tag t-warn">P2</span></td><td class="num">10 a 17</td><td>Atendimento imediato no horário; fora dele, acorda apenas se a trajetória piorar (urgência subir)</td></tr>
+<tr><td><span class="tag t-info">P3</span></td><td class="num">5 a 9</td><td>Próximo dia útil</td></tr>
+<tr><td><span class="tag t-ok">P4</span></td><td class="num">&lt; 5</td><td>Fila de melhoria ou próxima janela de manutenção</td></tr>
+</tbody></table></div>
+
+<h3>Exemplos no contexto do CESUP</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Situação</th><th class="num">I</th><th class="num">U</th><th class="num">C</th><th class="num">Score</th><th>Classe</th></tr></thead>
+<tbody>
+<tr><td>Relato por voz: “cheiro de queimado no corredor B”</td><td class="num">-</td><td class="num">-</td><td class="num">-</td><td class="num">segurança</td><td><span class="tag t-crit">P1</span></td></tr>
+<tr><td>Falha de refrigeração, temperatura da sala subindo 1 °C a cada 5 min</td><td class="num">5</td><td class="num">5</td><td class="num">1,0</td><td class="num">25</td><td><span class="tag t-crit">P1</span></td></tr>
+<tr><td>Rede elétrica caiu, UPS assumiu, autonomia estimada de 40 min</td><td class="num">5</td><td class="num">4</td><td class="num">1,0</td><td class="num">20</td><td><span class="tag t-crit">P1</span></td></tr>
+<tr><td>Switch de núcleo perdeu uma das duas fontes</td><td class="num">4</td><td class="num">3</td><td class="num">1,0</td><td class="num">12</td><td><span class="tag t-warn">P2</span></td></tr>
+<tr><td>Storage paralelo com um disco falho em RAID 6, reconstrução em andamento</td><td class="num">4</td><td class="num">2</td><td class="num">1,0</td><td class="num">8</td><td><span class="tag t-info">P3</span></td></tr>
+<tr><td>Um nó de computação fora do ar em um cluster de dezenas</td><td class="num">2</td><td class="num">1</td><td class="num">1,0</td><td class="num">2</td><td><span class="tag t-ok">P4</span></td></tr>
+<tr><td>CPU alta em VM de teste, alerta único</td><td class="num">1</td><td class="num">1</td><td class="num">0,6</td><td class="num">0,6</td><td><span class="tag t-ok">P4</span></td></tr>
+</tbody></table></div>
+<p>Observação: o RAID 6 com um disco falho é P3, mas se um segundo disco falhar a urgência vai a 5 e o incidente sobe automaticamente. A prioridade é recalculada a cada evento novo anexado, não fixada na abertura.</p>
+</section>
+
+<section id="pessoas">
+<h2>12. Pouca gente: o que atender primeiro</h2>
+<p>Com equipe pequena, a pergunta não é “o que é importante?” (quase tudo é), mas “o que piora se eu esperar?”. A ordem recomendada:</p>
+<ol>
+<li><b>Pessoas e integridade física.</b> Fogo, fumaça, água, eletricidade.</li>
+<li><b>Ameaças ao ambiente inteiro com relógio correndo.</b> Refrigeração, energia, UPS. Uma falha de refrigeração derruba tudo em minutos; nada mais importa antes dela.</li>
+<li><b>Perda de redundância em componente compartilhado.</b> Ainda não há queda, mas o próximo defeito será uma queda total (fonte de switch de núcleo, controladora de storage, segundo disco de um RAID).</li>
+<li><b>Indisponibilidade de serviço compartilhado.</b> Storage, rede, escalonador de jobs: muitos pesquisadores parados.</li>
+<li><b>Falha isolada em recurso redundante.</b> Um nó do cluster: drenar automaticamente e deixar para o horário.</li>
+<li><b>Desempenho e cosmético.</b> Janela de manutenção.</li>
+</ol>
+<h3>Táticas para multiplicar a equipe</h3>
+<ul>
+<li><b>Desempate por esforço:</b> entre dois incidentes de mesma classe, atender primeiro o que se resolve rápido (custo do atraso dividido pela duração, como no WSJF).</li>
+<li><b>Delegar à garantia:</b> se o ativo está em garantia, o sistema já prepara o chamado ao fornecedor com número de série, evidências e fotos; o técnico só confirma.</li>
+<li><b>Agrupar P3 e P4</b> por local: uma ida ao corredor B resolve cinco pendências.</li>
+<li><b>Ações automáticas seguras e reversíveis:</b> drenar um nó do escalonador, por exemplo, com registro e aprovação prévia por tipo de ação.</li>
+<li><b>Plantão sustentável:</b> só P1 acorda alguém. Medir acionamentos por semana por pessoa; se crescer, é sinal para ajustar gatilhos ou contratar.</li>
+<li><b>Runbooks curtos</b> vinculados a cada tipo de incidente, para que o terceirizado ou o técnico menos experiente resolva sem escalar.</li>
+</ul>
+</section>
+
+<section id="planejamento">
+<h2>13. Dados dos incidentes para o planejamento</h2>
+<p>Este é o maior retorno do projeto a médio prazo. Para que funcione, três campos precisam ser obrigatórios no encerramento: causa (lista controlada), peça ou recurso consumido e tempo efetivo de trabalho. Com isso, e com o inventário e as garantias já documentados, é possível responder:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Pergunta de gestão</th><th>Dados</th><th>Análise</th><th>Decisão</th></tr></thead>
+<tbody>
+<tr><td>Quais equipamentos renovar primeiro?</td><td>Falhas por ativo, modelo e idade; horas de indisponibilidade; fim de garantia</td><td>Taxa de falha por idade (curva de Weibull), custo de manter versus custo de trocar</td><td>Plano anual de renovação priorizado e justificado com dados</td></tr>
+<tr><td>Quanto estoque manter?</td><td>Peças consumidas por incidente, taxa de falha por modelo, prazo de entrega do fornecedor</td><td>Ponto de reposição: <code>d·L + z·σ·√L</code> (demanda × prazo + estoque de segurança)</td><td>Estoque mínimo por item; resolve a lacuna do slide 4</td></tr>
+<tr><td>A equipe é suficiente? Precisa de plantão?</td><td>Incidentes por hora e dia da semana, tempo de atendimento por categoria, acionamentos noturnos</td><td>Carga por pessoa, picos, categorias que sempre escalam</td><td>Dimensionamento, escala de plantão, capacitação em competências que faltam</td></tr>
+<tr><td>Quando a infraestrutura esgota?</td><td>Tendências do Zabbix: carga elétrica, temperatura, ocupação de storage, uso de rede</td><td>Projeção de tendência e margem até o limite</td><td>Momento de comprar capacidade de refrigeração, energia ou storage antes da crise</td></tr>
+<tr><td>Os fornecedores cumprem o contrato?</td><td>Tempo de resposta e solução por contrato e terceirizado</td><td>Comparação com o SLA contratado</td><td>Renegociação, multas, troca de fornecedor</td></tr>
+<tr><td>Que mudanças causam incidentes?</td><td>Vínculo incidente ↔ mudança</td><td>Taxa de falha de mudanças por tipo</td><td>Revisão do processo de mudanças, janelas e testes</td></tr>
+<tr><td>Que problemas se repetem?</td><td>Agrupamento de incidentes parecidos (embeddings + causa)</td><td>Gestão de problemas: causa raiz comum</td><td>Investimento definitivo em vez de correções repetidas</td></tr>
+</tbody></table></div>
+<p>Produto concreto: um <b>relatório trimestral de planejamento</b>, rascunhado pelo agente analista a partir de consultas SQL fixas e revisado pela coordenação, que vira insumo direto do orçamento e do plano de compras.</p>
+</section>
+
+<section id="roteiro">
+<h2>14. Roteiro em fases</h2>
+<p>Proposta para substituir as fases não definidas da apresentação. Cada fase termina com algo usável e medível.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Fase</th><th>Duração</th><th>Entregas</th><th>Critério de pronto</th></tr></thead>
+<tbody>
+<tr><td><b>0. Fundamentos</b></td><td>3–4 semanas</td><td>Linha de base (volume, MTTA, MTTR atuais); requisitos com a equipe; Zabbix instalado com cobertura física (temperatura, UPS, PDU, refrigeração, água) e núcleo (rede, storage, escalonador); topologia mínima no inventário; QR Codes nos racks; decisão sobre o canal de plantão</td><td>Linha de base documentada e 100% dos racks etiquetados</td></tr>
+<tr><td><b>1. MVP</b></td><td>6–8 semanas</td><td>PWA com texto, foto e QR; login LDAP via Keycloak; webhook do Zabbix; deduplicação por fingerprint; prioridade por regras; e-mail e SMS; vigia externo</td><td>Equipe usando no dia a dia; registro em menos de 30 s (mediana)</td></tr>
+<tr><td><b>2. Multimodal e correlação</b></td><td>6–8 semanas</td><td>Voz e vídeo (Whisper e visão na GPU); evento canônico completo; score de correlação; agente de recepção; marcação de falso positivo</td><td>Precisão da correlação ≥ 85% no conjunto rotulado</td></tr>
+<tr><td><b>3. Assistência e planejamento</b></td><td>8 semanas</td><td>Agentes de diagnóstico e passagem de turno; painéis de gestão; primeiro relatório trimestral; análise de confiabilidade e estoque</td><td>Relatório usado em uma decisão real de compra ou de equipe</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="avaliacao">
+<h2>15. Avaliação e contribuição acadêmica</h2>
+<p>Para um trabalho de pós-graduação em Engenharia de Software, falta à apresentação uma pergunta de pesquisa e um método de avaliação. Sugestões:</p>
+<ul>
+<li><b>QP1:</b> A captura multimodal com interpretação automática reduz o tempo de registro e aumenta a completude dos registros em relação a formulários tradicionais?</li>
+<li><b>QP2:</b> A correlação entre relatos humanos e alertas do Zabbix reduz incidentes duplicados e o tempo até o diagnóstico?</li>
+<li><b>QP3:</b> A priorização explicável reduz acionamentos desnecessários do plantão sem aumentar incidentes graves não detectados?</li>
+</ul>
+<div class="table-wrap"><table>
+<thead><tr><th>Métrica</th><th>Como medir</th></tr></thead>
+<tbody>
+<tr><td>Tempo de registro</td><td>Mediana de segundos entre abrir o app e confirmar o relato</td></tr>
+<tr><td>Completude</td><td>% de registros com ativo, local e sintoma válidos</td></tr>
+<tr><td>MTTA e MTTR</td><td>Comparação antes (linha de base da Fase 0) e depois</td></tr>
+<tr><td>Qualidade da correlação</td><td>Precisão e revocação contra rotulagem de dois técnicos</td></tr>
+<tr><td>Qualidade dos alertas</td><td>% de acionamentos acionáveis; acionamentos noturnos por semana</td></tr>
+<tr><td>Usabilidade</td><td>SUS (System Usability Scale), meta ≥ 80; teste com terceirizados e técnicos</td></tr>
+</tbody></table></div>
+<p>Um recurso metodológico barato: <b>reprodução histórica</b>. Depois de algumas semanas de Zabbix em operação, os eventos reais podem ser reprocessados com diferentes regras e pesos, comparando quantos alertas cada configuração teria gerado.</p>
+</section>
+
+<section id="decisoes">
+<h2>16. Decisões pendentes</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Decisão</th><th>Quem decide</th><th>Recomendação</th></tr></thead>
+<tbody>
+<tr><td>Canal do plantão fora da rede interna</td><td>Coordenação do CESUP e segurança da informação</td><td>SMS e ligação via modem GSM local já no MVP; avaliar uma página mínima de ACK exposta com MFA</td></tr>
+<tr><td>Onde fica o vigia externo</td><td>Coordenação</td><td>Outro prédio da UFRGS ou, no mínimo, outro circuito elétrico com nobreak próprio</td></tr>
+<tr><td>GLPI permanece como inventário?</td><td>Equipe, após a Fase 0</td><td>Sim, se a API atender; o núcleo de incidentes é independente</td></tr>
+<tr><td>Política de mídia (fotos e vídeos)</td><td>Coordenação e encarregado de dados (LGPD)</td><td>Retenção de 180 dias, exceto evidências de incidentes P1; acesso por perfil</td></tr>
+<tr><td>Ações automáticas permitidas</td><td>Coordenação técnica</td><td>Apenas reversíveis e de baixo risco (drenar nó), com lista aprovada</td></tr>
+<tr><td>Acesso dos usuários do cluster</td><td>Coordenação</td><td>Perfil “solicitante” que relata e acompanha, sem ver dados internos</td></tr>
+</tbody></table></div>
+</section>
+
+<footer>
+Documento de análise e proposta para discussão. Valores de pesos, limiares e prazos são pontos de partida a calibrar com dados reais do CESUP. Fonte analisada: “Sistema de Registro de Incidentes: Alinhamento Operacional GLPI &amp; Zabbix”, 5 slides, outubro de 2026.
+</footer>
+
+</main>
+</body>
+</html>
