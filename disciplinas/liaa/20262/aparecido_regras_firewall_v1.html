@@ -141,6 +141,7 @@ footer { margin-top: 72px; border-top: 1px solid var(--rule); padding-top: 18px;
 <a href="#fluxo-ideal">6. Fluxograma da solução ideal</a>
 <a href="#direcao">7. Direcionamento</a>
 <a href="#perguntas">8. Perguntas para a próxima reunião</a>
+<a href="#agentes">9. Agentes de IA na solução</a>
 </nav>
 </header>
 
@@ -541,6 +542,79 @@ flowchart TB
 <li>Os 101 alertas TCP em 101 portas vêm de uma única origem? Qual a taxa real dessa origem no filterlog?</li>
 <li>Por que a correlação usou apenas 8 alertas, e quais são eles?</li>
 </ol>
+</section>
+
+<section id="agentes">
+<h2>9. Agentes de IA na solução</h2>
+<p class="verdict">Vale a pena, mas como peça periférica e só depois que o pipeline básico existir. O agente não deve ser o núcleo da solução: ele entra na Fase 3, sobre o resíduo que passou pelo PF, e tudo o que ele produz passa por um avaliador determinístico e por revisão humana.</p>
+
+<div class="two">
+<div>
+<h3>Por que não no centro</h3>
+<ul class="clean">
+<li><strong>O problema atual é de método.</strong> Blacklist documentada, Community ID, log em pass e protocolo de avaliação não se resolvem com IA. Um agente agora só esconderia as lacunas atrás de respostas convincentes.</li>
+<li><strong>Reprodutibilidade.</strong> Correlação, funil e simulação precisam dar o mesmo resultado a cada execução; um LLM não garante isso.</li>
+<li><strong>Sem rótulo verdadeiro.</strong> Se o agente classificar fluxos e também participar da avaliação, a avaliação vira circular.</li>
+<li><strong>Logs são entrada hostil.</strong> Campos do <code>eve.json</code> (user-agent, URI, payload, nome de host) são controlados pelo atacante. Um agente que lê esses campos e escreve no firewall está exposto a prompt injection: o atacante influencia as próprias regras de bloqueio.</li>
+<li><strong>Volume errado.</strong> Enviar 48.915 alertas a um LLM é caro e inútil. Depois do funil determinístico restam dezenas de perfis, escala em que a IA faz sentido.</li>
+</ul>
+</div>
+<div>
+<h3>Onde o agente agrega</h3>
+<ul class="clean strengths">
+<li><strong>Triagem do resíduo que passou.</strong> Trilha de comportamento e origem privada: consulta o dataset, os feeds e a documentação da assinatura e devolve uma hipótese explicada (varredura, falso positivo de STUN, host interno com problema).</li>
+<li><strong>Proponente de regras.</strong> Uma quarta família de regras na Fase 3, ao lado de IP individual, agregação e comportamento. Propõe em JSON estruturado; o simulador julga com as mesmas métricas.</li>
+<li><strong>Rascunho de relatório</strong> para a revisão humana, com a justificativa de cada candidata.</li>
+<li><strong>Fica fora do agente:</strong> parsing, correlação, métricas e qualquer escrita no OPNsense.</li>
+</ul>
+</div>
+</div>
+
+<h3>Arquitetura simplificada</h3>
+<figure>
+<div class="diagram"><pre class="mermaid">
+flowchart TB
+  F["Fontes<br/>Suricata · filterlog do PF<br/>feeds · configuração"]
+  N["Núcleo determinístico<br/>Python + DuckDB<br/>coleta, normalização, Community ID<br/>funil por desfecho, perfis por origem"]
+
+  subgraph Z["Zona não determinística · somente leitura"]
+    A["Agente analista (LLM)<br/>ferramentas: consultar dataset,<br/>feeds, documentação de assinatura<br/>saída: triagem + regra candidata em JSON"]
+  end
+
+  V["Avaliador determinístico<br/>valida esquema<br/>simula no período B<br/>métricas contra o baseline"]
+  H["Humano<br/>revisão, modo sombra,<br/>aplicação via API"]
+  R["Relatório"]
+
+  F --> N
+  N -- "só o que passou<br/>(dezenas de perfis)" --> A
+  A --> V
+  V -- "reprovada: motivo volta ao agente" --> A
+  V -- "aprovada" --> H
+  A -. "triagem explicada" .-> R
+  H --> R
+
+  classDef src fill:#eef4fb,stroke:#0b5cad,color:#1a1a1a;
+  classDef proc fill:#ffffff,stroke:#6b7280,color:#1a1a1a;
+  classDef ok fill:#e9f5ea,stroke:#2e7d32,color:#14401a;
+  classDef ai fill:#fff4e5,stroke:#d97706,stroke-dasharray:5 4,color:#7a3e00;
+  class F,R src;
+  class N,H proc;
+  class V ok;
+  class A ai;
+</pre></div>
+<div class="legend"><span class="lg-src">fonte ou saída</span><span class="lg-proc">componente determinístico ou humano</span><span class="lg-ok">juiz das propostas</span><span class="lg-gap">componente não determinístico</span></div>
+<figcaption>Figura 4. Padrão gerador e juiz: o LLM pode errar, porque nada avança sem o simulador aprovar com métricas definidas antes. A fronteira de confiança fica onde dados controlados pelo atacante encontram o modelo.</figcaption>
+</figure>
+
+<h3>Recomendações práticas</h3>
+<ul class="clean">
+<li><strong>Cronograma.</strong> Fases 1 e 2 sem IA. Na Fase 3, o LLM entra como família de regras comparada às heurísticas, e a triagem como apoio ao analista.</li>
+<li><strong>Hipótese adicional.</strong> <em>H4. Regras propostas por LLM com acesso ao perfil da origem têm cobertura incremental e bloqueio colateral comparáveis às heurísticas, com menor esforço do analista.</em></li>
+<li><strong>Talvez nem seja preciso um agente.</strong> Se os passos são fixos (perfil, hipótese, regra), uma chamada de LLM com saída estruturada basta, é mais barata e mais fácil de defender na banca. Agente com ferramentas só se ele precisar decidir sozinho o que consultar.</li>
+<li><strong>Privacidade.</strong> Anonimizar IPs internos antes de enviar qualquer dado a uma API externa (LGPD), ou usar um modelo local.</li>
+<li><strong>Sem circularidade.</strong> Nunca usar o LLM para rotular a amostra que depois avalia o próprio LLM; a amostra estratificada de 100 fluxos continua sendo rotulada por humano.</li>
+<li><strong>Registro.</strong> Guardar modelo, versão, prompt e temperatura de cada execução, e repetir as propostas algumas vezes para medir a variação.</li>
+</ul>
 </section>
 
 <footer>Documento de orientação gerado a partir da apresentação de 13/10. Diagramas renderizados com Mermaid (requer conexão com a internet ao abrir o arquivo).</footer>
