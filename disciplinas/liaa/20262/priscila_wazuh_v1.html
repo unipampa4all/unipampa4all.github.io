@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avaliação A7 e A8</title>
+<meta name="description" content="Avaliação técnica das Atividades 7 e 8 de Priscila Schafhauzer: rubrica e dataset para avaliação de regras Wazuh por LLMs, com sugestões, métricas e arquitetura agêntica.">
+<style>
+:root {
+  --bg: #ffffff; --fg: #1d1d1f; --muted: #5f6368; --line: #e3e3e6; --soft: #f6f7f9;
+  --accent: #1f5fbf; --crit: #b3261e; --warn: #a15c00; --ok: #1e7a3c;
+  --node: #ffffff; --node-line: #9aa3ad; --tool: #eef4fc; --tool-line: #1f5fbf; --gate: #fff6e8; --gate-line: #a15c00;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171a; --fg: #e8eaed; --muted: #a0a6ad; --line: #30343a; --soft: #1c1f23;
+    --accent: #7fb0ff; --crit: #ff8a80; --warn: #f0b45a; --ok: #7fd09a;
+    --node: #1c1f23; --node-line: #5c636b; --tool: #182638; --tool-line: #7fb0ff; --gate: #2d2414; --gate-line: #f0b45a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171a; --fg: #e8eaed; --muted: #a0a6ad; --line: #30343a; --soft: #1c1f23;
+  --accent: #7fb0ff; --crit: #ff8a80; --warn: #f0b45a; --ok: #7fd09a;
+  --node: #1c1f23; --node-line: #5c636b; --tool: #182638; --tool-line: #7fb0ff; --gate: #2d2414; --gate-line: #f0b45a;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 920px; margin: 0 auto; padding: 40px 16px 80px; }
+header { border-bottom: 1px solid var(--line); padding-bottom: 20px; margin-bottom: 28px; }
+.kicker { color: var(--muted); font-size: 14px; letter-spacing: .04em; text-transform: uppercase; }
+h1 { font-size: 32px; line-height: 1.2; margin: 6px 0 10px; }
+h2 { font-size: 24px; margin: 48px 0 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+h3 { font-size: 19px; margin: 28px 0 8px; }
+p, li { max-width: 72ch; }
+.meta { color: var(--muted); font-size: 15px; }
+code { font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--soft); padding: 1px 5px; border-radius: 4px; }
+.verdict { border-left: 3px solid var(--accent); padding: 4px 0 4px 16px; margin: 16px 0; }
+.table-wrap { overflow-x: auto; margin: 14px 0; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+th { color: var(--muted); font-weight: 600; font-size: 14px; }
+.tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 1px 7px; border-radius: 3px; border: 1px solid currentColor; margin-right: 6px; }
+.crit { color: var(--crit); } .warn { color: var(--warn); } .ok { color: var(--ok); }
+.issue { margin: 18px 0; }
+.issue h4 { margin: 0 0 4px; font-size: 17px; }
+.issue p { margin: 4px 0; }
+.fix { color: var(--muted); }
+.fix strong { color: var(--fg); }
+figure { margin: 20px 0; }
+.diagram { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; padding: 12px; }
+.diagram svg { display: block; min-width: 760px; width: 100%; height: auto; }
+figcaption { color: var(--muted); font-size: 14px; margin-top: 8px; }
+svg text { fill: var(--fg); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+svg .t { font-size: 14px; font-weight: 600; } svg .s { font-size: 12.5px; fill: var(--muted); }
+svg .n { fill: var(--node); stroke: var(--node-line); stroke-width: 1.2; }
+svg .tool { fill: var(--tool); stroke: var(--tool-line); stroke-width: 1.2; }
+svg .gate { fill: var(--gate); stroke: var(--gate-line); stroke-width: 1.2; }
+svg .dash { fill: none; stroke: var(--tool-line); stroke-width: 1.2; stroke-dasharray: 5 4; }
+svg .a { stroke: var(--node-line); stroke-width: 1.4; fill: none; marker-end: url(#arr); }
+svg .ad { stroke: var(--tool-line); stroke-width: 1.2; fill: none; stroke-dasharray: 4 4; marker-end: url(#arrb); }
+svg .back { stroke: var(--warn); stroke-width: 1.4; fill: none; stroke-dasharray: 6 4; marker-end: url(#arrw); }
+svg .lbl { font-size: 12px; fill: var(--muted); }
+svg .lblw { font-size: 12px; fill: var(--warn); }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: var(--muted); margin-top: 8px; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; border: 1px solid var(--node-line); background: var(--node); }
+.legend .l-tool::before { background: var(--tool); border-color: var(--tool-line); }
+.legend .l-gate::before { background: var(--gate); border-color: var(--gate-line); }
+ol.steps li { margin: 6px 0; }
+@media (max-width: 600px) { h1 { font-size: 26px; } h2 { font-size: 21px; } body { font-size: 16px; } }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <div class="kicker">PPGES · UNIPAMPA · LIAA · Outubro de 2026</div>
+  <h1>Avaliação técnica das Atividades 7 e 8</h1>
+  <div class="meta">Regras de detecção Wazuh avaliadas por LLMs · Discente: Priscila Schafhauzer · Orientador: Prof. Diego Kreutz</div>
+  <div class="meta">Material: <code>Atividades_7_8_Apresentacao_LLMs_Wazuh.pdf</code> e <code>Atividade_8_Rubrica_Avaliacao_Wazuh.pdf</code></div>
+</header>
+
+<section>
+  <h2 style="border-top:0;margin-top:0">1. Veredito geral</h2>
+  <p>A proposta amadureceu bastante desde a A6. O desenho tem os elementos de um estudo sério de <em>LLM-as-a-judge</em>: dataset estratificado com função metodológica para cada estrato, rubrica ancorada em comportamento observável, NA separado da escala ordinal, métricas adequadas para amostra pequena, bootstrap por regra, piso e teto explícitos e ameaças à validade declaradas com honestidade.</p>
+  <p class="verdict">Há, porém, <strong>um problema crítico de vazamento de rótulos</strong> (a rubrica entregue às avaliadoras contém as respostas do próprio dataset), <strong>inconsistências internas</strong> entre rubrica, slides e protocolo, e <strong>um tamanho amostral que inviabiliza conclusões por critério e por tipo de defeito</strong>. Todos têm correção barata se forem tratados antes do congelamento com hash.</p>
+  <div class="table-wrap"><table>
+    <tr><th>Dimensão</th><th>Avaliação</th></tr>
+    <tr><td>Clareza das RQs</td><td><span class="tag ok">boa</span>RQ3 precisa de métricas próprias</td></tr>
+    <tr><td>Desenho do dataset</td><td><span class="tag warn">parcial</span>Boa ideia, n muito baixo em controles e mutantes</td></tr>
+    <tr><td>Rubrica</td><td><span class="tag crit">ajustar</span>Boa ancoragem, mas com vazamento e um descritor de C1 que reprova regras nativas</td></tr>
+    <tr><td>Métricas</td><td><span class="tag ok">boa</span>Muito boas para RQ1 e RQ2; ausentes para RQ3 e para as justificativas</td></tr>
+    <tr><td>Reprodutibilidade</td><td><span class="tag crit">ajustar</span>Interface web, sem temperatura nem versão fixa</td></tr>
+    <tr><td>Ameaças à validade</td><td><span class="tag ok">boa</span>Falta a circularidade do rótulo "manual" do replay</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <h2>2. Pontos fortes</h2>
+  <ol>
+    <li><strong>Estratificação com propósito.</strong> Nativas, geradas no SBSeg, mutantes e controles respondem perguntas diferentes. Os mutantes são, na prática, <em>mutation testing</em> aplicado ao avaliador.</li>
+    <li><strong>Ancoragem comportamental e justificativa com citação do artefato.</strong> Permite verificar automaticamente se a justificativa se apoia no XML.</li>
+    <li><strong>NA como campo binário</strong> (<code>applicable</code>), resolvendo o κ ponderado com categoria não ordinal.</li>
+    <li><strong>Métricas bem escolhidas:</strong> κ ponderado, α ordinal, AC2, concordância bruta e bootstrap reamostrando regras inteiras; piso e teto explícitos.</li>
+    <li><strong>Ameaças à validade:</strong> autopreferência, memorização, semântica hierárquica e controle experimental limitado, todas com mitigação.</li>
+    <li><strong>Pré-registro com hash.</strong></li>
+  </ol>
+</section>
+
+<section>
+  <h2>3. Problemas encontrados</h2>
+
+  <h3>3.1 Críticos (resolver antes de congelar)</h3>
+  <div class="issue">
+    <h4><span class="tag crit">P1</span>Vazamento de rótulos pela rubrica</h4>
+    <p>O protocolo entrega "esta rubrica completa" a cada avaliador, mas ela traz os rótulos esperados de regras do próprio dataset: N3 (rule 5402) → C4 Inadequado; N1 (rule 5715) → C5 Inadequado; descritores de C4 citam S1, S5, N3 e M4; exemplos para M2, M3 e M5. As nativas mantêm o ID, então a avaliadora pode casar a regra com o exemplo. Isso infla RQ1 e anula RQ3.</p>
+    <p class="fix"><strong>Correção:</strong> duas versões da rubrica, a do pesquisador (com exemplos do dataset, para o artigo) e a do avaliador, com exemplos tirados de regras de calibração fora do dataset.</p>
+  </div>
+  <div class="issue">
+    <h4><span class="tag crit">P2</span>Evidência do replay: quem recebe e o quê?</h4>
+    <p>A rubrica avalia C4 e C5 "com apoio da evidência do replay", mas o pacote de contexto (itens i a v) não a inclui. Sem replay, o "Inadequado" de C5 não é observável pela LLM e o rótulo humano deixa de ser comparável. Com o replay rotulado ("197/198 = nenhum"), a resposta está dada.</p>
+    <p class="fix"><strong>Correção:</strong> entregar a todos apenas estatísticas sem rótulo (nº de disparos, distribuição de <code>srcip</code>, <code>user</code>, horário) e transformar a presença dessa evidência em condição experimental (E2).</p>
+  </div>
+  <div class="issue">
+    <h4><span class="tag crit">P3</span>A "verdade objetiva" do replay é um rótulo humano</h4>
+    <p>A <code>severidade_manual</code> foi atribuída por uma pessoa (provavelmente quem desenhou perfil, regras e rubrica). É evidência valiosa, não oráculo. N3 se apoia em apenas 2 eventos.</p>
+    <p class="fix"><strong>Correção:</strong> chamar de "evidência empírica rotulada", informar quem rotulou e obter segunda rotulação independente de uma amostra dos eventos.</p>
+  </div>
+  <div class="issue">
+    <h4><span class="tag crit">P4</span>Ordem dos próximos passos</h4>
+    <p>O congelamento com hash vem no passo 1 e o piloto só no passo 4, mas o piloto existe para ajustar rubrica e prompt.</p>
+    <p class="fix"><strong>Correção:</strong> piloto → ajuste → treino dos humanos → congelar.</p>
+  </div>
+
+  <h3>3.2 Importantes</h3>
+  <div class="issue">
+    <h4><span class="tag warn">P5</span>Tamanho amostral por estrato</h4>
+    <p>3 controles e 5 mutantes (um por tipo) não sustentam taxa de falso alarme nem conclusões por tipo de defeito. Repetições não aumentam o n efetivo. Com 20 regras, o IC de 95% do κ por critério tende a ficar na ordem de ±0,3.</p>
+    <p class="fix"><strong>Correção:</strong> mutação automática com originais pareados como controle (seção 4).</p>
+  </div>
+  <div class="issue">
+    <h4><span class="tag warn">P6</span>Descritor de C1 reprova as regras nativas</h4>
+    <p>"Inadequado: id fora da faixa local" vale para 5715, 5402 e 5501 por definição. A obrigatoriedade de <code>group</code> também precisa ser conferida com o motor (grupos costumam ser herdados de <code>&lt;group name=...&gt;</code>).</p>
+    <p class="fix"><strong>Correção:</strong> restringir o id ≥ 100000 a regras locais e definir C1 como "o que o <code>wazuh-analysisd -t</code> aceita".</p>
+  </div>
+  <div class="issue">
+    <h4><span class="tag warn">P7</span>C1 não deveria entrar no κ humano × LLM</h4>
+    <p>É determinístico e quase todo "Adequado" (até os mutantes carregam), o cenário clássico do paradoxo do κ.</p>
+    <p class="fix"><strong>Correção:</strong> usar C1 como gate executado por ferramenta e reportar à parte a taxa de alucinação estrutural das LLMs.</p>
+  </div>
+  <div class="issue">
+    <h4><span class="tag warn">P8</span>RQ3 não tem métrica</h4>
+    <p>As métricas listadas são de concordância (RQ1 e RQ2). RQ3 é detecção: recall, precisão das alegações, falso alarme e localização.</p>
+  </div>
+  <div class="issue">
+    <h4><span class="tag warn">P9</span>Agregação das 3 repetições indefinida</h4>
+    <p>κ com a moda, com cada repetição ou com a primeira? Cada escolha muda o resultado.</p>
+    <p class="fix"><strong>Correção:</strong> pré-registrar a moda como análise principal e a análise por repetição como sensibilidade.</p>
+  </div>
+  <div class="issue">
+    <h4><span class="tag warn">P10</span>Execução pela interface web</h4>
+    <p>Sem temperatura, sem versão fixa, com prompt de sistema oculto, memória e personalização.</p>
+    <p class="fix"><strong>Correção:</strong> API com modelo versionado, temperatura fixa e saída estruturada com JSON Schema. Viabiliza também mais regras e mais repetições.</p>
+  </div>
+  <div class="issue">
+    <h4><span class="tag warn">P11</span>Faixas de severidade</h4>
+    <p>"low 1–4, medium 5–8, high 9–12, critical 13–16" não é a classificação oficial do Wazuh, que tem semântica própria por nível e faixas diferentes no dashboard conforme a versão.</p>
+    <p class="fix"><strong>Correção:</strong> declarar como convenção do estudo e transformar P1 a P4 em tabela de decisão que gera a faixa esperada de cada regra.</p>
+  </div>
+
+  <h3>3.3 Menores</h3>
+  <ul>
+    <li>Slides e rubrica falam em "XML de resultado conforme <code>evaluation.schema.json</code>"; a saída é JSON.</li>
+    <li>O slide "Defeitos com evidência objetiva do replay" inclui S1, S5 e M3, cuja evidência não vem do replay.</li>
+    <li>Avaliadores humanos não caracterizados (experiência, treino, cegamento quanto à categoria da regra).</li>
+    <li>Modelos sem versão exata nem data de execução.</li>
+    <li>"Powered by Claude.ai" no slide final: se a rubrica foi redigida com apoio do Claude, isso reforça a ameaça de autopreferência e deve ser declarado.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>4. Sugestões de melhoria</h2>
+  <h3>Rubrica e protocolo</h3>
+  <ul>
+    <li>Rubrica do pesquisador separada da rubrica do avaliador.</li>
+    <li>5 a 8 regras de calibração fora do dataset, para treinar humanos e servir de exemplos às LLMs.</li>
+    <li>Tabela de decisão para C4 (tentativa = medium; sucesso = high; cada agravante P2, P3 ou P4 sobe uma faixa; teto critical), com rótulo baseado na distância em faixas.</li>
+    <li>Ordem das regras aleatória; ordem dos critérios aleatória como teste de sensibilidade.</li>
+    <li>Humanos cegos quanto à categoria da regra.</li>
+  </ul>
+  <h3>Dataset</h3>
+  <ul>
+    <li><strong>Mutação automática:</strong> operadores (inverter <code>if_sid</code>, remover <code>same_srcip</code>, encolher <code>timeframe</code>, alterar <code>level</code>, remover <code>negate</code>, ampliar <code>srcip</code>) aplicados a 10 a 20 regras-base, com o original pareado. Métrica: <em>mutation score</em> por operador.</li>
+    <li>Filtrar <strong>mutantes equivalentes</strong> executando original e mutante no mesmo corpus pelo <code>wazuh-logtest</code>.</li>
+    <li>Tornar obrigatório o conjunto de contaminação (nativas com ID renumerado e descrição parafraseada).</li>
+    <li>Incluir um modelo de pesos abertos para reprodutibilidade e para triangular a autopreferência.</li>
+  </ul>
+  <h3>Análise</h3>
+  <ul>
+    <li>Matriz de confusão por critério e viés direcional (LLM mais branda ou mais rigorosa).</li>
+    <li><strong>Teoria da Generalizabilidade</strong> para decompor a variância em regra, modelo, repetição e critério.</li>
+    <li><strong>Modelo ordinal misto</strong> com efeito aleatório de regra, testando a interação modelo × origem (autopreferência).</li>
+    <li>Bootstrap pareado para diferenças entre modelos, com correção para múltiplas comparações.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>5. Caminhos, técnicas e métricas</h2>
+  <h3>5.1 Condições experimentais</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Condição</th><th>Descrição</th><th>O que mede</th></tr>
+    <tr><td>E0</td><td>Sem perfil organizacional</td><td>Contribuição do contexto</td></tr>
+    <tr><td>E1</td><td>Perfil + rubrica, julgamento único (proposta atual)</td><td>Linha de base</td></tr>
+    <tr><td>E2</td><td>E1 + evidência pré-computada (validação e estatísticas de disparo sem rótulo)</td><td>Efeito da evidência</td></tr>
+    <tr><td>E3</td><td>Fluxo agêntico com ferramentas</td><td>Efeito da agência</td></tr>
+    <tr><td>E4</td><td>E3 + verificador de outra família</td><td>Efeito da verificação cruzada</td></tr>
+  </table></div>
+  <p>A comparação <strong>E2 × E3</strong> é a mais importante: separa "ter dados" de "ter autonomia para buscar dados".</p>
+
+  <h3>5.2 Técnicas de LLM-as-a-judge</h3>
+  <ul>
+    <li><strong>Decomposição por critério</strong>: um prompt por critério.</li>
+    <li><strong>Raciocínio antes do rótulo</strong>: <code>justification</code> e <code>evidence</code> antes de <code>label</code>.</li>
+    <li><strong>Saída estruturada estrita</strong> com taxa de JSON inválido reportada.</li>
+    <li><strong>Autoconsistência</strong> (k amostras e voto) contra temperatura 0.</li>
+    <li><strong>Painel de juízes</strong> de famílias diferentes como avaliador agregado.</li>
+    <li><strong>Sensibilidade a prompt</strong> com 2 ou 3 paráfrases.</li>
+  </ul>
+
+  <h3>5.3 Métricas por pergunta de pesquisa</h3>
+  <div class="table-wrap"><table>
+    <tr><th>RQ</th><th>Métrica</th><th>Observação</th></tr>
+    <tr><td>RQ1</td><td>κ ponderado quadrático, AC2, concordância bruta</td><td>Por critério e agregado; sem C1</td></tr>
+    <tr><td>RQ1</td><td>Viés direcional e homogeneidade marginal (Stuart-Maxwell)</td><td>LLM sistematicamente branda ou severa?</td></tr>
+    <tr><td>RQ1 (C4)</td><td>Erro absoluto médio em faixas</td><td>Contra a tabela de decisão</td></tr>
+    <tr><td>RQ2</td><td>α de Krippendorff ordinal; coeficientes da G-theory</td><td></td></tr>
+    <tr><td>RQ2 / E4</td><td>Taxa de inversão entre repetições; α intra-modelo</td><td>Estabilidade</td></tr>
+    <tr><td>RQ3</td><td>Recall de defeitos por categoria e por operador; mutation score</td><td>Casamento por categoria e localização</td></tr>
+    <tr><td>RQ3</td><td>Precisão das alegações após adjudicação cega</td><td>Defeito novo legítimo × alucinação</td></tr>
+    <tr><td>RQ3</td><td>Falso alarme em controles e originais pareados</td><td>Requer mais controles</td></tr>
+    <tr><td>RQ3</td><td>Acurácia de localização</td><td>Atributo citado corresponde ao defeito</td></tr>
+    <tr><td>Justificativas</td><td>Taxa de ancoragem (trecho citado existe no XML)</td><td>Verificação automática por string</td></tr>
+    <tr><td>Operacional</td><td>Tokens, custo, latência, chamadas de ferramenta</td><td>Indispensável com agentes</td></tr>
+  </table></div>
+</section>
+
+<section>
+  <h2>6. Faz sentido um fluxo com agentes?</h2>
+  <p class="verdict"><strong>Sim, como condição experimental adicional (uma RQ4), não como substituto da linha de base.</strong> A proposta atual mede se a LLM julga uma regra lendo o XML. O fluxo agêntico mede se ela julga melhor quando pode <em>executar</em> a regra, o que é mais próximo da prática de <em>Detection Engineering</em>.</p>
+  <ul>
+    <li><strong>C1</strong> é determinístico: ferramenta, não opinião.</li>
+    <li><strong>C2</strong> é testável: gerar logs positivos e negativos e executar no logtest.</li>
+    <li><strong>C3</strong> é simulável: sequências com espaçamentos diferentes testam <code>frequency</code>, <code>timeframe</code> e <code>same_srcip</code>.</li>
+    <li><strong>C5</strong> depende de volume: contagem de disparos no corpus sem rótulo.</li>
+    <li><strong>C4</strong> é o único essencialmente de julgamento, apoiado pela tabela de decisão P1 a P4.</li>
+  </ul>
+  <p>Riscos: vazamento (sem acesso a rótulos manuais nem ao <code>catalog.csv</code>), custo e latência, mais não determinismo e a tentação de o agente corrigir a regra em vez de avaliá-la. Se o prazo for curto, E2 entrega a maior parte do ganho com pouca engenharia; o fluxo completo é um bom segundo artigo.</p>
+
+  <h3>6.1 Arquitetura proposta</h3>
+  <figure>
+    <div class="diagram">
+    <svg viewBox="0 0 960 900" role="img" aria-label="Fluxograma da arquitetura agêntica de avaliação de regras Wazuh">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--node-line)"/></marker>
+        <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--tool-line)"/></marker>
+        <marker id="arrw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--warn)"/></marker>
+      </defs>
+
+      <rect class="n" x="200" y="16" width="560" height="58" rx="6"/>
+      <text class="t" x="480" y="40" text-anchor="middle">Entrada: XML da regra + pacote de contexto</text>
+      <text class="s" x="480" y="60" text-anchor="middle">perfil ACME-LAB, faixas, P1–P4, rubrica do avaliador (sem exemplos do dataset)</text>
+      <path class="a" d="M480 74 V104"/>
+
+      <rect class="n" x="320" y="106" width="320" height="52" rx="6"/>
+      <text class="t" x="480" y="128" text-anchor="middle">Orquestrador</text>
+      <text class="s" x="480" y="147" text-anchor="middle">código determinístico, não LLM</text>
+      <path class="a" d="M400 158 L290 194"/>
+      <path class="a" d="M560 158 L670 194"/>
+
+      <rect class="tool" x="110" y="196" width="360" height="58" rx="6"/>
+      <text class="t" x="290" y="220" text-anchor="middle">Construtor de contexto</text>
+      <text class="s" x="290" y="240" text-anchor="middle">resolve if_sid / if_matched_sid e decoders</text>
+      <rect class="tool" x="490" y="196" width="360" height="58" rx="6"/>
+      <text class="t" x="670" y="220" text-anchor="middle">Validador estrutural → C1</text>
+      <text class="s" x="670" y="240" text-anchor="middle">wazuh-analysisd -t e wazuh-logtest</text>
+      <path class="a" d="M290 254 L440 296"/>
+      <path class="a" d="M670 254 L520 296"/>
+
+      <polygon class="gate" points="480,292 580,330 480,368 380,330"/>
+      <text class="t" x="480" y="335" text-anchor="middle">C1 = Inadequado?</text>
+      <path class="a" d="M580 330 H738"/>
+      <text class="lbl" x="655" y="322" text-anchor="middle">sim</text>
+      <rect class="n" x="740" y="304" width="200" height="52" rx="6"/>
+      <text class="t" x="840" y="326" text-anchor="middle">C2 a C5 = NA</text>
+      <text class="s" x="840" y="345" text-anchor="middle">registra e encerra</text>
+      <path class="a" d="M480 368 V404"/>
+      <text class="lbl" x="492" y="390">não</text>
+
+      <rect class="n" x="400" y="406" width="160" height="34" rx="17"/>
+      <text class="s" x="480" y="428" text-anchor="middle">execução em paralelo</text>
+      <path class="a" d="M420 440 L104 474"/>
+      <path class="a" d="M450 440 L292 474"/>
+      <path class="a" d="M480 440 V474"/>
+      <path class="a" d="M510 440 L668 474"/>
+      <path class="a" d="M540 440 L856 474"/>
+
+      <rect class="n" x="20" y="476" width="168" height="92" rx="6"/>
+      <text class="t" x="104" y="500" text-anchor="middle">Agente C2: Lógica</text>
+      <text class="s" x="104" y="520" text-anchor="middle">gera logs positivos</text>
+      <text class="s" x="104" y="537" text-anchor="middle">e negativos</text>
+      <text class="s" x="104" y="554" text-anchor="middle">e executa</text>
+      <rect class="n" x="208" y="476" width="168" height="92" rx="6"/>
+      <text class="t" x="292" y="500" text-anchor="middle">Agente C3</text>
+      <text class="s" x="292" y="520" text-anchor="middle">Correlação: simula</text>
+      <text class="s" x="292" y="537" text-anchor="middle">sequências temporais</text>
+      <rect class="n" x="396" y="476" width="168" height="92" rx="6"/>
+      <text class="t" x="480" y="500" text-anchor="middle">Agente C4</text>
+      <text class="s" x="480" y="520" text-anchor="middle">Severidade: tabela</text>
+      <text class="s" x="480" y="537" text-anchor="middle">de decisão P1–P4</text>
+      <rect class="n" x="584" y="476" width="168" height="92" rx="6"/>
+      <text class="t" x="668" y="500" text-anchor="middle">Agente C5: Ruído</text>
+      <text class="s" x="668" y="520" text-anchor="middle">disparos no corpus</text>
+      <text class="s" x="668" y="537" text-anchor="middle">sem rótulos</text>
+      <rect class="n" x="772" y="476" width="168" height="92" rx="6"/>
+      <text class="t" x="856" y="500" text-anchor="middle">Caçador de defeitos</text>
+      <text class="s" x="856" y="520" text-anchor="middle">RQ3: taxonomia,</text>
+      <text class="s" x="856" y="537" text-anchor="middle">sem o catalog.csv</text>
+
+      <rect class="dash" x="20" y="596" width="920" height="44" rx="6"/>
+      <text class="t" x="480" y="623" text-anchor="middle" style="fill:var(--tool-line)">Sandbox Wazuh (logtest) + corpus de replay SEM rótulos manuais</text>
+      <path class="ad" d="M104 596 V570"/>
+      <path class="ad" d="M292 596 V570"/>
+      <path class="ad" d="M668 596 V570"/>
+
+      <path class="a" d="M104 640 L400 690"/>
+      <path class="a" d="M292 640 L430 690"/>
+      <path class="a" d="M480 568 V690" style="stroke-dasharray:0"/>
+      <path class="a" d="M668 640 L530 690"/>
+      <path class="a" d="M856 640 L560 690"/>
+
+      <rect class="n" x="230" y="692" width="500" height="58" rx="6"/>
+      <text class="t" x="480" y="716" text-anchor="middle">Verificador / crítico (outra família de modelo)</text>
+      <text class="s" x="480" y="736" text-anchor="middle">confere citações no XML e contesta afirmações sem evidência</text>
+      <path class="back" d="M230 721 H12 V423 H398"/>
+      <text class="lblw" x="20" y="680">devolve (máx. 1 rodada)</text>
+
+      <path class="a" d="M480 750 V780"/>
+      <path class="a" d="M940 340 H952 V806 H732"/>
+      <rect class="n" x="230" y="782" width="500" height="48" rx="6"/>
+      <text class="t" x="480" y="803" text-anchor="middle">Agregador determinístico</text>
+      <text class="s" x="480" y="821" text-anchor="middle">valida JSON Schema, hash, log imutável</text>
+      <path class="a" d="M480 830 V846"/>
+      <rect class="tool" x="230" y="848" width="500" height="44" rx="6"/>
+      <text class="t" x="480" y="875" text-anchor="middle">Análise: κw, α, AC2, recall e precisão de defeitos, custo</text>
+    </svg>
+    </div>
+    <div class="legend"><span>agente LLM ou etapa</span><span class="l-tool">ferramenta ou código determinístico</span><span class="l-gate">decisão</span></div>
+    <figcaption>Os agentes de critério só usam a sandbox e o corpus sem rótulos. A seta tracejada laranja é a única realimentação permitida (uma rodada), para afirmações sem evidência no artefato.</figcaption>
+  </figure>
+
+  <h3>6.2 Papéis</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Componente</th><th>Tipo</th><th>Saída</th><th>Ferramentas</th></tr>
+    <tr><td>Orquestrador</td><td>Código</td><td>Plano de execução</td><td>Nenhuma</td></tr>
+    <tr><td>Construtor de contexto</td><td>Código</td><td>Cadeia de pais e decoders</td><td>Ruleset Wazuh local</td></tr>
+    <tr><td>Validador estrutural</td><td>Ferramenta</td><td>C1 + mensagens do motor</td><td><code>wazuh-analysisd -t</code>, <code>wazuh-logtest</code></td></tr>
+    <tr><td>Agente C2</td><td>LLM</td><td>Rótulo, casos de teste e resultados</td><td>Logtest</td></tr>
+    <tr><td>Agente C3</td><td>LLM</td><td>Rótulo ou NA, sequências simuladas</td><td>Logtest com sequências temporizadas</td></tr>
+    <tr><td>Agente C4</td><td>LLM</td><td>Faixa esperada, distância, rótulo</td><td>Nenhuma (julgamento)</td></tr>
+    <tr><td>Agente C5</td><td>LLM</td><td>Rótulo e estimativa de ruído</td><td>Consulta ao corpus sem rótulo</td></tr>
+    <tr><td>Caçador de defeitos</td><td>LLM</td><td>Lista de <code>problems</code></td><td>Logtest</td></tr>
+    <tr><td>Verificador</td><td>LLM de outra família</td><td>Aprovação ou objeção</td><td>Busca literal no XML</td></tr>
+    <tr><td>Agregador</td><td>Código</td><td>JSON validado e hash</td><td>JSON Schema</td></tr>
+  </table></div>
+
+  <h3>6.3 Regras de isolamento</h3>
+  <ol>
+    <li>Nenhum agente acessa <code>catalog.csv</code>, rótulos humanos ou <code>severidade_manual</code>.</li>
+    <li>O corpus de replay é exposto só por uma função que devolve contagens e distribuições.</li>
+    <li>Agentes de critério não veem as saídas uns dos outros antes do verificador (evita efeito halo).</li>
+    <li>Prompts, versões, chamadas de ferramenta e respostas vão para log imutável com hash.</li>
+  </ol>
+
+  <h3>6.4 Como avaliar o fluxo</h3>
+  <ul>
+    <li>Mesmas métricas da seção 5.3, comparando E1 a E4 nas mesmas regras (pareado).</li>
+    <li>Ablação por ferramenta: sem logtest, depois sem corpus.</li>
+    <li>Uso correto de ferramentas: % de logs gerados pelo agente C2 que o decoder aceita.</li>
+    <li>Custo-benefício: ganho em κ ou recall por dólar e por segundo.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>7. Próximos passos reordenados</h2>
+  <ol class="steps">
+    <li>Corrigir P1 a P11 na rubrica.</li>
+    <li>Criar regras de calibração fora do dataset.</li>
+    <li>Gerar mutantes automáticos com originais pareados; filtrar equivalentes pelo logtest.</li>
+    <li>Piloto com humanos e LLMs nas regras de calibração; ajustar rubrica e prompt.</li>
+    <li><strong>Congelar</strong> rubrica, perfil, catálogo, prompts e plano de análise com hash.</li>
+    <li>Rotulação humana independente e cega; κ humano × humano; adjudicação; congelar padrão-ouro.</li>
+    <li>Executar E1 (e E0, E2 se possível) via API com versões fixas.</li>
+    <li>Calcular métricas; codificação cega de justificativas e problemas alegados.</li>
+    <li>Opcional: fluxo agêntico (E3, E4).</li>
+  </ol>
+</section>
+
+<section>
+  <h2>8. Perguntas para a próxima reunião</h2>
+  <ol>
+    <li>Quem rotulou a <code>severidade_manual</code> dos 1.000 eventos, e com quais instruções?</li>
+    <li>Quem serão os dois avaliadores humanos, e que experiência têm com Wazuh?</li>
+    <li>A execução pode migrar para API? Há orçamento?</li>
+    <li>O replay será entregue às avaliadoras? Em que forma?</li>
+    <li>Qual é a regra de agregação das 3 repetições para RQ1?</li>
+    <li>O foco do artigo é avaliar regras ou fechar o ciclo gerar → validar → avaliar → corrigir? O fluxo agêntico serve melhor à segunda opção.</li>
+  </ol>
+</section>
+
+</main>
+</body>
+</html>

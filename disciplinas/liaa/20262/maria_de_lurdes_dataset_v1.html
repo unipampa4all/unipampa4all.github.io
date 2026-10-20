@@ -1,0 +1,690 @@
+<meta charset="utf-8">
+<title>Dataset de Incêndio Florestal</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: coluna de leitura de ~70ch com seções largas para tabelas e diagramas; cinza-cinza de cinzas com brasa pontual. */
+:root {
+  --bg: #f4f6f4;
+  --surface: #ffffff;
+  --fg: #1b2220;
+  --muted: #56615d;
+  --line: #d6ddd9;
+  --ember: #b9400f;
+  --ember-soft: #fbe6da;
+  --smoke: #6d7c86;
+  --smoke-soft: #e6ebee;
+  --ok: #2c6a4c;
+  --ok-soft: #dff0e6;
+  --warn: #8f5200;
+  --warn-soft: #fbefd9;
+  --sky: #dfe7ec;
+  --hill: #9fb3a6;
+  --hill2: #7d9686;
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111513; --surface: #181e1b; --fg: #e4e9e6; --muted: #9ba7a2; --line: #2b3430;
+    --ember: #f0874a; --ember-soft: #3a2116; --smoke: #93a3ad; --smoke-soft: #222a2f;
+    --ok: #74c49a; --ok-soft: #17291f; --warn: #e6a64e; --warn-soft: #2e2312;
+    --sky: #1f282d; --hill: #34463c; --hill2: #2a3a31;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111513; --surface: #181e1b; --fg: #e4e9e6; --muted: #9ba7a2; --line: #2b3430;
+  --ember: #f0874a; --ember-soft: #3a2116; --smoke: #93a3ad; --smoke-soft: #222a2f;
+  --ok: #74c49a; --ok-soft: #17291f; --warn: #e6a64e; --warn-soft: #2e2312;
+  --sky: #1f282d; --hill: #34463c; --hill2: #2a3a31;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 4rem;
+}
+a { color: var(--ember); text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; border-radius: 3px; }
+.wrap { max-width: 1080px; margin: 0 auto; }
+.prose { max-width: 70ch; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.12; margin: 0; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); font-weight: 800; font-stretch: 78%; letter-spacing: -0.01em; }
+h2 { font-size: clamp(1.6rem, 3.6vw, 2.2rem); font-weight: 750; font-stretch: 85%; }
+h3 { font-size: 1.2rem; font-weight: 700; font-stretch: 92%; }
+p { margin: 0; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+.muted { color: var(--muted); }
+code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
+code { background: var(--smoke-soft); padding: 0.08em 0.35em; border-radius: 4px; }
+
+/* topo */
+header.hero { padding-block: 3.5rem 2.5rem; border-bottom: 1px solid var(--line); display: grid; gap: 1.25rem; }
+.hero .lede { font-size: 1.25rem; max-width: 62ch; }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem; font-size: 0.95rem; color: var(--muted); }
+nav.toc { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+nav.toc ul { list-style: none; margin: 0 auto; padding: 0.6rem 0; display: flex; gap: 0.25rem 1.1rem; overflow-x: auto; max-width: 1080px; scrollbar-width: thin; }
+nav.toc a { color: var(--muted); text-decoration: none; font-size: 0.92rem; white-space: nowrap; }
+nav.toc a:hover { color: var(--fg); }
+
+section { padding-block: 3rem 0.5rem; display: grid; gap: 1.25rem; }
+section > .head { display: grid; gap: 0.4rem; }
+
+/* resposta curta */
+.answer { border-left: 4px solid var(--ember); background: var(--surface); padding: 1.25rem 1.4rem; display: grid; gap: 0.6rem; max-width: 76ch; }
+.answer strong { color: var(--fg); }
+.answer ul { margin: 0; padding-left: 1.2rem; display: grid; gap: 0.3rem; }
+
+/* citações dos áudios */
+.quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+.quote { border-top: 1px solid var(--line); padding-top: 0.9rem; display: grid; gap: 0.5rem; align-content: start; min-width: 0; }
+.quote blockquote { margin: 0; font-style: italic; }
+.quote .who { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* comparação */
+.compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.opt { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1.2rem 1.3rem; display: grid; gap: 0.7rem; align-content: start; min-width: 0; }
+.opt.pick { border-color: var(--ember); box-shadow: 0 0 0 1px var(--ember) inset; }
+.opt ul { margin: 0; padding-left: 1.15rem; display: grid; gap: 0.35rem; }
+.pill { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.15rem 0.55rem; border-radius: 999px; width: fit-content; }
+.pill.rec { background: var(--ember-soft); color: var(--ember); }
+.pill.no { background: var(--smoke-soft); color: var(--muted); }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.warn { background: var(--warn-soft); color: var(--warn); }
+
+/* cenas ilustrativas */
+.scenes { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.scene { display: grid; gap: 0.5rem; align-content: start; min-width: 0; }
+.scene svg { width: 100%; height: auto; border-radius: 6px; border: 1px solid var(--line); display: block; }
+.scene .lbl { font-family: var(--font-mono); font-size: 0.82rem; }
+.scene p { font-size: 0.95rem; color: var(--muted); }
+.sky { fill: var(--sky); }
+.hill { fill: var(--hill); }
+.hill2 { fill: var(--hill2); }
+.plume { fill: var(--smoke); opacity: 0.75; }
+.plume-light { fill: var(--smoke); opacity: 0.35; }
+.flame { fill: var(--ember); }
+.fog { fill: var(--surface); opacity: 0.8; }
+.sun { fill: var(--warn); opacity: 0.85; }
+.dusk { fill: var(--ember-soft); }
+
+/* tabelas */
+.tablebox { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; vertical-align: top; padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-mono); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 600; background: var(--bg); position: sticky; top: 0; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* pipeline */
+ol.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: 0; max-width: 80ch; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 3rem 1fr; gap: 0 1rem; padding-block: 1rem; border-top: 1px solid var(--line); }
+ol.steps li::before { content: counter(s, decimal-leading-zero); font-family: var(--font-display); font-weight: 800; font-stretch: 70%; font-size: 1.9rem; color: var(--ember); line-height: 1; }
+ol.steps li > div { display: grid; gap: 0.3rem; min-width: 0; }
+
+/* diagrama de vazamento */
+.leak { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+.leakbox { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.2rem; display: grid; gap: 0.8rem; min-width: 0; }
+.row { display: grid; grid-template-columns: 4.5rem 1fr; align-items: center; gap: 0.6rem; }
+.row .k { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+.frames { display: flex; flex-wrap: wrap; gap: 4px; }
+.f { width: 18px; height: 18px; border-radius: 3px; }
+.vA { background: var(--ember); }
+.vB { background: var(--smoke); }
+.vC { background: var(--ok); }
+.legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; font-size: 0.88rem; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+
+/* catálogo */
+.filters { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.chip { font: inherit; font-size: 0.9rem; border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: 0.3rem 0.8rem; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.search { font: inherit; font-size: 0.95rem; padding: 0.35rem 0.75rem; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--fg); min-width: 0; flex: 1 1 200px; max-width: 320px; }
+.count { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); }
+td .tags { display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: 0.3rem; }
+
+/* links por categoria */
+.linkgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem 2rem; }
+.linkgroup { display: grid; gap: 0.6rem; align-content: start; min-width: 0; }
+.linkgroup ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
+.linkgroup li { display: grid; gap: 0.1rem; }
+.linkgroup li a { font-weight: 600; }
+.linkgroup li span { font-size: 0.93rem; color: var(--muted); }
+
+.callout { background: var(--warn-soft); color: var(--fg); border-radius: 8px; padding: 1rem 1.2rem; max-width: 80ch; }
+.callout strong { color: var(--warn); }
+
+ol.refs { margin: 0; padding-left: 1.4rem; display: grid; gap: 0.7rem; max-width: 85ch; }
+ol.refs li span { color: var(--muted); font-size: 0.95rem; }
+
+footer { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.92rem; }
+
+@media (max-width: 520px) {
+  body { font-size: 1rem; }
+  ol.steps li { grid-template-columns: 2.4rem 1fr; }
+  ol.steps li::before { font-size: 1.5rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; scroll-padding-top: 3.5rem; }
+</style>
+
+<div class="wrap">
+<header class="hero">
+  <p class="eyebrow">Proposta de trabalho de disciplina · Visão computacional</p>
+  <h1>Um dataset de incêndio florestal que dê para confiar</h1>
+  <p class="lede">Como construir, em um semestre, um conjunto de imagens para classificar incêndio em floresta: escopo, classes, curadoria, ferramentas, experimentos e onde buscar dados e literatura.</p>
+  <div class="meta">
+    <span>Grupo: Maria de Lurdes e colegas</span>
+    <span>Orientação: Prof. Dr. Diego Kreutz, com contribuições do Prof. Welfer</span>
+    <span>Outubro de 2026</span>
+  </div>
+</header>
+</div>
+
+<nav class="toc" aria-label="Seções">
+  <ul>
+    <li><a href="#resposta">Resposta curta</a></li>
+    <li><a href="#contexto">Contexto</a></li>
+    <li><a href="#escopo">Escopo</a></li>
+    <li><a href="#classes">Classes</a></li>
+    <li><a href="#qualidade">Curadoria</a></li>
+    <li><a href="#vazamento">Vazamento</a></li>
+    <li><a href="#ferramentas">Ferramentas</a></li>
+    <li><a href="#experimentos">Experimentos</a></li>
+    <li><a href="#cronograma">Cronograma</a></li>
+    <li><a href="#datasets">Datasets</a></li>
+    <li><a href="#imagens">Onde achar imagens</a></li>
+    <li><a href="#papers">Papers</a></li>
+  </ul>
+</nav>
+
+<main class="wrap">
+
+<section id="resposta">
+  <div class="head">
+    <p class="eyebrow">A pergunta do grupo</p>
+    <h2>Um ambiente só, ou fogo em todo lugar?</h2>
+  </div>
+  <div class="answer">
+    <p><strong>Um ambiente só: floresta e vegetação nativa, sempre vista do mesmo jeito (paisagem à distância).</strong></p>
+    <ul>
+      <li>A classe "sem incêndio" passa a ser <strong>floresta sem incêndio</strong>, e não fotos aleatórias de flores e cachorros.</li>
+      <li>Os erros que importam ficam claros: neblina, nuvem baixa, pôr do sol, poeira, chaminé.</li>
+      <li>Dá para olhar todas as imagens, uma por uma, dentro de um semestre.</li>
+      <li>Outros ambientes (estrada, cidade, casa) entram só como um pequeno teste de generalização.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="contexto">
+  <div class="head">
+    <p class="eyebrow">De onde veio a proposta</p>
+    <h2>O que a conversa nos áudios levantou</h2>
+  </div>
+  <p class="prose">Antes de escrever esta proposta, o Prof. Diego consultou o Prof. Welfer por áudio. Quatro pontos guiaram tudo o que vem abaixo.</p>
+  <div class="quotes">
+    <div class="quote">
+      <span class="who">Diego · escopo</span>
+      <blockquote>"Acho que a princípio elas estão com o escopo bem amplo, o que pode ser um problema, ainda mais para o trabalho de disciplina."</blockquote>
+    </div>
+    <div class="quote">
+      <span class="who">Diego · negativos</span>
+      <blockquote>"Tem até imagem de uma flor, imagem de um cachorro. Não tem árvore, não tem nada. Umas fotos totalmente aleatórias."</blockquote>
+    </div>
+    <div class="quote">
+      <span class="who">Welfer · ponto de vista</span>
+      <blockquote>"Quando é uma floresta é difícil tu ter imagem da chama. É aéreo a foto? Uma foto terrestre? Começa por aí."</blockquote>
+    </div>
+    <div class="quote">
+      <span class="who">Welfer · qualidade</span>
+      <blockquote>"Da internet é um lixo. O nome do dataset era X e as imagens que estavam lá dentro eram Z, Y. O cara tem que olhar com calma."</blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="escopo">
+  <div class="head">
+    <p class="eyebrow">Decisão 1</p>
+    <h2>Escopo: comparação das duas opções</h2>
+  </div>
+  <div class="compare">
+    <div class="opt pick">
+      <span class="pill rec">Recomendado</span>
+      <h3>Só floresta, um ponto de vista</h3>
+      <ul>
+        <li>Negativos coerentes: a mesma paisagem, sem fogo.</li>
+        <li>Lista curta de negativos difíceis, que dá para coletar de propósito.</li>
+        <li>Revisão manual de 100% das imagens é viável.</li>
+        <li>Há lacuna real: quase nenhum dataset público de fumaça vista do chão em biomas brasileiros.</li>
+        <li>Resultado defensável: o grupo sabe exatamente o que o modelo aprendeu.</li>
+      </ul>
+    </div>
+    <div class="opt">
+      <span class="pill no">Não recomendado agora</span>
+      <h3>Vários ambientes (floresta, estrada, cidade, casas)</h3>
+      <ul>
+        <li>Cada ambiente tem seus próprios negativos difíceis: faróis, letreiros, luz de poste, lareira, pôr do sol em prédio.</li>
+        <li>O "sem fogo" vira "qualquer coisa", e o modelo aprende atalhos.</li>
+        <li>Volume de curadoria multiplica.</li>
+        <li>Já existem datasets mistos grandes (D-Fire, FASDD, LFDN); difícil contribuir em um semestre.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="prose"><strong>Ponto de vista sugerido:</strong> paisagem de vegetação vista de longe, por câmera terrestre elevada (torre, morro, beira de estrada) ou por drone em visão inclinada. Ficam de fora imagens de satélite (é outro problema, com outras ferramentas), closes de chama (fogueira, vela, lareira) e fotos de bombeiros em primeiro plano. Se o grupo preferir drone olhando para baixo, a lógica é a mesma: escolher um ponto de vista e manter.</p>
+</section>
+
+<section id="classes">
+  <div class="head">
+    <p class="eyebrow">Decisão 2</p>
+    <h2>Que classes o dataset terá</h2>
+  </div>
+  <p class="prose">É uma tarefa de <strong>classificação</strong>: cada imagem vai para uma pasta, sem desenhar caixas. As ilustrações abaixo são esquemáticas e mostram o tipo de cena de cada classe.</p>
+
+  <div class="scenes">
+    <div class="scene">
+      <svg viewBox="0 0 240 140" role="img" aria-label="Paisagem com uma coluna estreita de fumaça">
+        <rect class="sky" width="240" height="140"/>
+        <path class="hill" d="M0 95 Q60 70 120 88 T240 80 V140 H0Z"/>
+        <path class="hill2" d="M0 112 Q80 98 150 110 T240 104 V140 H0Z"/>
+        <ellipse class="plume" cx="152" cy="74" rx="6" ry="14"/>
+        <ellipse class="plume" cx="148" cy="52" rx="9" ry="13"/>
+        <ellipse class="plume-light" cx="142" cy="32" rx="13" ry="11"/>
+      </svg>
+      <span class="lbl"><span class="pill rec">incendio</span> · foco_local</span>
+      <p>Uma coluna de fumaça estreita, ocupando pouco da imagem.</p>
+    </div>
+    <div class="scene">
+      <svg viewBox="0 0 240 140" role="img" aria-label="Paisagem com várias colunas de fumaça e chamas">
+        <rect class="sky" width="240" height="140"/>
+        <ellipse class="plume-light" cx="120" cy="38" rx="120" ry="26"/>
+        <path class="hill" d="M0 95 Q60 70 120 88 T240 80 V140 H0Z"/>
+        <ellipse class="plume" cx="50" cy="66" rx="16" ry="22"/>
+        <ellipse class="plume" cx="120" cy="62" rx="22" ry="26"/>
+        <ellipse class="plume" cx="190" cy="60" rx="18" ry="22"/>
+        <path class="hill2" d="M0 112 Q80 98 150 110 T240 104 V140 H0Z"/>
+        <path class="flame" d="M20 112 l8 -12 l6 9 l7 -14 l7 13 l6 -8 l8 12 l9 -10 l7 12 l8 -9 l6 10 Z"/>
+      </svg>
+      <span class="lbl"><span class="pill rec">incendio</span> · incendio_extenso</span>
+      <p>Várias colunas, frente de fogo larga, fumaça cobrindo o horizonte.</p>
+    </div>
+    <div class="scene">
+      <svg viewBox="0 0 240 140" role="img" aria-label="Paisagem com neblina baixa nos vales, sem fogo">
+        <rect class="sky" width="240" height="140"/>
+        <path class="hill" d="M0 95 Q60 70 120 88 T240 80 V140 H0Z"/>
+        <ellipse class="fog" cx="70" cy="96" rx="70" ry="9"/>
+        <ellipse class="fog" cx="185" cy="90" rx="60" ry="8"/>
+        <path class="hill2" d="M0 112 Q80 98 150 110 T240 104 V140 H0Z"/>
+      </svg>
+      <span class="lbl"><span class="pill ok">sem_incendio</span> · negativo difícil</span>
+      <p>Neblina nos vales parece fumaça. É o tipo de imagem que ensina o modelo a diferenciar.</p>
+    </div>
+    <div class="scene">
+      <svg viewBox="0 0 240 140" role="img" aria-label="Pôr do sol alaranjado sobre a floresta, sem fogo">
+        <rect class="dusk" width="240" height="140"/>
+        <circle class="sun" cx="170" cy="84" r="16"/>
+        <path class="hill" d="M0 95 Q60 70 120 88 T240 80 V140 H0Z"/>
+        <path class="hill2" d="M0 112 Q80 98 150 110 T240 104 V140 H0Z"/>
+      </svg>
+      <span class="lbl"><span class="pill ok">sem_incendio</span> · negativo difícil</span>
+      <p>Céu alaranjado no fim da tarde engana modelos que aprenderam "laranja = fogo".</p>
+    </div>
+  </div>
+
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Nível</th><th>Classe</th><th>Definição</th></tr></thead>
+      <tbody>
+        <tr><td>1 (obrigatório)</td><td><code>incendio</code></td><td>Chama e/ou fumaça de queima de vegetação visível na paisagem.</td></tr>
+        <tr><td>1 (obrigatório)</td><td><code>sem_incendio</code></td><td>Paisagem de vegetação sem queima. Pelo menos 30% devem ser negativos difíceis: neblina, nuvem baixa, pôr do sol, poeira de estrada, vapor, chaminé rural.</td></tr>
+        <tr><td>2 (opcional)</td><td><code>foco_local</code></td><td>Uma coluna de fumaça estreita ou chamas numa área pequena da imagem.</td></tr>
+        <tr><td>2 (opcional)</td><td><code>incendio_extenso</code></td><td>Várias colunas, frente de fogo larga ou fumaça cobrindo boa parte do horizonte.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="compare">
+    <div class="opt">
+      <h3>Fumaça conta como incêndio?</h3>
+      <p>Sim. Em floresta, a fumaça é o sinal mais comum e o mais precoce; a chama muitas vezes nem aparece. Treinar só com chama ensinaria o modelo a ignorar justamente o caso mais importante.</p>
+    </div>
+    <div class="opt">
+      <h3>E a cor da fumaça?</h3>
+      <p>A ideia (fumaça preta em indústria, branca em floresta) faz mais sentido com vários ambientes. Dentro da floresta, a cor muda com a fase da queima e com a luz. Sugestão: anotar como metadado (<code>cor_fumaca</code>: clara ou escura) e analisar no fim.</p>
+    </div>
+    <div class="opt">
+      <h3>E se um dia quiserem caixas?</h3>
+      <p>O padrão da área (D-Fire, FASDD, Pyro-SDIS) é usar <strong>duas classes separadas, fogo e fumaça</strong>. A caixa de fumaça cobre a parte densa e visível da pluma, sem tentar abraçar a fumaça diluída no céu. Essa regra precisa estar escrita no guia.</p>
+    </div>
+  </div>
+  <p class="prose muted">Cuidado com o nível 2: o tamanho da fumaça na imagem depende da distância da câmera. Uma fumaça pequena pode ser um incêndio enorme a 30 km. O critério deve ser o que se vê na imagem, com exemplos no guia de rotulagem.</p>
+</section>
+
+<section id="qualidade">
+  <div class="head">
+    <p class="eyebrow">O coração do trabalho</p>
+    <h2>Sete passos de curadoria</h2>
+  </div>
+  <p class="prose">A contribuição do grupo é a qualidade do dataset. Estes passos seguem a ordem em que devem ser feitos.</p>
+  <ol class="steps">
+    <li><div><h3>Escrever o guia de rotulagem antes de rotular</h3><p>Duas ou três páginas: definição de cada classe, cinco exemplos positivos e cinco negativos por classe, e a decisão para cada caso duvidoso (fumaça tênue, foto noturna só com brilho, queimada agrícola controlada, área já queimada sem fumaça). O que ninguém consegue decidir vai para <code>descartadas_ambiguas</code>, com o motivo anotado.</p></div></li>
+    <li><div><h3>Olhar 100% das imagens</h3><p>Toda imagem que entra no dataset é vista por uma pessoa do grupo. O FiftyOne mostra as imagens em grade, filtradas por fonte e classe, e acelera muito essa revisão.</p></div></li>
+    <li><div><h3>Remover duplicatas e quase duplicatas</h3><p>Frames vizinhos de um vídeo são quase iguais. Use hash perceptual (pHash) e similaridade de embeddings com imagededup ou fastdup, e mantenha no máximo um frame a cada N segundos por vídeo. Uma auditoria recente achou 15% de duplicatas exatas e cerca de 55% de quase duplicatas nas imagens de fogo do D-Fire.</p></div></li>
+    <li><div><h3>Dividir treino, validação e teste por grupo</h3><p>Todas as imagens de um mesmo vídeo, câmera ou incêndio ficam no mesmo conjunto. No scikit-learn, <code>StratifiedGroupKFold</code> ou <code>GroupShuffleSplit</code> fazem isso. O ideal é o teste ter uma fonte inteira que o modelo nunca viu. Veja o diagrama logo abaixo.</p></div></li>
+    <li><div><h3>Medir a concordância entre anotadores</h3><p>Duas pessoas rotulam a mesma amostra de 200 a 300 imagens sem conversar. Calcule o kappa de Cohen (<code>cohen_kappa_score</code>). Abaixo de cerca de 0,8, revise o guia e repita.</p></div></li>
+    <li><div><h3>Caçar erros de rótulo com o próprio modelo</h3><p>Depois de treinar um primeiro modelo, o cleanlab aponta as imagens cujo rótulo provavelmente está errado. O grupo revisa só essas e corrige.</p></div></li>
+    <li><div><h3>Documentar numa ficha do dataset</h3><p>Um README com origem e licença de cada fonte, critérios de inclusão e exclusão, contagens por classe e por fonte, como a divisão foi feita e as limitações. Cada imagem tem uma linha no <code>metadados.csv</code>:</p><p><code>arquivo, classe, extensao, fonte, id_grupo, licenca, cor_fumaca, dia_noite, negativo_dificil, observacoes</code></p></div></li>
+  </ol>
+</section>
+
+<section id="vazamento">
+  <div class="head">
+    <p class="eyebrow">Por que o passo 4 importa</p>
+    <h2>Vazamento: quando o teste já foi visto no treino</h2>
+  </div>
+  <p class="prose">Cada quadradinho é um frame. As cores indicam de qual vídeo ele veio. Frames do mesmo vídeo são quase idênticos.</p>
+  <div class="leak">
+    <div class="leakbox">
+      <span class="pill warn">Divisão aleatória</span>
+      <div class="row"><span class="k">treino</span><div class="frames"><i class="f vA"></i><i class="f vA"></i><i class="f vB"></i><i class="f vA"></i><i class="f vC"></i><i class="f vB"></i><i class="f vC"></i><i class="f vA"></i><i class="f vB"></i><i class="f vC"></i></div></div>
+      <div class="row"><span class="k">teste</span><div class="frames"><i class="f vA"></i><i class="f vB"></i><i class="f vC"></i></div></div>
+      <p>O teste tem frames "irmãos" de imagens do treino. O modelo reconhece a cena, não o fogo. A acurácia sobe artificialmente e despenca no uso real.</p>
+    </div>
+    <div class="leakbox">
+      <span class="pill ok">Divisão por grupo</span>
+      <div class="row"><span class="k">treino</span><div class="frames"><i class="f vA"></i><i class="f vA"></i><i class="f vA"></i><i class="f vA"></i><i class="f vA"></i><i class="f vB"></i><i class="f vB"></i><i class="f vB"></i><i class="f vB"></i></div></div>
+      <div class="row"><span class="k">teste</span><div class="frames"><i class="f vC"></i><i class="f vC"></i><i class="f vC"></i><i class="f vC"></i></div></div>
+      <p>O vídeo C inteiro fica no teste. A acurácia medida é menor, mas é a verdadeira: mostra como o modelo se sai numa cena nova.</p>
+    </div>
+  </div>
+  <div class="legend"><span><i class="f vA"></i> vídeo A</span><span><i class="f vB"></i> vídeo B</span><span><i class="f vC"></i> vídeo C</span></div>
+</section>
+
+<section id="ferramentas">
+  <div class="head">
+    <p class="eyebrow">Caixa de ferramentas</p>
+    <h2>Ferramentas por etapa</h2>
+  </div>
+  <p class="prose">Todas são gratuitas e rodam em Python ou no navegador.</p>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Etapa</th><th>Ferramenta</th><th>Para quê</th></tr></thead>
+      <tbody>
+        <tr><td>Organização</td><td>Python, pandas</td><td>Pastas por classe e o <code>metadados.csv</code></td></tr>
+        <tr><td>Revisão visual</td><td><a href="https://github.com/voxel51/fiftyone" target="_blank" rel="noopener">FiftyOne</a></td><td>Navegar, filtrar e marcar imagens problemáticas; ver duplicatas e erros prováveis</td></tr>
+        <tr><td>Deduplicação</td><td><a href="https://github.com/idealo/imagededup" target="_blank" rel="noopener">imagededup</a>, <a href="https://github.com/visual-layer/fastdup" target="_blank" rel="noopener">fastdup</a></td><td>pHash para cópias exatas, embeddings para quase duplicatas</td></tr>
+        <tr><td>Extração de frames</td><td><a href="https://ffmpeg.org" target="_blank" rel="noopener">ffmpeg</a>, <a href="https://opencv.org" target="_blank" rel="noopener">OpenCV</a></td><td>Tirar frames de vídeos com intervalo mínimo entre eles</td></tr>
+        <tr><td>Rotulagem com caixas</td><td><a href="https://labelstud.io" target="_blank" rel="noopener">Label Studio</a>, <a href="https://github.com/cvat-ai/cvat" target="_blank" rel="noopener">CVAT</a>, <a href="https://roboflow.com" target="_blank" rel="noopener">Roboflow</a></td><td>Só se o grupo evoluir para detecção; exportam YOLO e COCO</td></tr>
+        <tr><td>Divisão dos conjuntos</td><td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.StratifiedGroupKFold.html" target="_blank" rel="noopener">scikit-learn StratifiedGroupKFold</a></td><td>Divisão por vídeo, câmera ou incêndio, mantendo a proporção das classes</td></tr>
+        <tr><td>Erros de rótulo</td><td><a href="https://github.com/cleanlab/cleanlab" target="_blank" rel="noopener">cleanlab</a></td><td>Aponta imagens com rótulo suspeito usando as probabilidades do modelo</td></tr>
+        <tr><td>Concordância</td><td><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cohen_kappa_score.html" target="_blank" rel="noopener">cohen_kappa_score</a></td><td>Kappa de Cohen entre dois anotadores</td></tr>
+        <tr><td>Modelo de referência</td><td><a href="https://pytorch.org/vision/stable/models.html" target="_blank" rel="noopener">torchvision</a>, <a href="https://docs.ultralytics.com/tasks/classify/" target="_blank" rel="noopener">Ultralytics YOLO (classificação)</a></td><td>Transfer learning com ResNet-50, EfficientNet ou YOLOv8-cls</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="experimentos">
+  <div class="head">
+    <p class="eyebrow">Mostrar que a curadoria vale a pena</p>
+    <h2>Três experimentos curtos</h2>
+  </div>
+  <p class="prose">O foco é o dataset, mas um modelo simples, sempre o mesmo, mostra o efeito de cada decisão.</p>
+  <div class="compare">
+    <div class="opt">
+      <span class="pill rec">Experimento A</span>
+      <h3>Bruto versus curado</h3>
+      <p>Treinar com um dataset "como veio da internet" (por exemplo, um fire/non-fire do Kaggle) e com o dataset curado. Testar os dois no teste curado, com negativos difíceis. Hipótese: o modelo do dataset bruto erra muito mais em neblina, nuvem e pôr do sol.</p>
+    </div>
+    <div class="opt">
+      <span class="pill rec">Experimento B</span>
+      <h3>Divisão aleatória versus por grupo</h3>
+      <p>Mesmo dataset, duas divisões. Mostra quanto da acurácia "some" quando se elimina o vazamento entre frames do mesmo vídeo. Resultado simples e muito didático.</p>
+    </div>
+    <div class="opt">
+      <span class="pill rec">Experimento C</span>
+      <h3>Generalização</h3>
+      <p>Testar o modelo final nas imagens brasileiras da coleta própria e, se der tempo, em cerca de 100 imagens de fogo em estrada ou cidade.</p>
+    </div>
+  </div>
+  <p class="prose"><strong>Métricas:</strong> precisão, recall e F1 por classe, matriz de confusão e taxa de falso alarme nos negativos difíceis. Em detecção de incêndio, deixar de ver um fogo (recall baixo) e dar alarme falso importam mais que a acurácia geral.</p>
+</section>
+
+<section id="cronograma">
+  <div class="head">
+    <p class="eyebrow">Cerca de 12 semanas</p>
+    <h2>Cronograma sugerido</h2>
+  </div>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Semanas</th><th>Atividade</th><th>Entrega</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1–2</td><td>Leitura dirigida; decisão do ponto de vista e das classes; guia de rotulagem v1</td><td>Guia de rotulagem</td></tr>
+        <tr><td class="num">3–4</td><td>Download das fontes; filtragem por escopo; extração de frames; deduplicação</td><td>Conjunto bruto filtrado e relatório de duplicatas</td></tr>
+        <tr><td class="num">5–6</td><td>Revisão visual de 100%; coleta de negativos difíceis; coleta própria</td><td>Dataset v1 e <code>metadados.csv</code></td></tr>
+        <tr><td class="num">7</td><td>Dupla rotulagem de uma amostra; kappa; revisão do guia</td><td>Kappa e guia v2</td></tr>
+        <tr><td class="num">8–9</td><td>Divisão por grupo; modelo de referência; cleanlab; correções</td><td>Dataset v2 e primeiros resultados</td></tr>
+        <tr><td class="num">10–11</td><td>Experimentos A, B e C</td><td>Tabelas e matrizes de confusão</td></tr>
+        <tr><td class="num">12</td><td>Ficha do dataset, relatório e apresentação</td><td>Entrega final</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="prose"><strong>Versão mínima, se o tempo apertar:</strong> só o nível 1, duas fontes (Pyro-SDIS e FIgLib) mais a coleta própria, e os experimentos A e B. O trabalho continua completo.</p>
+</section>
+
+<section id="datasets">
+  <div class="head">
+    <p class="eyebrow">Levantamento de outubro de 2026</p>
+    <h2>Catálogo de datasets públicos</h2>
+  </div>
+  <p class="prose">Os marcados como <span class="pill rec">ponto de partida</span> combinam com o escopo proposto. Números e licenças foram conferidos na fonte sempre que possível; "NC" quer dizer não confirmado. Antes de usar qualquer um, leia a licença e abra uma amostra das imagens.</p>
+  <div class="filters" role="group" aria-label="Filtrar datasets">
+    <button class="chip" type="button" data-f="todos" aria-pressed="true">Todos</button>
+    <button class="chip" type="button" data-f="rec" aria-pressed="false">Ponto de partida</button>
+    <button class="chip" type="button" data-f="torre" aria-pressed="false">Câmera fixa / torre</button>
+    <button class="chip" type="button" data-f="drone" aria-pressed="false">Drone</button>
+    <button class="chip" type="button" data-f="misto" aria-pressed="false">Misto / multiambiente</button>
+    <button class="chip" type="button" data-f="satelite" aria-pressed="false">Satélite</button>
+    <button class="chip" type="button" data-f="sintetico" aria-pressed="false">Sintético</button>
+    <button class="chip" type="button" data-f="br" aria-pressed="false">Brasil</button>
+    <input class="search" id="busca" type="search" placeholder="Buscar por nome ou observação" aria-label="Buscar dataset">
+    <span class="count" id="contagem"></span>
+  </div>
+  <div class="tablebox">
+    <table>
+      <thead><tr><th>Dataset</th><th>Ano</th><th>Tipo</th><th>Tamanho</th><th>Licença</th><th>Observações</th></tr></thead>
+      <tbody id="tabela"></tbody>
+    </table>
+  </div>
+</section>
+
+<section id="imagens">
+  <div class="head">
+    <p class="eyebrow">Para a coleta própria e para os negativos difíceis</p>
+    <h2>Onde encontrar imagens de interesse</h2>
+  </div>
+  <div class="callout"><strong>Licença primeiro.</strong> Imagem achada na internet não é imagem livre. Para cada fonte, anote no <code>metadados.csv</code> de onde veio e sob qual licença. Prefira Creative Commons, domínio público ou autorização por escrito. Fotos de imprensa só com permissão.</div>
+  <div class="linkgrid">
+    <div class="linkgroup">
+      <h3>Câmeras de monitoramento de incêndio</h3>
+      <ul>
+        <li><a href="https://www.hpwren.ucsd.edu/cameras/" target="_blank" rel="noopener">HPWREN Cameras</a><span>Rede de câmeras no sul da Califórnia, com arquivo histórico. É a origem do FIgLib.</span></li>
+        <li><a href="https://alertcalifornia.org" target="_blank" rel="noopener">ALERTCalifornia</a><span>Mais de mil câmeras em torres na Califórnia; imagens ao vivo e de eventos.</span></li>
+        <li><a href="https://www.alertwildfire.org" target="_blank" rel="noopener">ALERTWildfire</a><span>Câmeras no oeste dos EUA; fonte do dataset Nemo.</span></li>
+        <li><a href="https://pyronear.org" target="_blank" rel="noopener">Pyronear</a><span>Projeto aberto franco-chileno de detecção por câmeras; publica datasets e modelos.</span></li>
+      </ul>
+    </div>
+    <div class="linkgroup">
+      <h3>Acervos com licença aberta</h3>
+      <ul>
+        <li><a href="https://commons.wikimedia.org/wiki/Category:Wildfires" target="_blank" rel="noopener">Wikimedia Commons: Wildfires</a><span>Milhares de fotos com licença indicada em cada uma. Veja também as subcategorias por país.</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/Category:Wildfires_in_Brazil" target="_blank" rel="noopener">Wikimedia Commons: Wildfires in Brazil</a><span>Queimadas no Cerrado, Pantanal e Amazônia.</span></li>
+        <li><a href="https://www.flickr.com/search/?text=wildfire%20smoke&amp;license=2%2C3%2C4%2C5%2C6%2C9" target="_blank" rel="noopener">Flickr, busca com filtro Creative Commons</a><span>Troque o termo por "queimada", "incêndio florestal", "fumaça".</span></li>
+        <li><a href="https://www.youtube.com/results?search_query=inc%C3%AAndio+florestal&amp;sp=EgIwAQ%253D%253D" target="_blank" rel="noopener">YouTube, filtro Creative Commons</a><span>Vídeos de onde extrair frames. Lembre da divisão por vídeo.</span></li>
+      </ul>
+    </div>
+    <div class="linkgroup">
+      <h3>Brasil</h3>
+      <ul>
+        <li><a href="https://terrabrasilis.dpi.inpe.br/queimadas/portal/" target="_blank" rel="noopener">INPE, Programa Queimadas</a><span>Focos de calor por satélite. Útil para saber onde e quando houve fogo e procurar imagens daquele evento.</span></li>
+        <li><a href="https://agenciabrasil.ebc.com.br/fotos" target="_blank" rel="noopener">Agência Brasil, fotos</a><span>Acervo público de fotojornalismo com muitas queimadas; confira a licença indicada no site.</span></li>
+        <li><a href="https://www.defesacivil.rs.gov.br" target="_blank" rel="noopener">Defesa Civil do RS</a><span>Contato para pedir imagens de ocorrências no estado.</span></li>
+        <li><a href="https://www.gov.br/ibama/pt-br/assuntos/fiscalizacao-e-protecao-ambiental/incendios-florestais" target="_blank" rel="noopener">Ibama, Prevfogo</a><span>Centro de prevenção e combate a incêndios florestais; possível parceiro para imagens de brigadas.</span></li>
+        <li><span>Coleta própria: brigadas municipais, corpo de bombeiros e queimas controladas acompanhadas, sempre com autorização registrada.</span></li>
+      </ul>
+    </div>
+    <div class="linkgroup">
+      <h3>Negativos difíceis (floresta sem fogo)</h3>
+      <ul>
+        <li><a href="http://places2.csail.mit.edu" target="_blank" rel="noopener">Places365 (MIT)</a><span>Dataset acadêmico de cenas com categorias de floresta, campo e montanha.</span></li>
+        <li><a href="https://commons.wikimedia.org/wiki/Category:Fog_in_forests" target="_blank" rel="noopener">Wikimedia Commons: neblina em florestas</a><span>Fumaça e neblina são o principal falso positivo.</span></li>
+        <li><a href="https://unsplash.com/s/photos/forest-fog" target="_blank" rel="noopener">Unsplash</a> e <a href="https://www.pexels.com/search/forest%20sunset/" target="_blank" rel="noopener">Pexels</a><span>Neblina, pôr do sol e nuvens baixas sobre mata. Licenças próprias, que permitem uso gratuito.</span></li>
+        <li><span>Frames do FIgLib anteriores à ignição: a mesma cena, sem fumaça. São os negativos mais valiosos.</span></li>
+      </ul>
+    </div>
+    <div class="linkgroup">
+      <h3>Buscadores de datasets</h3>
+      <ul>
+        <li><a href="https://huggingface.co/datasets?search=wildfire" target="_blank" rel="noopener">Hugging Face Datasets</a><span>Busca por "wildfire", "smoke", "fire".</span></li>
+        <li><a href="https://www.kaggle.com/search?q=wildfire+smoke" target="_blank" rel="noopener">Kaggle</a><span>Muitos conjuntos sem documentação; use com cuidado redobrado.</span></li>
+        <li><a href="https://universe.roboflow.com/search?q=wildfire%20smoke" target="_blank" rel="noopener">Roboflow Universe</a><span>Conjuntos já com caixas; verifique autor, licença e conteúdo.</span></li>
+        <li><a href="https://zenodo.org/search?q=wildfire%20dataset" target="_blank" rel="noopener">Zenodo</a> e <a href="https://data.mendeley.com/research-data/?search=forest%20fire" target="_blank" rel="noopener">Mendeley Data</a><span>Dados de artigos científicos, com DOI e licença.</span></li>
+      </ul>
+    </div>
+    <div class="linkgroup">
+      <h3>Satélite (fora do escopo, para contexto)</h3>
+      <ul>
+        <li><a href="https://firms.modaps.eosdis.nasa.gov" target="_blank" rel="noopener">NASA FIRMS</a><span>Focos ativos no mundo inteiro, quase em tempo real.</span></li>
+        <li><a href="https://worldview.earthdata.nasa.gov" target="_blank" rel="noopener">NASA Worldview</a><span>Imagens diárias onde as plumas de grandes incêndios aparecem bem.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="papers">
+  <div class="head">
+    <p class="eyebrow">Literatura</p>
+    <h2>Papers para ler</h2>
+  </div>
+  <h3>Comece por estes</h3>
+  <ol class="refs">
+    <li><a href="https://arxiv.org/abs/2503.14552" target="_blank" rel="noopener">Boroujeni et al. Eyes on the Environment: AI-Driven Analysis for Fire and Smoke Classification, Segmentation, and Detection.</a> <span>arXiv 2503.14552, 2025. Revisão de 29 datasets com pontos fortes e fracos de cada um.</span></li>
+    <li><a href="https://arxiv.org/abs/2410.16631" target="_blank" rel="noopener">Han et al. Benchmarking Multi-Scene Fire and Smoke Detection.</a> <span>arXiv 2410.16631, 2024. A crítica mais direta a duplicatas, marcas d'água e rótulos ruins nos datasets antigos.</span></li>
+    <li><a href="https://arxiv.org/abs/2112.08598" target="_blank" rel="noopener">Dewangan et al. FIgLib &amp; SmokeyNet: Dataset and Deep Learning Model for Real-Time Wildland Fire Smoke Detection.</a> <span>Remote Sensing 14(4):1007, 2022.</span></li>
+    <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12350734/" target="_blank" rel="noopener">Pesonen et al. Boreal Forest Fire dataset.</a> <span>Scientific Data 12:1419, 2025. Bom exemplo de como dividir treino e teste sem vazamento.</span></li>
+    <li><a href="https://arxiv.org/abs/1803.09010" target="_blank" rel="noopener">Gebru et al. Datasheets for Datasets.</a> <span>Communications of the ACM 64(12), 2021. Modelo para a ficha do dataset.</span></li>
+  </ol>
+  <h3>Revisões da área</h3>
+  <ol class="refs">
+    <li><a href="https://doi.org/10.1016/j.eswa.2024.124783" target="_blank" rel="noopener">Gragnaniello, Greco, Sansone, Vento. Fire and smoke detection from videos: A literature review under a novel taxonomy.</a> <span>Expert Systems with Applications, 2024. 153 artigos e 17 datasets.</span></li>
+    <li><a href="https://www.mdpi.com/2076-3417/15/18/10255" target="_blank" rel="noopener">Elhanashi et al. Early Fire and Smoke Detection Using Deep Learning: A Comprehensive Review of Models, Datasets, and Challenges.</a> <span>Applied Sciences 15(18):10255, 2025.</span></li>
+    <li><a href="https://doi.org/10.3390/fire6080315" target="_blank" rel="noopener">Jin et al. Video Fire Detection Methods Based on Deep Learning: Datasets, Methods, and Future Directions.</a> <span>Fire 6(8):315, 2023.</span></li>
+    <li><a href="https://www.mdpi.com/2072-4292/15/7/1821" target="_blank" rel="noopener">Ghali, Akhloufi. Deep Learning Approaches for Wildland Fires Remote Sensing: Classification, Detection, and Segmentation.</a> <span>Remote Sensing 15(7):1821, 2023.</span></li>
+    <li><a href="https://doi.org/10.1016/j.isprsjprs.2022.01.013" target="_blank" rel="noopener">Chaturvedi, Khanna, Ojha. A survey on vision-based outdoor smoke detection techniques for environmental safety.</a> <span>ISPRS Journal of Photogrammetry and Remote Sensing 185:158-187, 2022.</span></li>
+    <li><a href="https://ideas.repec.org/a/gam/jlands/v13y2024i10p1696-d1500445.html" target="_blank" rel="noopener">Vasconcelos et al. Revisão de deep learning para detecção de fogo em sensoriamento remoto (1990-2023).</a> <span>Land 13(10):1696, 2024. Autores brasileiros.</span></li>
+    <li><a href="https://repository.bilkent.edu.tr/bitstream/11693/38125/1/Video%20fire%20detection%20-%20Review.pdf" target="_blank" rel="noopener">Çetin et al. Video fire detection: Review.</a> <span>Digital Signal Processing, 2013. Referência clássica.</span></li>
+  </ol>
+  <h3>Artigos dos datasets mais citados</h3>
+  <ol class="refs">
+    <li><a href="https://github.com/gaia-solutions-on-demand/DFireDataset" target="_blank" rel="noopener">de Venâncio, Lisboa, Barbosa. An automatic fire detection system based on deep convolutional neural networks for low-power, resource-constrained devices (D-Fire).</a> <span>Neural Computing and Applications, 2022. UFMG.</span></li>
+    <li><a href="https://arxiv.org/abs/2402.05349" target="_blank" rel="noopener">Lostanlen et al. Scrapping the Web for Early Wildfire Detection (Pyronear).</a> <span>arXiv 2402.05349, 2024/2025.</span></li>
+    <li><a href="https://arxiv.org/abs/2012.14036" target="_blank" rel="noopener">Shamsoshoara et al. Aerial imagery pile burn detection using deep learning: the FLAME dataset.</a> <span>Computer Networks, 2021.</span></li>
+    <li><a href="https://arxiv.org/abs/2412.02831" target="_blank" rel="noopener">Hopkins et al. FLAME 3: Radiometric Thermal UAV Imagery for Wildfire Management.</a> <span>arXiv 2412.02831, 2024.</span></li>
+    <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11398105/" target="_blank" rel="noopener">Catargiu, Cleju, Ciocoiu. A Comparative Performance Evaluation of YOLO-Type Detectors on a New Open Fire and Smoke Dataset.</a> <span>Sensors 24(17):5597, 2024. Inclui classe "other" com falsos positivos.</span></li>
+    <li><a href="https://arxiv.org/abs/2511.02495" target="_blank" rel="noopener">Liu, Khajavi, Jiang. DetectiumFire.</a> <span>arXiv 2511.02495, 2025. Mediu as duplicatas do D-Fire.</span></li>
+    <li><a href="https://www.mdpi.com/2072-4292/14/16/3979" target="_blank" rel="noopener">Yazdi et al. Nemo: An Open-Source Transformer-Supercharged Benchmark for Fine-Grained Wildfire Smoke Detection.</a> <span>Remote Sensing 14(16):3979, 2022. Classes por densidade de fumaça.</span></li>
+    <li><a href="https://arxiv.org/abs/1506.03495" target="_blank" rel="noopener">Chino et al. BoWFire: Detection of Fire in Still Images by Integrating Pixel Color and Texture Analysis.</a> <span>SIBGRAPI 2015. USP São Carlos.</span></li>
+    <li><a href="https://arxiv.org/abs/2101.03409" target="_blank" rel="noopener">Pereira et al. Active fire detection in Landsat-8 imagery: a large-scale dataset and a deep-learning study.</a> <span>ISPRS Journal, 2021. UTFPR.</span></li>
+    <li><a href="https://www.mdpi.com/2072-4292/14/3/688" target="_blank" rel="noopener">Higa et al. Active Fire Mapping on Brazilian Pantanal Based on Deep Learning and CBERS 04A Imagery.</a> <span>Remote Sensing 14(3):688, 2022.</span></li>
+  </ol>
+  <h3>Qualidade de dados, em geral</h3>
+  <ol class="refs">
+    <li><a href="https://arxiv.org/abs/2103.14749" target="_blank" rel="noopener">Northcutt, Athalye, Mueller. Pervasive Label Errors in Test Sets Destabilize Machine Learning Benchmarks.</a> <span>NeurIPS Datasets and Benchmarks, 2021. A base do cleanlab.</span></li>
+  </ol>
+</section>
+
+<footer>
+  <p>Proposta elaborada para o grupo da Maria de Lurdes, com base na conversa entre o Prof. Dr. Diego Kreutz e o Prof. Welfer e num levantamento de datasets e literatura feito em outubro de 2026. Números marcados como NC não foram confirmados na fonte original; confira antes de citar.</p>
+</footer>
+</main>
+
+<script>
+const D = [
+  {n:"Pyro-SDIS", u:"https://huggingface.co/datasets/pyronear/pyro-sdis", a:"2025", t:"torre", s:"12.378 imagens (v2.0)", l:"Apache 2.0", o:"Câmeras em torres na França. Inclui 1.634 falsos alarmes reais do sistema: ótimos negativos difíceis.", rec:true},
+  {n:"FIgLib (HPWREN)", u:"https://www.hpwren.ucsd.edu/FIgLib/", a:"2020–2024", t:"torre", s:"24.800+ imagens, 315+ sequências", l:"Crédito ao HPWREN", o:"Sequências antes e depois da ignição na mesma cena. Dividir por sequência, nunca por frame.", rec:true},
+  {n:"PYRONEAR-2025", u:"https://arxiv.org/abs/2402.05349v3", a:"2025", t:"torre", s:"cerca de 50 mil imagens, 640 incêndios", l:"NC", o:"França, Espanha, Chile e EUA. Testes entre datasets mostram F1 de 60–70%."},
+  {n:"Wildfire Smoke (AI For Mankind)", u:"https://github.com/aiformankind/wildfire-smoke-detection-research", a:"2019", t:"torre", s:"737 imagens", l:"CC BY-NC-SA 4.0", o:"Pequeno; derivado do HPWREN, então se sobrepõe ao FIgLib."},
+  {n:"Nemo", u:"https://www.mdpi.com/2072-4292/14/16/3979", a:"2022", t:"torre", s:"frames de 1.073 vídeos", l:"Apache 2.0", o:"Classes de densidade de fumaça (baixa, média, alta): próximas da ideia de extensão do incêndio."},
+  {n:"D-Fire", u:"https://github.com/gaia-solutions-on-demand/DFireDataset", a:"2022", t:"misto", s:"21.527 imagens; caixas de fogo e fumaça", l:"CC0 1.0", o:"UFMG. Filtrar só cenas florestais e deduplicar: muitas quase duplicatas e imagens do HPWREN dentro.", rec:true, br:true},
+  {n:"Boreal Forest Fire", u:"https://pmc.ncbi.nlm.nih.gov/articles/PMC12350734/", a:"2025", t:"drone", s:"4.954 imagens, 288 clipes, 1.472 máscaras", l:"Verificar", o:"Finlândia, vídeo 4K de drone. Divisão exemplar: intervalo de 120 s e um local inteiro só no teste.", rec:true},
+  {n:"The Wildfire Dataset", u:"https://www.mdpi.com/1999-4907/14/9/1697", a:"2023", t:"misto", s:"cerca de 2.700 imagens (NC)", l:"Verificar", o:"El-Madafri et al., Forests 14(9):1697. Florestal, com elementos de confusão como neblina e pôr do sol.", rec:true},
+  {n:"FLAME", u:"https://ieee-dataport.org/open-access/flame-dataset-aerial-imagery-pile-burn-detection-using-drones-uavs", a:"2021", t:"drone", s:"47.992 frames 254×254; 2.003 máscaras", l:"Login IEEE", o:"Uma única queima no Arizona. Frames consecutivos: vazamento forte em divisão aleatória."},
+  {n:"FLAME 2", u:"https://data.ucar.edu/dataset/wildland-fire-detection-and-monitoring-using-a-drone-collected-rgb-ir-image-dataset", a:"2022", t:"drone", s:"cerca de 53 mil pares RGB/IR", l:"CC BY-NC 4.0", o:"Queima prescrita num só local. Rótulos de fogo e fumaça por imagem."},
+  {n:"FLAME 3", u:"https://arxiv.org/abs/2412.02831", a:"2024", t:"drone", s:"738 quartetos (subconjunto de CV)", l:"NC", o:"Térmico radiométrico. Conjunto completo só por pedido."},
+  {n:"FLAME2-DT", u:"https://ieee-dataport.org/documents/flame2-dt/embed", a:"2025", t:"drone", s:"1.280 pares 640×512", l:"Assinatura IEEE", o:"Segmentação de fogo e fumaça em RGB e térmico."},
+  {n:"UAVs-FFDB", u:"https://researchportal.port.ac.uk/en/publications/uavs-ffdb-a-high-resolution-dataset-for-advancing-forest-fire-det/", a:"2024", t:"drone", s:"1.653 imagens", l:"NC", o:"Data in Brief. Floresta, anotado no makesense.ai."},
+  {n:"FASDD", u:"https://doi.org/10.57760/sciencedb.j00104.00103", a:"2025", t:"misto", s:"mais de 120 mil imagens", l:"NC", o:"Terrestre, drone e satélite. Subconjunto de satélite criticado por usar caixas e só bandas visíveis."},
+  {n:"FireAndSmoke (Catargiu)", u:"https://github.com/CostiCatargiu/NEWFireSmokeDataset_YoloModels", a:"2024", t:"misto", s:"22.970 imagens, 93 mil+ instâncias", l:"CC BY 4.0", o:"Classe 'other' com pôr do sol, nuvens, postes e faróis. Frames de cerca de 1.200 vídeos do YouTube."},
+  {n:"LFDN (MIVIA)", u:"https://mivia.unisa.it/large-fire-dataset-with-negative-samples-lfdn/", a:"2024", t:"misto", s:"36.554 imagens", l:"Por formulário", o:"Muitos negativos difíceis: sol, nuvens, neblina, reflexos, objetos vermelhos."},
+  {n:"MS-FSDB", u:"https://xiaoyihan6.github.io/FSD/", a:"2024", t:"misto", s:"12.586 imagens (cerca de 8.983 negativas)", l:"NC", o:"2.731 cenas. Criado para corrigir duplicação e rótulos dos datasets antigos."},
+  {n:"DetectiumFire", u:"https://arxiv.org/abs/2511.02495", a:"2025", t:"misto", s:"cerca de 22,5 mil imagens, 2,5 mil vídeos", l:"NC", o:"Deduplicado com imagededup; inclui níveis de severidade e legendas."},
+  {n:"DFS (Dataset for Fire and Smoke)", u:"https://dl.acm.org/doi/10.1007/s11042-022-13580-x", a:"2023", t:"misto", s:"9.462 imagens", l:"NC", o:"Classe 'other' para luzes parecidas com fogo. Redundância e marcas d'água."},
+  {n:"BoWFire", u:"https://arxiv.org/abs/1506.03495", a:"2015", t:"misto", s:"466 imagens com máscaras", l:"NC", o:"USP São Carlos. Pequeno; traz negativos parecidos com fogo.", br:true},
+  {n:"FiSmo", u:"https://repositorio.usp.br/item/002854714", a:"2017", t:"misto", s:"6.063 a 9.448 imagens (fontes divergem)", l:"NC", o:"USP. Compilação de outras bases; qualidade desigual.", br:true},
+  {n:"MIVIA Fire Detection", u:"https://mivia.unisa.it/datasets/video-analysis-datasets/fire-detection-dataset/", a:"2015", t:"misto", s:"31 vídeos", l:"Por pedido", o:"Clássico de vídeo, com negativos de objetos vermelhos, fumaça e nuvens."},
+  {n:"FIRESENSE", u:"https://zenodo.org/records/836749", a:"2017", t:"misto", s:"49 vídeos", l:"NC", o:"Chama e fumaça; baixa resolução."},
+  {n:"Corsican Fire Database", u:"https://cfdb.univ-corse.fr/donnees_images_page_135_menu,2.htm", a:"2017", t:"misto", s:"500 imagens visíveis, 100 pares NIR", l:"Só pesquisa", o:"Chamas florestais de perto, com máscaras. Sem redistribuição."},
+  {n:"Fire Recognition (Data in Brief)", u:"https://data.mendeley.com/datasets/7jk6xh7h6w/4", a:"2026", t:"misto", s:"1.112 originais", l:"CC BY 4.0", o:"Classes Real Fire, Smoke, Safe Fire, Artificial Fire. Imagens aumentadas misturadas às originais: risco de vazamento."},
+  {n:"DeepFire", u:"https://data.mendeley.com/datasets/gjmr63rz2r/1", a:"2022", t:"misto", s:"1.900 imagens 250×250", l:"NC", o:"Exemplo típico de fire/no-fire simples. Bom candidato para o Experimento A (dataset bruto)."},
+  {n:"Forest Fire Dataset (Shamta e Demir)", u:"https://data.mendeley.com/datasets/fcsjwd9gr6/2", a:"2024", t:"misto", s:"2.974 imagens (classificação)", l:"NC", o:"Floresta; também tem subconjunto de detecção."},
+  {n:"MultiNatSmoke / AusSmoke", u:"https://github.com/henryzhao0615/MultiNatSmoke", a:"2026", t:"torre", s:"70.818 imagens com máscaras", l:"NC", o:"Agrega FIgLib, D-Fire e outros: cuidado com sobreposição entre datasets."},
+  {n:"Landsat-8 Active Fire", u:"https://github.com/pereira-gha/activefire", a:"2021", t:"satelite", s:"150 mil+ patches, 200 GB+", l:"CC BY 4.0", o:"UTFPR. Rótulos gerados por algoritmo; há versão para a América do Sul.", br:true},
+  {n:"Pantanal CBERS-4A", u:"https://www.mdpi.com/2072-4292/14/3/688", a:"2022", t:"satelite", s:"775 patches de 49 cenas", l:"NC", o:"Focos ativos no Pantanal em 2020.", br:true},
+  {n:"Cerrado multitemporal (INPE)", u:"https://arxiv.org/abs/2609.23687", a:"2025", t:"satelite", s:"NC", l:"NC", o:"Área queimada na Chapada dos Veadeiros com CBERS-4/4A e Amazonia-1.", br:true},
+  {n:"WildfireSpreadTS", u:"https://zenodo.org/records/8006177", a:"2023", t:"satelite", s:"607 eventos, 13.607 imagens diárias", l:"NC", o:"Previsão de propagação; rótulos desbalanceados e ruidosos."},
+  {n:"TS-SatFire", u:"https://huggingface.co/datasets/SamuelWu318/ts-satfire", a:"2025", t:"satelite", s:"3.552 imagens, 71 GB", l:"NC", o:"VIIRS; focos ativos, área queimada e previsão."},
+  {n:"Sen2Fire", u:"https://zenodo.org/records/10881058", a:"2024", t:"satelite", s:"2.466 patches 512×512", l:"NC", o:"Sentinel-2; só quatro incêndios na Austrália."},
+  {n:"FireRisk", u:"https://github.com/CharmonyShen/FireRisk", a:"2023", t:"satelite", s:"91.872 imagens", l:"NC", o:"Classifica risco de fogo, não fogo."},
+  {n:"CaBuAr", u:"https://huggingface.co/datasets/DarthReca/california_burned_areas", a:"2023", t:"satelite", s:"NC", l:"OpenRAIL", o:"Área queimada na Califórnia, Sentinel-2 pré e pós."},
+  {n:"FLAME-SD / FLAME Diffuser", u:"https://arxiv.org/abs/2403.03463", a:"2024", t:"sintetico", s:"cerca de 10 mil imagens", l:"NC", o:"Stable Diffusion sobre frames do FLAME. Rendeu bem menos que dados reais."},
+  {n:"M4SFWD", u:"https://ieee-dataport.org/node/13288", a:"2024", t:"sintetico", s:"NC", l:"NC", o:"Unreal Engine 5, oito cenas com clima e luz variados."},
+  {n:"FireFly", u:"https://openaccess.thecvf.com/content/ICCV2023W/AIHADR/papers/Hu_FireFly_A_Synthetic_Dataset_for_Ember_Detection_in_Wildfire_ICCVW_2023_paper.pdf", a:"2023", t:"sintetico", s:"19.273 imagens (NC)", l:"NC", o:"Detecção de brasas, Unreal Engine 4."}
+];
+const NOMES = {torre:"Câmera fixa", drone:"Drone", misto:"Misto", satelite:"Satélite", sintetico:"Sintético"};
+const tb = document.getElementById("tabela");
+const ct = document.getElementById("contagem");
+const busca = document.getElementById("busca");
+let filtro = "todos";
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function render(){
+  const q = busca.value.trim().toLowerCase();
+  const rows = D.filter(d => {
+    if (filtro === "rec" && !d.rec) return false;
+    if (filtro === "br" && !d.br) return false;
+    if (!["todos","rec","br"].includes(filtro) && d.t !== filtro) return false;
+    if (q && !(d.n + " " + d.o).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  tb.innerHTML = rows.map(d => {
+    const tags = [d.rec ? '<span class="pill rec">ponto de partida</span>' : "", d.br ? '<span class="pill ok">Brasil</span>' : ""].join("");
+    return `<tr><td><a href="${esc(d.u)}" target="_blank" rel="noopener">${esc(d.n)}</a>${tags ? `<div class="tags">${tags}</div>` : ""}</td><td class="num">${esc(d.a)}</td><td>${NOMES[d.t]}</td><td>${esc(d.s)}</td><td>${esc(d.l)}</td><td>${esc(d.o)}</td></tr>`;
+  }).join("") || '<tr><td colspan="6" class="muted">Nenhum dataset corresponde a esse filtro.</td></tr>';
+  ct.textContent = rows.length + " de " + D.length;
+}
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+  filtro = b.dataset.f;
+  document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+  render();
+}));
+busca.addEventListener("input", render);
+render();
+</script>
