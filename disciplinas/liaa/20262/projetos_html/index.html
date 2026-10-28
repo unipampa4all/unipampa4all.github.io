@@ -1,0 +1,1269 @@
+<!doctype html><meta charset="utf-8">
+<html lang="pt-BR">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mapa dos projetos LIAA/LEAS</title>
+<meta name="description" content="Mapa, relações e evolução dos projetos de LIAA e LEAS 2026/2">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="pag larga">
+<header class="topo"><p class="sobre">LIAA · LEAS · Unipampa · 2026/2</p>
+<h1>Mapa dos projetos</h1>
+<p class="sub">Evolução dos projetos dos alunos de Laboratório de IA Aplicada (LIAA) e de Laboratório de Artefatos (LEAS), reconstruída a partir de 36 gravações de 08/09 a 27/10/2026.</p></header>
+<section class="kpis"><div class="kpi"><b>35</b><span>projetos</span></div><div class="kpi"><b>43</b><span>alunos citados</span></div><div class="kpi"><b>138</b><span>apresentações</span></div><div class="kpi"><b>11 · 23</b><span>mudanças de tema · ajustes de escopo</span></div><div class="kpi"><b>79</b><span>relações entre projetos</span></div></section>
+<section><h2>Mapa de relações</h2><p class="nota">Cada círculo é um projeto, colorido pela área e com tamanho proporcional ao número de apresentações. O anel tracejado indica que o projeto mudou de tema. Passe o mouse sobre um projeto para destacar as relações dele e clique para abrir a página.</p><div class="legenda"><span><i class="dot a0"></i>Segurança e redes</span><span><i class="dot a1"></i>Visão computacional e sinais</span><span><i class="dot a2"></i>Educação, jogos e acessibilidade</span><span><i class="dot a3"></i>Agentes e engenharia de software com IA</span><span><i class="dot a4"></i>Avaliação de artefatos e de LLMs</span><span><i class="dot a5"></i>Dados, previsão e negócios</span></div><div class="legenda"><span><i class="ln t-tema"></i>mesmo tema</span><span><i class="ln t-tecnica"></i>técnica parecida</span><span><i class="ln t-dados"></i>dados/datasets</span><span><i class="ln t-colaboracao"></i>colaboração possível</span><span><i class="ln t-contraste"></i>contraste</span></div><div class="mapa-box"><svg class="mapa" viewBox="0 0 1200 684" role="img" aria-label="Mapa de projetos e relações">
+<rect class="area-fundo a0" x="8" y="8" width="384" height="322" rx="14"/>
+<text class="area-rot a0" x="200" y="32" text-anchor="middle">Segurança e redes</text>
+<rect class="area-fundo a4" x="408" y="8" width="384" height="322" rx="14"/>
+<text class="area-rot a4" x="600" y="32" text-anchor="middle">Avaliação de artefatos e de LLMs</text>
+<rect class="area-fundo a3" x="808" y="8" width="384" height="322" rx="14"/>
+<text class="area-rot a3" x="1000" y="32" text-anchor="middle">Agentes e engenharia de software com IA</text>
+<rect class="area-fundo a5" x="8" y="338" width="384" height="322" rx="14"/>
+<text class="area-rot a5" x="200" y="362" text-anchor="middle">Dados, previsão e negócios</text>
+<rect class="area-fundo a1" x="408" y="338" width="384" height="322" rx="14"/>
+<text class="area-rot a1" x="600" y="362" text-anchor="middle">Visão computacional e sinais</text>
+<rect class="area-fundo a2" x="808" y="338" width="384" height="322" rx="14"/>
+<text class="area-rot a2" x="1000" y="362" text-anchor="middle">Educação, jogos e acessibilidade</text>
+<path class="aresta t-tema" data-a="adilson-douglas-incidentes" data-b="aparecido-firewall" d="M200.0,171.0 Q151.1,106.0 72.0,87.0"><title>Registro inteligente de incidentes no CESUP ↔ Faro: regras de firewall geradas com IA: Os dois começaram com análise de logs de servidores com IA e esbarraram na mesma necessidade de centralizar logs e definir o que é prioritário.</title></path>
+<path class="aresta t-tecnica" data-a="adilson-douglas-incidentes" data-b="beatriz-scanners" d="M200.0,171.0 Q264.0,194.0 328.0,171.0"><title>Registro inteligente de incidentes no CESUP ↔ Relatórios de scanners de vulnerabilidade para JSON: A proposta inicial de priorizar alertas de auditoria (Lynis) se parece com a triagem de relatórios de scanners de vulnerabilidade por LLM. / Ambos transformam saídas de ferramentas de segurança (scanners, Lynis) em informação estruturada para triagem e resposta.</title></path>
+<path class="aresta t-contraste" data-a="adilson-douglas-incidentes" data-b="erickson" d="M200.0,171.0 Q215.1,129.0 200.0,87.0"><title>Registro inteligente de incidentes no CESUP ↔ Detecção de tráfego malicioso com ML: O professor criticou nos dois projetos os sistemas baseados em formulários (&quot;coisa da década de 90&quot;) e pediu interação natural mediada por IA.</title></path>
+<path class="aresta t-tema" data-a="adilson-douglas-incidentes" data-b="matheus-provedor" d="M200.0,171.0 Q136.0,148.0 72.0,171.0"><title>Registro inteligente de incidentes no CESUP ↔ Detecção de anomalias na rede de um provedor: Ambos usam o Zabbix como fonte de eventos para correlacionar alarmes em cascata num único incidente. / Ambos usam o Zabbix como fonte de eventos para correlacionar e priorizar incidentes de infraestrutura.</title></path>
+<path class="aresta t-tecnica" data-a="alisson-emg" data-b="erickson" d="M472.0,543.0 Q418.1,266.0 200.0,87.0"><title>Classificação de gestos por EMG com TinyML ↔ Detecção de tráfego malicioso com ML: O Erickson também precisou refazer a divisão do dataset para eliminar vazamento entre treino e validação, cuidado que o Alisson adotou desde o início com os splits within-subject e cross-subject.</title></path>
+<path class="aresta t-tecnica" data-a="alisson-emg" data-b="jeorgel-pm25" d="M472.0,543.0 Q351.1,452.0 200.0,459.0"><title>Classificação de gestos por EMG com TinyML ↔ Previsão de curto prazo de PM2.5 em Luanda: Os dois trabalham com sinais ou séries temporais e insistem em protocolos causais, sem vazamento de dados futuros entre treino e teste. / Os dois tratam sinais ou séries temporais com protocolos causais e divisões sem vazamento de dados futuros.</title></path>
+<path class="aresta t-contraste" data-a="aparecido-firewall" data-b="elton-recon" d="M72.0,87.0 Q200.0,133.1 328.0,87.0"><title>Faro: regras de firewall geradas com IA ↔ Recon AI: Ambos dependem de fontes externas de reputação e inteligência (listas negras × Censys/NVD) cuja confiabilidade e atualização não controlam. / Os dois dependem de fontes externas de inteligência (Censys/NVD × AbuseIPDB/Spamhaus) e esbarram na mesma questão de confiabilidade e atualização dessas fontes.</title></path>
+<path class="aresta t-tema" data-a="aparecido-firewall" data-b="erickson" d="M72.0,87.0 Q136.0,110.0 200.0,87.0"><title>Faro: regras de firewall geradas com IA ↔ Detecção de tráfego malicioso com ML: Aparecido também detecta tráfego malicioso, mas a partir de logs web e com foco em gerar regras de firewall.</title></path>
+<path class="aresta t-tecnica" data-a="aparecido-firewall" data-b="julio-ids2017" d="M72.0,87.0 Q137.8,205.6 264.0,255.0"><title>Faro: regras de firewall geradas com IA ↔ Tráfego benigno ou malicioso no CIC-IDS2017: Ambos classificam tráfego benigno × malicioso, e o professor indicou a ambos o testbed do laboratório para gerar dados mais atuais. / Aparecido também usa IA para detectar anomalias de tráfego, no caso em logs web.</title></path>
+<path class="aresta t-colaboracao" data-a="aparecido-firewall" data-b="matheus-provedor" d="M72.0,87.0 Q56.9,129.0 72.0,171.0"><title>Faro: regras de firewall geradas com IA ↔ Detecção de anomalias na rede de um provedor: O Aparecido opera redes de clientes com MikroTik e Zabbix e contribuiu com sugestões de monitoramento (renovação de leases de DHCP) na apresentação do Matheus. / O Aparecido também trabalha com redes de provedores e clientes e sugeriu, na aula de 15/09, o monitoramento por renovação de leases de DHCP.</title></path>
+<path class="aresta t-tema" data-a="aparecido-firewall" data-b="priscila-siem" d="M72.0,87.0 Q73.8,182.5 136.0,255.0"><title>Faro: regras de firewall geradas com IA ↔ LLMs avaliando regras de SIEM (Wazuh): Os dois lidam com regras de detecção e bloqueio geradas ou avaliadas com IA em ambientes de segurança operacional. / Ambos tratam de regras de detecção e de bloqueio geradas ou avaliadas com IA em ambientes de segurança operacional.</title></path>
+<path class="aresta t-contraste" data-a="beatriz-scanners" data-b="cristian-jailbreak-ptbr" d="M328.0,171.0 Q456.4,241.0 600.0,213.0"><title>Relatórios de scanners de vulnerabilidade para JSON ↔ Juízes LLM para jailbreak em PT-BR: Cristian defendeu fazer a extração só com regex, e essa discussão motivou a comparação regex × LLM apresentada em 06/10. / Cristian defendeu que a extração de relatórios de scanners poderia ser feita só com regex, discussão que Beatriz trouxe para a aula de 06/10.</title></path>
+<path class="aresta t-tema" data-a="beatriz-scanners" data-b="elton-recon" d="M328.0,171.0 Q343.1,129.0 328.0,87.0"><title>Relatórios de scanners de vulnerabilidade para JSON ↔ Recon AI: Ambos lidam com a saída de ferramentas de segurança ofensiva e vulnerabilidades (CVEs), um gerando hipóteses de ataque e o outro normalizando relatórios de scanners em JSON.</title></path>
+<path class="aresta t-tecnica" data-a="beatriz-scanners" data-b="jamilli-navega" d="M328.0,171.0 Q600.0,268.9 872.0,171.0"><title>Relatórios de scanners de vulnerabilidade para JSON ↔ Navega: Ambos usam LLMs para extrair informação não estruturada para um esquema estruturado, com o mesmo desafio de validar a extração.</title></path>
+<path class="aresta t-colaboracao" data-a="beatriz-scanners" data-b="leas-fluxo-artefatos" d="M328.0,171.0 Q471.6,199.0 600.0,129.0"><title>Relatórios de scanners de vulnerabilidade para JSON ↔ Novo sistema de avaliação de artefatos com IA: Beatriz também atua na LEAS com Cristian no novo fluxo de avaliação de artefatos com IA. / Beatriz desenvolve na LIAA a extração de relatórios de scanners para JSON e discutiu com Christian regex × LLM, o que mostra a parceria dos dois.</title></path>
+<path class="aresta t-tema" data-a="beatriz-scanners" data-b="priscila-siem" d="M328.0,171.0 Q216.9,178.4 136.0,255.0"><title>Relatórios de scanners de vulnerabilidade para JSON ↔ LLMs avaliando regras de SIEM (Wazuh): Os dois aplicam LLMs a artefatos operacionais de segurança da informação.</title></path>
+<path class="aresta t-tecnica" data-a="carlos-vistorias" data-b="gian-dentia" d="M728.0,459.0 Q648.9,478.0 600.0,543.0"><title>Marca, modelo e cor em fotos de vistoria veicular ↔ Dentia: apoio ao diagnóstico odontológico: Em 25/09, o professor comparou o Dentia ao problema de classificação de veículos do Detran, e os dois usam YOLO e precisam de anotação. / Em 25/09, o professor comparou o Dentia ao problema de classificação de veículos do Detran; os dois usam YOLO e dependem de anotação cuidadosa.</title></path>
+<path class="aresta t-tecnica" data-a="carlos-vistorias" data-b="jeorgel-pm25" d="M728.0,459.0 Q464.0,364.0 200.0,459.0"><title>Marca, modelo e cor em fotos de vistoria veicular ↔ Previsão de curto prazo de PM2.5 em Luanda: Os dois criaram com IA aplicações próprias e transparentes de preparação de dataset, que o professor destacou como exemplo para a turma. / Os dois construíram com IA aplicações próprias de preparação de dataset, que o professor destacou como exemplo para a turma.</title></path>
+<path class="aresta t-dados" data-a="carlos-vistorias" data-b="judith-smart-stock" d="M728.0,459.0 Q712.9,501.0 728.0,543.0"><title>Marca, modelo e cor em fotos de vistoria veicular ↔ Smart Stock Vision: Em 27/10, o professor citou o grupo da Judith como outro trabalho com imagens que ainda precisa encarar a anotação, tema da apresentação do Carlos. / Ambos constroem do zero um dataset de imagens para classificação com YOLO, e o professor apontou o Carlos como exemplo de curadoria.</title></path>
+<path class="aresta t-contraste" data-a="carlos-vistorias" data-b="maria-lurdes-incendio" d="M728.0,459.0 Q664.0,436.0 600.0,459.0"><title>Marca, modelo e cor em fotos de vistoria veicular ↔ Detecção de incêndios: validação de datasets de imagens: Em 16/10, o professor citou o Carlos à Maria de Lurdes como exemplo de quem voltou ao dataset e passou várias apresentações só construindo-o. / Em 16/10, o professor citou o Carlos como o aluno que já fez várias apresentações só sobre a construção de um dataset de imagens, o caminho que ele cobra da Maria de Lurdes.</title></path>
+<path class="aresta t-tecnica" data-a="cristian-jailbreak-ptbr" data-b="felipe-prd2spec" d="M600.0,213.0 Q886.7,245.0 1128.0,87.0"><title>Juízes LLM para jailbreak em PT-BR ↔ PRD2Spec: Cristian estuda LLMs como juízes, técnica central na avaliação cega do PRD2Spec.</title></path>
+<path class="aresta t-tema" data-a="cristian-jailbreak-ptbr" data-b="leas-avaliacao-llm" d="M600.0,213.0 Q551.1,148.0 472.0,129.0"><title>Juízes LLM para jailbreak em PT-BR ↔ LLMs como avaliadores de artefatos (T7 a T9): Os dois usam LLMs como juízes, e Cristian sugeriu ao grupo variar o esforço dos modelos e executá-los em VM.</title></path>
+<path class="aresta t-colaboracao" data-a="cristian-jailbreak-ptbr" data-b="leas-fluxo-artefatos" d="M600.0,213.0 Q615.1,171.0 600.0,129.0"><title>Juízes LLM para jailbreak em PT-BR ↔ Novo sistema de avaliação de artefatos com IA: Na LEAS, Cristian constrói o sistema de avaliação de artefatos com IA, que também usa LLMs como avaliadores. / No projeto da LIAA, Cristian também estuda LLMs no papel de juízes, o mesmo papel que a IA terá no novo sistema.</title></path>
+<path class="aresta t-colaboracao" data-a="cristian-jailbreak-ptbr" data-b="maicon-rag-legado" d="M600.0,213.0 Q871.6,287.0 1128.0,171.0"><title>Juízes LLM para jailbreak em PT-BR ↔ RAG local para manutenção de sistemas legados: O Cristian sugeriu em aula usar RAG baseado em grafos para código, uma linha que pode ser explorada em conjunto.</title></path>
+<path class="aresta t-colaboracao" data-a="cristian-jailbreak-ptbr" data-b="priscila-siem" d="M600.0,213.0 Q360.4,150.5 136.0,255.0"><title>Juízes LLM para jailbreak em PT-BR ↔ LLMs avaliando regras de SIEM (Wazuh): O projeto de Priscila continua um trabalho do SBSeg feito com Cristian, também com LLMs avaliando artefatos de segurança. / O Cristian é coautor do artigo do SBSeg que originou o projeto e fornece as regras; os dois projetos usam LLMs como juízes.</title></path>
+<path class="aresta t-tecnica" data-a="cristian-jailbreak-ptbr" data-b="ulisses-pong" d="M600.0,213.0 Q755.7,408.0 1000.0,459.0"><title>Juízes LLM para jailbreak em PT-BR ↔ Pong com aprendizado por reforço: A ideia de vários modelos gerando e comparando teorias sobre o problema se aproxima do uso de LLMs como juízes.</title></path>
+<path class="aresta t-tecnica" data-a="diego-acoes" data-b="eric-pedro-andre-rubrik" d="M72.0,459.0 Q587.8,482.0 1000.0,171.0"><title>Agente de teses de investimento ↔ Rubrik Pro: gateway multimodelo: O grupo do Rubrik Pro também construiu um gateway multimodelo com fallback entre provedores. / Diego também construiu um gateway multimodelo com fallback (Gemini, Claude e modelo local) para o agente de ações.</title></path>
+<path class="aresta t-colaboracao" data-a="diego-acoes" data-b="erickson" d="M72.0,459.0 Q203.0,296.0 200.0,87.0"><title>Agente de teses de investimento ↔ Detecção de tráfego malicioso com ML: Em 27/10, Diego contou que faz com Erickson uma tarefa do prof. Jonathan.</title></path>
+<path class="aresta t-tema" data-a="diego-acoes" data-b="fernando-saude-mental" d="M72.0,459.0 Q200.0,505.1 328.0,459.0"><title>Agente de teses de investimento ↔ Sinais de depressão e ansiedade em textos (e scanner de segredos): Em 08/09 o professor aproximou o projeto de ações, que reage ao efeito psicológico das notícias, do tema de problemas emocionais de estudantes, atribuído por engano ao “Paulo”.</title></path>
+<path class="aresta t-tecnica" data-a="diego-acoes" data-b="leonardo-viagem" d="M72.0,459.0 Q604.7,535.6 1064.0,255.0"><title>Agente de teses de investimento ↔ Paradas de viagem com IA: Os dois usam um gateway com vários modelos e fallback entre provedores.</title></path>
+<path class="aresta t-tecnica" data-a="diego-acoes" data-b="lucas-ferreira-arandu" d="M72.0,459.0 Q539.0,417.0 872.0,87.0"><title>Agente de teses de investimento ↔ Arandu: plugin agêntico para Unity: Ambos usam documentação e harness gerados com IA para guiar agentes de código, prática que o professor destacou para a turma.</title></path>
+<path class="aresta t-contraste" data-a="diego-acoes" data-b="paulo-dislexia" d="M72.0,459.0 Q472.0,603.0 872.0,459.0"><title>Agente de teses de investimento ↔ Motor de dificuldade adaptativa para jogos de dislexia: Em 08/09, o professor comparou o efeito de notícias e mídias sociais no mercado a um trabalho de Paulo sobre problemas emocionais de estudantes, mas a ligação é vaga.</title></path>
+<path class="aresta t-tema" data-a="edlin-rag-uml" data-b="emanuel-mentoria" d="M1128.0,459.0 Q1016.9,466.4 936.0,543.0"><title>Livro de UML interativo com IA ↔ Mentoria: O Mentoria também gera conteúdo didático com IA a partir de um PDF e tem um tutor RAG, como a proposta inicial de Edlin. / Os dois geram material didático com IA a partir de conteúdo existente e usam RAG para tirar dúvidas.</title></path>
+<path class="aresta t-tema" data-a="edlin-rag-uml" data-b="gabriel-uml" d="M1128.0,459.0 Q1131.0,250.0 1000.0,87.0"><title>Livro de UML interativo com IA ↔ UML × IA: Edlin citou a discussão sobre UML do projeto de Gabriel ao apresentar sua ideia, e os dois trabalham com UML e IA. / Edlin partiu de uma ideia sobre UML influenciada pela discussão do projeto de Gabriel e trabalha com o livro de UML da disciplina de Análise e Projeto.</title></path>
+<path class="aresta t-tema" data-a="edlin-rag-uml" data-b="guilherme-estudos" d="M1128.0,459.0 Q1080.9,489.5 1064.0,543.0"><title>Livro de UML interativo com IA ↔ Assistente de estudos com IA: Ambos são assistentes de estudo baseados em IA para estudantes. / Ambos usam LLMs sobre um material fornecido (livro ou PDF) para apoiar o estudo.</title></path>
+<path class="aresta t-tecnica" data-a="edlin-rag-uml" data-b="maicon-rag-legado" d="M1128.0,459.0 Q1179.8,315.0 1128.0,171.0"><title>Livro de UML interativo com IA ↔ RAG local para manutenção de sistemas legados: Maicon usa RAG sobre documentação, a mesma técnica da proposta inicial de chatbot. / Os dois projetos usam RAG para responder perguntas sobre uma base de conhecimento específica (livro de UML × código legado).</title></path>
+<path class="aresta t-tema" data-a="eduardo-silver-bullet" data-b="felipe-prd2spec" d="M936.0,255.0 Q1062.2,205.6 1128.0,87.0"><title>Silver Bullet: apoio inteligente à gestão de projetos ↔ PRD2Spec: Os dois projetos usam agentes de IA para apoiar o ciclo de gestão de produtos e projetos de software (PRD/especificação × alocação, riscos e prazos). / Os dois tratam de IA no processo de produto e gestão de projetos de software.</title></path>
+<path class="aresta t-colaboracao" data-a="eduardo-silver-bullet" data-b="leas-avaliacao-llm" d="M936.0,255.0 Q726.7,108.5 472.0,129.0"><title>Silver Bullet: apoio inteligente à gestão de projetos ↔ LLMs como avaliadores de artefatos (T7 a T9): Provavelmente é o mesmo Eduardo, cujo grupo na LEAS mede tempo, tokens e custo de modelos de provedores diferentes, uma experiência útil para avaliar a POC. / Provavelmente é o mesmo Eduardo, que pode levar para o mestrado a experiência de medir custo e tokens de modelos diferentes.</title></path>
+<path class="aresta t-tema" data-a="eduardo-silver-bullet" data-b="maicon-rag-legado" d="M936.0,255.0 Q1047.1,247.6 1128.0,171.0"><title>Silver Bullet: apoio inteligente à gestão de projetos ↔ RAG local para manutenção de sistemas legados: Os dois integram LLMs a sistemas institucionais existentes para apoiar o trabalho de equipes de software, com preocupação com segurança e isolamento de dados.</title></path>
+<path class="aresta t-tecnica" data-a="elton-recon" data-b="priscila-siem" d="M328.0,87.0 Q201.8,136.4 136.0,255.0"><title>Recon AI ↔ LLMs avaliando regras de SIEM (Wazuh): Ambos usam LLMs como analistas de segurança e precisam validar a saída contra um especialista humano. / Ambos usam LLMs como analistas de segurança e comparam a saída com um especialista humano.</title></path>
+<path class="aresta t-tecnica" data-a="emanuel-mentoria" data-b="eric-pedro-andre-rubrik" d="M936.0,543.0 Q1035.0,368.5 1000.0,171.0"><title>Mentoria ↔ Rubrik Pro: gateway multimodelo: A ideia de um agente que escolhe o modelo por tarefa se aproxima do gateway multimodelo do Rubrik Pro.</title></path>
+<path class="aresta t-tema" data-a="emanuel-mentoria" data-b="guilherme-estudos" d="M936.0,543.0 Q1000.0,566.0 1064.0,543.0"><title>Mentoria ↔ Assistente de estudos com IA: Ambos são sistemas de apoio ao estudo com IA. / O Mentoria também gera conteúdo e quizzes adaptativos a partir de PDFs com LLMs, um problema muito próximo.</title></path>
+<path class="aresta t-tecnica" data-a="emanuel-mentoria" data-b="lucas-ferreira-arandu" d="M936.0,543.0 Q986.1,303.5 872.0,87.0"><title>Mentoria ↔ Arandu: plugin agêntico para Unity: O professor apontou que o experimento de latência de Emanuel tem desenho parecido com o de Lucas Ferreira e sugeriu apresentá-los no mesmo bloco. / O professor propôs ao Emanuel um experimento de latência e custo de modelos parecido com o sugerido a Lucas em 08/09.</title></path>
+<path class="aresta t-tema" data-a="eric-pedro-andre-rubrik" data-b="felipe-prd2spec" d="M1000.0,171.0 Q1079.1,152.0 1128.0,87.0"><title>Rubrik Pro: gateway multimodelo ↔ PRD2Spec: Os dois usam LLMs para gerar artefatos estruturados e precisam garantir conformidade com um esquema.</title></path>
+<path class="aresta t-colaboracao" data-a="eric-pedro-andre-rubrik" data-b="leas-eric-andre" d="M1000.0,171.0 Q871.6,101.0 728.0,129.0"><title>Rubrik Pro: gateway multimodelo ↔ Artigos de avaliação de artefatos, GitExpert Check e auditoria de senhas: Eric e André formam também a dupla da LEAS que trabalha com artigos de avaliação de artefatos e ferramentas de auditoria. / Provavelmente são os mesmos Eric e André que, com Pedro, desenvolvem na LIAA o gateway multimodelo do Rubrik Pro.</title></path>
+<path class="aresta t-tecnica" data-a="eric-pedro-andre-rubrik" data-b="leonardo-viagem" d="M1000.0,171.0 Q1016.9,224.5 1064.0,255.0"><title>Rubrik Pro: gateway multimodelo ↔ Paradas de viagem com IA: O Rubrik Pro também implementa um gateway multimodelo com fallback, solução parecida com a troca Groq/Gemini do grupo.</title></path>
+<path class="aresta t-tecnica" data-a="eric-pedro-andre-rubrik" data-b="lucas-ferreira-arandu" d="M1000.0,171.0 Q951.1,106.0 872.0,87.0"><title>Rubrik Pro: gateway multimodelo ↔ Arandu: plugin agêntico para Unity: O plugin Arandu tem um ModelAdapter para integrar modelos, problema de abstração parecido com o do gateway. / O ModelAdapter do Arandu e o gateway multimodelo do Rubrik Pro resolvem o mesmo problema de abstrair vários modelos e provedores.</title></path>
+<path class="aresta t-tema" data-a="erickson" data-b="guilherme-estudos" d="M200.0,87.0 Q549.9,470.5 1064.0,543.0"><title>Detecção de tráfego malicioso com ML ↔ Assistente de estudos com IA: O professor fez a ambos a mesma provocação de personalizar o conteúdo pelos interesses da pessoa (hiperfoco, no caso do Erickson).</title></path>
+<path class="aresta t-dados" data-a="erickson" data-b="julio-ids2017" d="M200.0,87.0 Q201.8,182.5 264.0,255.0"><title>Detecção de tráfego malicioso com ML ↔ Tráfego benigno ou malicioso no CIC-IDS2017: Júlio classifica tráfego benigno ou malicioso no CIC-IDS2017, dataset irmão do usado por Erickson e da mesma instituição canadense. / Erickson classifica tráfego malicioso com o CSE-CIC-IDS2018, do mesmo instituto e com atributos de fluxo semelhantes.</title></path>
+<path class="aresta t-tema" data-a="erickson" data-b="lucas-alves-atencao" d="M200.0,87.0 Q269.0,322.0 472.0,459.0"><title>Detecção de tráfego malicioso com ML ↔ App de atenção da filha durante o estudo: O projeto inicial do Erickson também era voltado a crianças, com envolvimento dos pais e cuidado com dados sensíveis.</title></path>
+<path class="aresta t-tema" data-a="erickson" data-b="matheus-provedor" d="M200.0,87.0 Q120.9,106.0 72.0,171.0"><title>Detecção de tráfego malicioso com ML ↔ Detecção de anomalias na rede de um provedor: Ambos aplicam ML para detectar anomalias e ataques em tráfego de rede.</title></path>
+<path class="aresta t-contraste" data-a="erickson" data-b="paulo-dislexia" d="M200.0,87.0 Q469.0,394.0 872.0,459.0"><title>Detecção de tráfego malicioso com ML ↔ Motor de dificuldade adaptativa para jogos de dislexia: A fase inicial de Erickson (conteúdo adaptativo para crianças com TEA) se aproxima da adaptação para dislexia de Paulo, tema que ele abandonou. / O projeto inicial do Erickson (histórias adaptativas para crianças com TEA) também adaptava conteúdo a crianças neurodivergentes e recebeu a sugestão de avaliar com instituições como a APAE.</title></path>
+<path class="aresta t-tema" data-a="felipe-prd2spec" data-b="gabriel-uml" d="M1128.0,87.0 Q1064.0,64.0 1000.0,87.0"><title>PRD2Spec ↔ UML × IA: Ambos investigam como especificar sistemas para que a IA os implemente: Felipe com PRDs e specs verificadas, Gabriel com UML. / Ambos tratam de como especificar sistemas para que a IA os implemente: Gabriel com UML, Felipe com PRDs e specs verificadas.</title></path>
+<path class="aresta t-tecnica" data-a="felipe-prd2spec" data-b="leas-avaliacao-llm" d="M1128.0,87.0 Q792.4,-10.1 472.0,129.0"><title>PRD2Spec ↔ LLMs como avaliadores de artefatos (T7 a T9): No LEAS, LLMs avaliam artefatos com critérios definidos, problema análogo ao do avaliador do PRD2Spec.</title></path>
+<path class="aresta t-tema" data-a="felipe-prd2spec" data-b="maicon-rag-legado" d="M1128.0,87.0 Q1112.9,129.0 1128.0,171.0"><title>PRD2Spec ↔ RAG local para manutenção de sistemas legados: Ambos aplicam LLMs ao apoio de equipes de engenharia de software com dados internos da organização.</title></path>
+<path class="aresta t-tema" data-a="fernando-saude-mental" data-b="leas-eric-andre" d="M328.0,459.0 Q587.4,366.0 728.0,129.0"><title>Sinais de depressão e ansiedade em textos (e scanner de segredos) ↔ Artigos de avaliação de artefatos, GitExpert Check e auditoria de senhas: Na LEAS, o scanner de segredos de Fernando e o GitExpert Check de Eric tratam do mesmo problema: vazamento de credenciais em código. / O scanner de segredos que Fernando propôs na LEAS e o GitExpert Check atacam o mesmo problema: vazamento de credenciais em código.</title></path>
+<path class="aresta t-tecnica" data-a="fernando-saude-mental" data-b="mluiza-mariana-ecommerce" d="M328.0,459.0 Q248.9,478.0 200.0,543.0"><title>Sinais de depressão e ansiedade em textos (e scanner de segredos) ↔ Inteligência multidimensional para e-commerce: Os dois projetos classificam estados afetivos em textos (sentimento e satisfação × sinais de depressão e ansiedade) e podem comparar abordagens clássicas e LLMs. / Ambos classificam textos em linguagem natural (satisfação e sentimento × indícios de saúde mental) e podem comparar modelos clássicos e LLMs.</title></path>
+<path class="aresta t-tecnica" data-a="gabriel-uml" data-b="leas-avaliacao-llm" d="M1000.0,87.0 Q728.4,13.0 472.0,129.0"><title>UML × IA ↔ LLMs como avaliadores de artefatos (T7 a T9): A escolha do estudo a replicar depende de avaliar artefatos de pesquisa, tema central do LEAS, que o professor citou explicitamente.</title></path>
+<path class="aresta t-tecnica" data-a="gabriel-uml" data-b="leas-fluxo-artefatos" d="M1000.0,87.0 Q792.4,36.0 600.0,129.0"><title>UML × IA ↔ Novo sistema de avaliação de artefatos com IA: Critérios de disponibilidade e reprodutibilidade de artefatos discutidos no LEAS servem de base para a tabela de replicabilidade.</title></path>
+<path class="aresta t-tecnica" data-a="gian-dentia" data-b="judith-smart-stock" d="M600.0,543.0 Q664.0,566.0 728.0,543.0"><title>Dentia: apoio ao diagnóstico odontológico ↔ Smart Stock Vision: Os dois treinam YOLO sobre conjuntos de imagens pequenos montados pelos próprios alunos.</title></path>
+<path class="aresta t-tecnica" data-a="gian-dentia" data-b="maria-lurdes-incendio" d="M600.0,543.0 Q615.1,501.0 600.0,459.0"><title>Dentia: apoio ao diagnóstico odontológico ↔ Detecção de incêndios: validação de datasets de imagens: Os dois são problemas de classificação de imagens em que o professor cobrou a organização por classe e a regra de mil imagens por classe. / Os dois são problemas de classificação de imagens, e o professor deu aos dois a mesma regra: no mínimo mil imagens por classe.</title></path>
+<path class="aresta t-tema" data-a="guilherme-estudos" data-b="lucas-alves-atencao" d="M1064.0,543.0 Q783.1,394.4 472.0,459.0"><title>Assistente de estudos com IA ↔ App de atenção da filha durante o estudo: Os dois tratam de apoio ao estudo e à autonomia do aprendiz com IA. / Os dois tratam de apoio ao estudo e autonomia do aprendiz com IA.</title></path>
+<path class="aresta t-tecnica" data-a="guilherme-estudos" data-b="paulo-dislexia" d="M1064.0,543.0 Q983.1,466.4 872.0,459.0"><title>Assistente de estudos com IA ↔ Motor de dificuldade adaptativa para jogos de dislexia: Ambos adaptam o conteúdo seguinte a partir dos erros do aprendiz.</title></path>
+<path class="aresta t-colaboracao" data-a="jamilli-navega" data-b="judith-smart-stock" d="M872.0,171.0 Q733.0,331.1 728.0,543.0"><title>Navega ↔ Smart Stock Vision: A Jamilli fez dupla com a Judith na proposta do Smart Stock Vision em 08/09. / A Jamilli fez dupla com a Judith na proposta de 08/09 antes de seguir com o Navega.</title></path>
+<path class="aresta t-tecnica" data-a="jamilli-navega" data-b="leonardo-viagem" d="M872.0,171.0 Q952.9,247.6 1064.0,255.0"><title>Navega ↔ Paradas de viagem com IA: Os dois projetos receberam a mesma orientação: mapear fontes dispersas (Instagram, agências) e extraí-las com IA antes de desenhar o sistema. / Os dois projetos precisam mapear fontes dispersas (Instagram, agências) e extrair delas informação estruturada com IA.</title></path>
+<path class="aresta t-tema" data-a="jeorgel-pm25" data-b="maria-lurdes-incendio" d="M200.0,459.0 Q400.0,531.0 600.0,459.0"><title>Previsão de curto prazo de PM2.5 em Luanda ↔ Detecção de incêndios: validação de datasets de imagens: Em 08/09, o professor associou o PM2.5, gerado por queimadas, ao projeto de detecção de queimadas e fez aos dois a mesma cobrança sobre a confiabilidade de dados de satélite. / Em 08/09, o professor ligou o PM2.5, que vem de queimadas, ao trabalho de detecção de queimadas e fez aos dois a mesma cobrança sobre a confiabilidade de dados de satélite.</title></path>
+<path class="aresta t-tecnica" data-a="jeorgel-pm25" data-b="matheus-provedor" d="M200.0,459.0 Q187.8,292.0 72.0,171.0"><title>Previsão de curto prazo de PM2.5 em Luanda ↔ Detecção de anomalias na rede de um provedor: Os dois trabalham com séries temporais de sensores com lacunas e precisam de análise de tendência e de baselines simples antes de modelos complexos.</title></path>
+<path class="aresta t-tecnica" data-a="judith-smart-stock" data-b="maria-lurdes-incendio" d="M728.0,543.0 Q679.1,478.0 600.0,459.0"><title>Smart Stock Vision ↔ Detecção de incêndios: validação de datasets de imagens: Em 27/10 o professor citou os dois projetos como trabalhos com imagens que ainda precisam enfrentar a anotação. / Em 27/10, o professor citou o grupo da Maria e o da Judith como trabalhos com imagens que ainda precisam enfrentar a anotação.</title></path>
+<path class="aresta t-tema" data-a="julio-ids2017" data-b="matheus-provedor" d="M264.0,255.0 Q183.1,178.4 72.0,171.0"><title>Tráfego benigno ou malicioso no CIC-IDS2017 ↔ Detecção de anomalias na rede de um provedor: Ambos detectam tráfego anômalo ou malicioso em redes com aprendizado de máquina.</title></path>
+<path class="aresta t-tema" data-a="leas-avaliacao-llm" data-b="leas-eric-andre" d="M472.0,129.0 Q600.0,175.1 728.0,129.0"><title>LLMs como avaliadores de artefatos (T7 a T9) ↔ Artigos de avaliação de artefatos, GitExpert Check e auditoria de senhas: Eric e André receberam a mesma tarefa T7 de avaliar, com três LLMs, artefatos já avaliados do SBRC/SBSeg. / Os dois grupos receberam a tarefa 7, e o protocolo validado pelo grupo de Eduardo pode ser reaproveitado pela dupla.</title></path>
+<path class="aresta t-colaboracao" data-a="leas-avaliacao-llm" data-b="leas-fluxo-artefatos" d="M472.0,129.0 Q536.0,152.0 600.0,129.0"><title>LLMs como avaliadores de artefatos (T7 a T9) ↔ Novo sistema de avaliação de artefatos com IA: Os experimentos do grupo vão subsidiar o avaliador de IA do novo sistema de avaliação de artefatos de Cristian, e o professor marcou uma reunião conjunta. / Os experimentos T7 a T9 do grupo de Eduardo subsidiam o avaliador de IA do sistema, e o professor marcou uma reunião entre os dois grupos.</title></path>
+<path class="aresta t-tecnica" data-a="leas-avaliacao-llm" data-b="priscila-siem" d="M472.0,129.0 Q281.3,131.5 136.0,255.0"><title>LLMs como avaliadores de artefatos (T7 a T9) ↔ LLMs avaliando regras de SIEM (Wazuh): Os dois projetos usam ChatGPT, Claude e Gemini com critérios padronizados para julgar artefatos técnicos e comparam o resultado com a referência humana. / Mesma lógica de LLMs avaliando objetos técnicos com rubrica e comparação entre modelos (ChatGPT, Claude e Gemini).</title></path>
+<path class="aresta t-tema" data-a="leas-eric-andre" data-b="leas-fluxo-artefatos" d="M728.0,129.0 Q664.0,106.0 600.0,129.0"><title>Artigos de avaliação de artefatos, GitExpert Check e auditoria de senhas ↔ Novo sistema de avaliação de artefatos com IA: A ambiguidade de critérios entre revisores, apontada no artigo do ICSE 2020, é o que o checklist por selo do novo fluxo procura eliminar. / O artigo do ICSE 2020 apresentado por Eric e André mostra a ambiguidade de critérios entre revisores, problema que o checklist por selo do novo fluxo pretende resolver.</title></path>
+<path class="aresta t-tecnica" data-a="leonardo-viagem" data-b="mluiza-mariana-ecommerce" d="M1064.0,255.0 Q580.2,243.5 200.0,543.0"><title>Paradas de viagem com IA ↔ Inteligência multidimensional para e-commerce: Ambos fazem recomendação personalizada a partir de dados coletados por scraping em várias fontes. / Os dois projetos fazem recomendação personalizada a partir de avaliações coletadas por scraping em várias fontes.</title></path>
+<path class="aresta t-contraste" data-a="lucas-alves-atencao" data-b="maria-lurdes-incendio" d="M472.0,459.0 Q536.0,482.0 600.0,459.0"><title>App de atenção da filha durante o estudo ↔ Detecção de incêndios: validação de datasets de imagens: Os dois esbarram no mesmo ponto que o professor cobra: sem um dataset rotulado e validado, não há como avaliar o classificador.</title></path>
+<path class="aresta t-tema" data-a="lucas-alves-atencao" data-b="paulo-dislexia" d="M472.0,459.0 Q672.0,531.0 872.0,459.0"><title>App de atenção da filha durante o estudo ↔ Motor de dificuldade adaptativa para jogos de dislexia: Ambos apoiam crianças com dificuldades no estudo e dependem de validação com o usuário real. / Os dois tratam de crianças com dificuldades no estudo e enfrentam o mesmo desafio de validar com o usuário real.</title></path>
+<path class="aresta t-tema" data-a="lucas-ferreira-arandu" data-b="paulo-dislexia" d="M872.0,87.0 Q805.0,273.0 872.0,459.0"><title>Arandu: plugin agêntico para Unity ↔ Motor de dificuldade adaptativa para jogos de dislexia: Os dois desenvolvem jogos educacionais em Unity no mestrado. / Ambos desenvolvem jogos educacionais em Unity no mestrado; o Arandu poderia futuramente gerar conteúdo ou dicas no jogo.</title></path>
+<path class="aresta t-tema" data-a="lucas-ferreira-arandu" data-b="ulisses-pong" d="M872.0,87.0 Q869.0,296.0 1000.0,459.0"><title>Arandu: plugin agêntico para Unity ↔ Pong com aprendizado por reforço: Ambos colocam agentes de IA para agir dentro de jogos. / Ambos colocam agentes de IA dentro de jogos; o Arandu poderia servir de referência para o agente com LLM que joga Pong.</title></path>
+<path class="aresta t-contraste" data-a="paulo-dislexia" data-b="ulisses-pong" d="M872.0,459.0 Q936.0,482.0 1000.0,459.0"><title>Motor de dificuldade adaptativa para jogos de dislexia ↔ Pong com aprendizado por reforço: Os dois ajustam comportamento em jogos, mas Paulo usa regras adaptativas explícitas enquanto Ulisses aprende a política por reforço.</title></path>
+<a href="adilson-douglas-incidentes.html" class="no" data-id="adilson-douglas-incidentes"><title>Registro inteligente de incidentes no CESUP — Adilson (grafia incerta: &quot;A Dilson&quot;), Douglas (4 apresentações)</title>
+<circle class="anel a0" cx="200.0" cy="171.0" r="17.4"/>
+<circle class="bola a0" cx="200.0" cy="171.0" r="13.4"/>
+<text class="no-rot" x="200.0" y="197.4" text-anchor="middle">Incidentes CESUP</text>
+<text class="no-sub" x="200.0" y="209.4" text-anchor="middle">Adilson, Douglas</text></a>
+<a href="alisson-emg.html" class="no" data-id="alisson-emg"><title>Classificação de gestos por EMG com TinyML — Alisson (grafia incerta; chamado também de &quot;Alice&quot;), Gabriel Belagamba (parceiro na prótese física; participação na disciplina incerta) (4 apresentações)</title>
+<circle class="bola a1" cx="472.0" cy="543.0" r="13.4"/>
+<text class="no-rot" x="472.0" y="569.4" text-anchor="middle">EMG / TinyML</text>
+<text class="no-sub" x="472.0" y="581.4" text-anchor="middle">Alisson, Gabriel</text></a>
+<a href="aparecido-firewall.html" class="no" data-id="aparecido-firewall"><title>Faro: regras de firewall geradas com IA — Aparecido (7 apresentações)</title>
+<circle class="anel a0" cx="72.0" cy="87.0" r="22.2"/>
+<circle class="bola a0" cx="72.0" cy="87.0" r="18.2"/>
+<text class="no-rot" x="72.0" y="118.2" text-anchor="middle">Faro (firewall)</text>
+<text class="no-sub" x="72.0" y="130.2" text-anchor="middle">Aparecido</text></a>
+<a href="beatriz-scanners.html" class="no" data-id="beatriz-scanners"><title>Relatórios de scanners de vulnerabilidade para JSON — Beatriz, Dois colegas de trio (não nomeados) (2 apresentações)</title>
+<circle class="bola a0" cx="328.0" cy="171.0" r="10.2"/>
+<text class="no-rot" x="328.0" y="194.2" text-anchor="middle">Scanners → JSON</text>
+<text class="no-sub" x="328.0" y="206.2" text-anchor="middle">Beatriz</text></a>
+<a href="carlos-vistorias.html" class="no" data-id="carlos-vistorias"><title>Marca, modelo e cor em fotos de vistoria veicular — Carlos André (5 apresentações)</title>
+<circle class="bola a1" cx="728.0" cy="459.0" r="15.0"/>
+<text class="no-rot" x="728.0" y="487.0" text-anchor="middle">Vistorias veiculares</text>
+<text class="no-sub" x="728.0" y="499.0" text-anchor="middle">Carlos</text></a>
+<a href="cristian-jailbreak-ptbr.html" class="no" data-id="cristian-jailbreak-ptbr"><title>Juízes LLM para jailbreak em PT-BR — Cristian (grafia incerta: Christian/Cristiano) (3 apresentações)</title>
+<circle class="bola a4" cx="600.0" cy="213.0" r="11.8"/>
+<text class="no-rot" x="600.0" y="237.8" text-anchor="middle">Juízes LLM PT-BR</text>
+<text class="no-sub" x="600.0" y="249.8" text-anchor="middle">Cristian</text></a>
+<a href="diego-acoes.html" class="no" data-id="diego-acoes"><title>Agente de teses de investimento — Diego (aluno de mestrado, distinto do professor) (6 apresentações)</title>
+<circle class="anel a5" cx="72.0" cy="459.0" r="20.6"/>
+<circle class="bola a5" cx="72.0" cy="459.0" r="16.6"/>
+<text class="no-rot" x="72.0" y="488.6" text-anchor="middle">Teses de investimento</text>
+<text class="no-sub" x="72.0" y="500.6" text-anchor="middle">Diego</text></a>
+<a href="edlin-rag-uml.html" class="no" data-id="edlin-rag-uml"><title>Livro de UML interativo com IA — Edlin (grafia incerta) (1 apresentações)</title>
+<circle class="anel a2" cx="1128.0" cy="459.0" r="12.6"/>
+<circle class="bola a2" cx="1128.0" cy="459.0" r="8.6"/>
+<text class="no-rot" x="1128.0" y="480.6" text-anchor="middle">Livro de UML com IA</text>
+<text class="no-sub" x="1128.0" y="492.6" text-anchor="middle">Edlin</text></a>
+<a href="eduardo-silver-bullet.html" class="no" data-id="eduardo-silver-bullet"><title>Silver Bullet: apoio inteligente à gestão de projetos — Eduardo (1 apresentações)</title>
+<circle class="bola a3" cx="936.0" cy="255.0" r="8.6"/>
+<text class="no-rot" x="936.0" y="276.6" text-anchor="middle">Silver Bullet</text>
+<text class="no-sub" x="936.0" y="288.6" text-anchor="middle">Eduardo</text></a>
+<a href="elton-recon.html" class="no" data-id="elton-recon"><title>Recon AI — Elton (5 apresentações)</title>
+<circle class="bola a0" cx="328.0" cy="87.0" r="15.0"/>
+<text class="no-rot" x="328.0" y="115.0" text-anchor="middle">Recon AI</text>
+<text class="no-sub" x="328.0" y="127.0" text-anchor="middle">Elton</text></a>
+<a href="emanuel-mentoria.html" class="no" data-id="emanuel-mentoria"><title>Mentoria — Emanuel (1 apresentações)</title>
+<circle class="bola a2" cx="936.0" cy="543.0" r="8.6"/>
+<text class="no-rot" x="936.0" y="564.6" text-anchor="middle">Mentoria</text>
+<text class="no-sub" x="936.0" y="576.6" text-anchor="middle">Emanuel</text></a>
+<a href="eric-pedro-andre-rubrik.html" class="no" data-id="eric-pedro-andre-rubrik"><title>Rubrik Pro: gateway multimodelo — Eric (grafia incerta), Pedro, André (2 apresentações)</title>
+<circle class="bola a3" cx="1000.0" cy="171.0" r="10.2"/>
+<text class="no-rot" x="1000.0" y="194.2" text-anchor="middle">Rubrik Pro</text>
+<text class="no-sub" x="1000.0" y="206.2" text-anchor="middle">Eric, Pedro, André</text></a>
+<a href="erickson.html" class="no" data-id="erickson"><title>Detecção de tráfego malicioso com ML — Erickson (grafia incerta: Ericsson) (6 apresentações)</title>
+<circle class="anel a0" cx="200.0" cy="87.0" r="20.6"/>
+<circle class="bola a0" cx="200.0" cy="87.0" r="16.6"/>
+<text class="no-rot" x="200.0" y="116.6" text-anchor="middle">IDS com ML</text>
+<text class="no-sub" x="200.0" y="128.6" text-anchor="middle">Erickson</text></a>
+<a href="felipe-prd2spec.html" class="no" data-id="felipe-prd2spec"><title>PRD2Spec — Felipe (3 apresentações)</title>
+<circle class="bola a3" cx="1128.0" cy="87.0" r="11.8"/>
+<text class="no-rot" x="1128.0" y="111.8" text-anchor="middle">PRD2Spec</text>
+<text class="no-sub" x="1128.0" y="123.8" text-anchor="middle">Felipe</text></a>
+<a href="fernando-saude-mental.html" class="no" data-id="fernando-saude-mental"><title>Sinais de depressão e ansiedade em textos (e scanner de segredos) — Fernando (5 apresentações)</title>
+<circle class="bola a5" cx="328.0" cy="459.0" r="15.0"/>
+<text class="no-rot" x="328.0" y="487.0" text-anchor="middle">Saúde mental em textos</text>
+<text class="no-sub" x="328.0" y="499.0" text-anchor="middle">Fernando</text></a>
+<a href="gabriel-uml.html" class="no" data-id="gabriel-uml"><title>UML × IA — Gabriel (6 apresentações)</title>
+<circle class="anel a3" cx="1000.0" cy="87.0" r="20.6"/>
+<circle class="bola a3" cx="1000.0" cy="87.0" r="16.6"/>
+<text class="no-rot" x="1000.0" y="116.6" text-anchor="middle">UML × IA</text>
+<text class="no-sub" x="1000.0" y="128.6" text-anchor="middle">Gabriel</text></a>
+<a href="gian-dentia.html" class="no" data-id="gian-dentia"><title>Dentia: apoio ao diagnóstico odontológico — Gian Esteves Oliveira (transcrito também como &quot;Jean&quot;) (3 apresentações)</title>
+<circle class="bola a1" cx="600.0" cy="543.0" r="11.8"/>
+<text class="no-rot" x="600.0" y="567.8" text-anchor="middle">Dentia</text>
+<text class="no-sub" x="600.0" y="579.8" text-anchor="middle">Gian</text></a>
+<a href="guilherme-estudos.html" class="no" data-id="guilherme-estudos"><title>Assistente de estudos com IA — Guilherme (sobrenome não citado) (1 apresentações)</title>
+<circle class="bola a2" cx="1064.0" cy="543.0" r="8.6"/>
+<text class="no-rot" x="1064.0" y="564.6" text-anchor="middle">Assistente de estudos</text>
+<text class="no-sub" x="1064.0" y="576.6" text-anchor="middle">Guilherme</text></a>
+<a href="jamilli-navega.html" class="no" data-id="jamilli-navega"><title>Navega — Jamilli, Nilmara (grafia incerta; aparece só no nome dos arquivos de 01/10 e 07/10) (3 apresentações)</title>
+<circle class="anel a3" cx="872.0" cy="171.0" r="15.8"/>
+<circle class="bola a3" cx="872.0" cy="171.0" r="11.8"/>
+<text class="no-rot" x="872.0" y="195.8" text-anchor="middle">Navega</text>
+<text class="no-sub" x="872.0" y="207.8" text-anchor="middle">Jamilli, Nilmara</text></a>
+<a href="jeorgel-pm25.html" class="no" data-id="jeorgel-pm25"><title>Previsão de curto prazo de PM2.5 em Luanda — Jeorgel (grafia incerta; também transcrito &quot;Georgel&quot;) (6 apresentações)</title>
+<circle class="bola a5" cx="200.0" cy="459.0" r="16.6"/>
+<text class="no-rot" x="200.0" y="488.6" text-anchor="middle">PM2.5 Luanda</text>
+<text class="no-sub" x="200.0" y="500.6" text-anchor="middle">Jeorgel</text></a>
+<a href="judith-smart-stock.html" class="no" data-id="judith-smart-stock"><title>Smart Stock Vision — Judith (grafia incerta: Judite), Jamilli (só na apresentação de 08/09) (3 apresentações)</title>
+<circle class="bola a1" cx="728.0" cy="543.0" r="11.8"/>
+<text class="no-rot" x="728.0" y="567.8" text-anchor="middle">Smart Stock Vision</text>
+<text class="no-sub" x="728.0" y="579.8" text-anchor="middle">Judith, Jamilli</text></a>
+<a href="julio-ids2017.html" class="no" data-id="julio-ids2017"><title>Tráfego benigno ou malicioso no CIC-IDS2017 — Júlio Bastos (1 apresentações)</title>
+<circle class="bola a0" cx="264.0" cy="255.0" r="8.6"/>
+<text class="no-rot" x="264.0" y="276.6" text-anchor="middle">CIC-IDS2017</text>
+<text class="no-sub" x="264.0" y="288.6" text-anchor="middle">Júlio</text></a>
+<a href="leas-avaliacao-llm.html" class="no" data-id="leas-avaliacao-llm"><title>LLMs como avaliadores de artefatos (T7 a T9) — Eduardo, Reinaldo (aparece como “Renato” em 05/10), Miguel (8 apresentações)</title>
+<circle class="anel a4" cx="472.0" cy="129.0" r="23.8"/>
+<circle class="bola a4" cx="472.0" cy="129.0" r="19.8"/>
+<text class="no-rot" x="472.0" y="161.8" text-anchor="middle">LLMs avaliam artefatos</text>
+<text class="no-sub" x="472.0" y="173.8" text-anchor="middle">Eduardo, Reinaldo, Miguel</text></a>
+<a href="leas-eric-andre.html" class="no" data-id="leas-eric-andre"><title>Artigos de avaliação de artefatos, GitExpert Check e auditoria de senhas — Eric (grafia incerta: Érick), André (4 apresentações)</title>
+<circle class="bola a4" cx="728.0" cy="129.0" r="13.4"/>
+<text class="no-rot" x="728.0" y="155.4" text-anchor="middle">Artigos + GitExpert</text>
+<text class="no-sub" x="728.0" y="167.4" text-anchor="middle">Eric, André</text></a>
+<a href="leas-fluxo-artefatos.html" class="no" data-id="leas-fluxo-artefatos"><title>Novo sistema de avaliação de artefatos com IA — Cristian (grafia incerta: Christian), Beatriz (“Bia”) (5 apresentações)</title>
+<circle class="anel a4" cx="600.0" cy="129.0" r="19.0"/>
+<circle class="bola a4" cx="600.0" cy="129.0" r="15.0"/>
+<text class="no-rot" x="600.0" y="157.0" text-anchor="middle">Fluxo de avaliação</text>
+<text class="no-sub" x="600.0" y="169.0" text-anchor="middle">Cristian, Beatriz</text></a>
+<a href="leonardo-viagem.html" class="no" data-id="leonardo-viagem"><title>Paradas de viagem com IA — Leonardo, Guilherme Vicente (grafia incerta), Emile Dias (grafia incerta: Emily) (1 apresentações)</title>
+<circle class="bola a3" cx="1064.0" cy="255.0" r="8.6"/>
+<text class="no-rot" x="1064.0" y="276.6" text-anchor="middle">Paradas de viagem</text>
+<text class="no-sub" x="1064.0" y="288.6" text-anchor="middle">Leonardo, Guilherme, Emile</text></a>
+<a href="lucas-alves-atencao.html" class="no" data-id="lucas-alves-atencao"><title>App de atenção da filha durante o estudo — Lucas Alves (em 29/09 e 06/10 chamado de &#x27;Lucas Matheus&#x27;; grafia incerta) (7 apresentações)</title>
+<circle class="bola a1" cx="472.0" cy="459.0" r="18.2"/>
+<text class="no-rot" x="472.0" y="490.2" text-anchor="middle">Atenção no estudo</text>
+<text class="no-sub" x="472.0" y="502.2" text-anchor="middle">Lucas</text></a>
+<a href="lucas-ferreira-arandu.html" class="no" data-id="lucas-ferreira-arandu"><title>Arandu: plugin agêntico para Unity — Lucas de Medeiros Ferreira (9 apresentações)</title>
+<circle class="anel a3" cx="872.0" cy="87.0" r="23.8"/>
+<circle class="bola a3" cx="872.0" cy="87.0" r="19.8"/>
+<text class="no-rot" x="872.0" y="119.8" text-anchor="middle">Arandu (Unity)</text>
+<text class="no-sub" x="872.0" y="131.8" text-anchor="middle">Lucas</text></a>
+<a href="maicon-rag-legado.html" class="no" data-id="maicon-rag-legado"><title>RAG local para manutenção de sistemas legados — Maicon (2 apresentações)</title>
+<circle class="bola a3" cx="1128.0" cy="171.0" r="10.2"/>
+<text class="no-rot" x="1128.0" y="194.2" text-anchor="middle">RAG p/ legado</text>
+<text class="no-sub" x="1128.0" y="206.2" text-anchor="middle">Maicon</text></a>
+<a href="maria-lurdes-incendio.html" class="no" data-id="maria-lurdes-incendio"><title>Detecção de incêndios: validação de datasets de imagens — Maria de Lurdes Ribeiro da Rosa, Maria Eduarda (&quot;Duda&quot;; back-end do aplicativo) (6 apresentações)</title>
+<circle class="bola a1" cx="600.0" cy="459.0" r="16.6"/>
+<text class="no-rot" x="600.0" y="488.6" text-anchor="middle">Detecção de incêndio</text>
+<text class="no-sub" x="600.0" y="500.6" text-anchor="middle">Maria de Lurdes, Maria Eduarda</text></a>
+<a href="matheus-provedor.html" class="no" data-id="matheus-provedor"><title>Detecção de anomalias na rede de um provedor — Matheus (5 apresentações)</title>
+<circle class="bola a0" cx="72.0" cy="171.0" r="15.0"/>
+<text class="no-rot" x="72.0" y="199.0" text-anchor="middle">Rede do provedor</text>
+<text class="no-sub" x="72.0" y="211.0" text-anchor="middle">Matheus</text></a>
+<a href="mluiza-mariana-ecommerce.html" class="no" data-id="mluiza-mariana-ecommerce"><title>Inteligência multidimensional para e-commerce — Maria Luíza (grafia incerta: Maria Luísa), Mariana (2 apresentações)</title>
+<circle class="bola a5" cx="200.0" cy="543.0" r="10.2"/>
+<text class="no-rot" x="200.0" y="566.2" text-anchor="middle">E-commerce</text>
+<text class="no-sub" x="200.0" y="578.2" text-anchor="middle">Maria, Mariana</text></a>
+<a href="paulo-dislexia.html" class="no" data-id="paulo-dislexia"><title>Motor de dificuldade adaptativa para jogos de dislexia — Paulo (sobrenome não citado), colega não identificada que desenvolve o jogo com ele (5 apresentações)</title>
+<circle class="bola a2" cx="872.0" cy="459.0" r="15.0"/>
+<text class="no-rot" x="872.0" y="487.0" text-anchor="middle">Jogos p/ dislexia</text>
+<text class="no-sub" x="872.0" y="499.0" text-anchor="middle">Paulo</text></a>
+<a href="priscila-siem.html" class="no" data-id="priscila-siem"><title>LLMs avaliando regras de SIEM (Wazuh) — Priscila (2 apresentações)</title>
+<circle class="bola a0" cx="136.0" cy="255.0" r="10.2"/>
+<text class="no-rot" x="136.0" y="278.2" text-anchor="middle">Regras SIEM</text>
+<text class="no-sub" x="136.0" y="290.2" text-anchor="middle">Priscila</text></a>
+<a href="ulisses-pong.html" class="no" data-id="ulisses-pong"><title>Pong com aprendizado por reforço — Ulisses (sobrenome não citado; em 08/09 o Whisper transcreveu outro nome, &#x27;Alice&#x27;, na chamada anterior) (4 apresentações)</title>
+<circle class="bola a2" cx="1000.0" cy="459.0" r="13.4"/>
+<text class="no-rot" x="1000.0" y="485.4" text-anchor="middle">Pong RL</text>
+<text class="no-sub" x="1000.0" y="497.4" text-anchor="middle">Ulisses</text></a>
+</svg></div></section>
+<section><h2>Evolução no tempo</h2><p class="nota">Cada marca é uma apresentação ou discussão do projeto; o losango indica mudança de tema e o anel, ajuste de escopo. Passe o mouse sobre uma marca para ver o título.</p><div class="matriz-box"><table class="matriz"><thead><tr><th>Projeto</th>
+<th><span>ter 08/09</span></th>
+<th><span>seg 14/09</span></th>
+<th><span>ter 15/09</span></th>
+<th><span>sex 18/09</span></th>
+<th><span>seg 21/09</span></th>
+<th><span>ter 22/09</span></th>
+<th><span>qua 23/09</span></th>
+<th><span>sex 25/09</span></th>
+<th><span>seg 28/09</span></th>
+<th><span>ter 29/09</span></th>
+<th><span>qui 01/10</span></th>
+<th><span>sex 02/10</span></th>
+<th><span>seg 05/10</span></th>
+<th><span>ter 06/10</span></th>
+<th><span>qua 07/10</span></th>
+<th><span>ter 13/10</span></th>
+<th><span>qua 14/10</span></th>
+<th><span>sex 16/10</span></th>
+<th><span>seg 19/10</span></th>
+<th><span>ter 20/10</span></th>
+<th><span>qua 21/10</span></th>
+<th><span>qui 22/10</span></th>
+<th><span>seg 26/10</span></th>
+<th><span>ter 27/10</span></th>
+<th>Prog.</th><th>Mér.</th></tr></thead><tbody>
+<tr class="grupo"><td colspan="27"><i class="dot a0"></i>Segurança e redes</td></tr>
+<tr><td class="mt-nome"><a href="aparecido-firewall.html">Faro: regras de firewall geradas com IA</a><small>Aparecido</small></td>
+<td><span class="mk a0" title="08/09: CIGA: extração de dados de comunicações internas"></span></td>
+<td></td>
+<td><span class="mk a0 mk-tema" title="15/09: Novo projeto: anomalias e score de risco em logs web"></span></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="22/09: Montagem do laboratório físico"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="29/09: Experimento com servidor exposto em DMZ"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0 mk-tema" title="07/10: Atendimento: geração de regras para o OPNsense e o pedido de produção"></span></td>
+<td><span class="mk a0" title="13/10: Filtragem por listas negras dos alertas do Suricata"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="20/10: Faro: filtragem em camadas e seleção de candidatos por IA"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">3</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="erickson.html">Detecção de tráfego malicioso com ML</a><small>Erickson</small></td>
+<td><span class="mk a0" title="08/09: Histórias adaptativas para crianças com TEA"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="22/09: Arquitetura e telas do app de histórias"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0 mk-tema" title="06/10: Novo tema: classificação binária de tráfego malicioso"></span></td>
+<td></td>
+<td><span class="mk a0" title="13/10: Limpeza do dataset e estimativas de treino"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="20/10: Primeiros modelos e hiperparâmetros de Claude × Gemini"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="27/10: Vazamento entre treino e validação e nova deduplicação"></span></td>
+<td class="num">4</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="matheus-provedor.html">Detecção de anomalias na rede de um provedor</a><small>Matheus</small></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="15/09: Proposta: monitoramento unificado com IA para rádio e fibra"></span></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="22/09: Sem apresentação (em viagem)"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0 mk-aj" title="06/10: Replanejamento em torno do Zabbix"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="16/10: Integração com o Zabbix via SNMP"></span></td>
+<td></td>
+<td><span class="mk a0" title="20/10: Análise de quedas, incidentes e anomalias"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">2</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="elton-recon.html">Recon AI</a><small>Elton</small></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="15/09: Proposta: LLM como analista do reconhecimento passivo"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="29/09: Escopo fechado: ferramentas, alvos e modelos"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="06/10: Estimativa de custo e número de execuções"></span></td>
+<td></td>
+<td><span class="mk a0 mk-aj" title="13/10: Recon AI: primeiros resultados do M1 e a questão do &quot;passivo&quot;"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="27/10: Passivo com baixo contato e scorecard de confiança das fontes"></span></td>
+<td class="num">3</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="adilson-douglas-incidentes.html">Registro inteligente de incidentes no CESUP</a><small>Adilson, Douglas</small></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="22/09: IA para priorizar alertas de auditoria (Lynis) em HPC"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0 mk-tema" title="13/10: Sem apresentação: escolher um único projeto"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="20/10: Sistema de registro de incidentes: primeira versão"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="27/10: Nova versão: captura multimodal, correlação e priorização"></span></td>
+<td class="num">2</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="priscila-siem.html">LLMs avaliando regras de SIEM (Wazuh)</a><small>Priscila</small></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="22/09: Proposta: LLMs avaliando a qualidade de regras do Wazuh"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0 mk-aj" title="20/10: Atividades 7 e 8: dataset de 20 regras e rubrica"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">3</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="beatriz-scanners.html">Relatórios de scanners de vulnerabilidade para JSON</a><small>Beatriz</small></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="22/09: Proposta completa da ferramenta de extração"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="06/10: Contextualização: scanners, relatórios e JSON unificado"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">2</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="julio-ids2017.html">Tráfego benigno ou malicioso no CIC-IDS2017</a><small>Júlio</small></td>
+<td></td>
+<td></td>
+<td><span class="mk a0" title="15/09: Definição do problema, MVP e critérios de sucesso"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">1</td><td class="num">3</td></tr>
+<tr class="grupo"><td colspan="27"><i class="dot a1"></i>Visão computacional e sinais</td></tr>
+<tr><td class="mt-nome"><a href="lucas-alves-atencao.html">App de atenção da filha durante o estudo</a><small>Lucas</small></td>
+<td><span class="mk a1" title="08/09: Proposta: detectar engajamento e alertar com LED"></span></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="15/09: Reformulação com foco em autonomia"></span></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="22/09: Estudo de modelos e datasets de emoção e engajamento"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="29/09: Aplicativo com detecção pelo ângulo da cabeça"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="06/10: Novas funções e plano de coleta rotulada"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="20/10: Teste real: falsos positivos e calibração"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="27/10: Versão 1.1 com zona adaptativa e falta de gabarito"></span></td>
+<td class="num">4</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="maria-lurdes-incendio.html">Detecção de incêndios: validação de datasets de imagens</a><small>Maria de Lurdes, Maria Eduarda</small></td>
+<td><span class="mk a1 mk-aj" title="08/09: Proposta: aplicativo de detecção de incêndios por foto"></span></td>
+<td></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="18/09: Origem dos datasets e novo artefato para a LEAS"></span></td>
+<td></td>
+<td><span class="mk a1" title="22/09: Validação técnica dos três datasets (atribuição provável)"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="02/10: Duplicatas, balanceamento e resultados das redes"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="16/10: Revisão do dataset com o professor: recomeçar por ambiente"></span></td>
+<td></td>
+<td><span class="mk a1" title="20/10: Proposta do professor enviada ao grupo (sem apresentação)"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">3</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="carlos-vistorias.html">Marca, modelo e cor em fotos de vistoria veicular</a><small>Carlos</small></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="22/09: Proposta do classificador e primeiros problemas do acervo"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="29/09: Curadoria do dataset e redução de classes"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="06/10: Demonstração da aplicação de curadoria"></span></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="13/10: Pré-triagem com o Qwen e dataset de 38 classes"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="27/10: Comparação de ferramentas de anotação"></span></td>
+<td class="num">5</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="alisson-emg.html">Classificação de gestos por EMG com TinyML</a><small>Alisson, Gabriel</small></td>
+<td><span class="mk a1 mk-aj" title="08/09: Proposta: TinyML para prótese transradial de baixo custo"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="06/10: Virada para host-first e baseline LDA"></span></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="13/10: Caracterização do NinaPro DB2"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="20/10: Comparação de datasets e plano de redução de canais"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">3</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="gian-dentia.html">Dentia: apoio ao diagnóstico odontológico</a><small>Gian</small></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="25/09: Apresentação do Dentia (versões 1.0 e 2.0)"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="06/10: Triagem das panorâmicas e treino rápido de YOLO"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="20/10: Base estruturada de lesões e dataset de 200 imagens (atribuição provável)"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">2</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="judith-smart-stock.html">Smart Stock Vision</a><small>Judith, Jamilli</small></td>
+<td><span class="mk a1" title="08/09: Proposta do Smart Stock Vision (dupla Judith e Jamilli)"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1 mk-aj" title="29/09: Dataset de 5 mil imagens de 10 produtos"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a1" title="27/10: Chegou atrasada e não apresentou"></span></td>
+<td class="num">2</td><td class="num">3</td></tr>
+<tr class="grupo"><td colspan="27"><i class="dot a2"></i>Educação, jogos e acessibilidade</td></tr>
+<tr><td class="mt-nome"><a href="paulo-dislexia.html">Motor de dificuldade adaptativa para jogos de dislexia</a><small>Paulo</small></td>
+<td><span class="mk a2" title="08/09: Proposta do motor de dificuldade adaptativa"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a2" title="29/09: Primeiro minijogo, Acha Letra, com motor adaptativo"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a2" title="13/10: Pedido para remarcar"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a2" title="20/10: Novos minijogos e calibração de velocidade"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a2" title="27/10: Demo com interface, acessibilidade e o desafio do jogo de memória"></span></td>
+<td class="num">4</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="ulisses-pong.html">Pong com aprendizado por reforço</a><small>Ulisses</small></td>
+<td><span class="mk a2 mk-aj" title="08/09: Proposta: Pong com raquetes controladas por IA"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a2" title="29/09: Ambiente Pong em Python/Pygame"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a2" title="13/10: Oponente algorítmico (baseline) e testes em massa"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a2" title="20/10: Agente de RL treinado e suspeita de overfitting"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">3</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="guilherme-estudos.html">Assistente de estudos com IA</a><small>Guilherme</small></td>
+<td></td>
+<td></td>
+<td><span class="mk a2" title="15/09: Proposta do assistente de estudos"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">1</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="edlin-rag-uml.html">Livro de UML interativo com IA</a><small>Edlin</small></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a2 mk-tema" title="29/09: Chatbot RAG sobre o livro de UML"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">1</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="emanuel-mentoria.html">Mentoria</a><small>Emanuel</small></td>
+<td><span class="mk a2" title="08/09: Mentoria: microaprendizagem agêntica e o gargalo de custo e latência"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">1</td><td class="num">4</td></tr>
+<tr class="grupo"><td colspan="27"><i class="dot a3"></i>Agentes e engenharia de software com IA</td></tr>
+<tr><td class="mt-nome"><a href="lucas-ferreira-arandu.html">Arandu: plugin agêntico para Unity</a><small>Lucas</small></td>
+<td><span class="mk a3 mk-aj" title="08/09: Comentário sobre pipeline multiagente no trabalho | Jogo educacional com NPCs guiados por LLM"></span></td>
+<td></td>
+<td><span class="mk a3" title="15/09: Confirmação da próxima entrega"></span></td>
+<td></td>
+<td></td>
+<td><span class="mk a3 mk-tema" title="22/09: Troca do benchmark de latência pelo plugin agêntico"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="29/09: Arquitetura do Arandu"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="06/10: Repositório e documentação de engenharia de contexto"></span></td>
+<td></td>
+<td><span class="mk a3" title="13/10: Primeira versão do Core com 74 testes"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="20/10: ModelAdapter, Integration e 124 testes"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="27/10: Agente rodando com o Gemini na cena Throne Room"></span></td>
+<td class="num">5</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="gabriel-uml.html">UML × IA</a><small>Gabriel</small></td>
+<td><span class="mk a3" title="08/09: Ferramenta de geração de UML textual"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3 mk-tema" title="22/09: Reformulação: a IA elimina a modelagem?"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="29/09: Evidências empíricas sobre UML e desenvolvimento com IA"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3 mk-aj" title="06/10: Tabela comparativa: RealBench, diagramas de atividade e 21 LLMs"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="20/10: Dois artigos em detalhe: diagramas de atividade e RealBench"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="27/10: Terceiro artigo: LLMs gerando diagramas de classe"></span></td>
+<td class="num">3</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="jamilli-navega.html">Navega</a><small>Jamilli, Nilmara</small></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3 mk-tema" title="23/09: Proposta do Navega"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="01/10: Experimentos de redes neurais fora do escopo"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="07/10: Mapeamento das fontes de informação"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">2</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="felipe-prd2spec.html">PRD2Spec</a><small>Felipe</small></td>
+<td><span class="mk a3" title="08/09: Proposta do PRD2Spec"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="06/10: POC na base da Olist com verificação de fatos"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="20/10: Primeira avaliação cega: do resultado ruim à vitória do pipeline"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">4</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="maicon-rag-legado.html">RAG local para manutenção de sistemas legados</a><small>Maicon</small></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="15/09: Proposta de RAG local para sistemas legados"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="06/10: Apresentação adiada"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">1</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="eric-pedro-andre-rubrik.html">Rubrik Pro: gateway multimodelo</a><small>Eric, Pedro, André</small></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="15/09: Gateway multimodelo para o módulo de rubricas"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="29/09: Apresentação adiada"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">2</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="leonardo-viagem.html">Paradas de viagem com IA</a><small>Leonardo, Guilherme, Emile</small></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="16/10: Proposta do aplicativo de paradas de viagem"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">2</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="eduardo-silver-bullet.html">Silver Bullet: apoio inteligente à gestão de projetos</a><small>Eduardo</small></td>
+<td></td>
+<td></td>
+<td><span class="mk a3" title="15/09: Proposta inicial: IA no Silver Bullet"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">1</td><td class="num">3</td></tr>
+<tr class="grupo"><td colspan="27"><i class="dot a4"></i>Avaliação de artefatos e de LLMs</td></tr>
+<tr><td class="mt-nome"><a href="leas-avaliacao-llm.html">LLMs como avaliadores de artefatos (T7 a T9)</a><small>Eduardo, Reinaldo, Miguel</small></td>
+<td></td>
+<td><span class="mk a4" title="14/09: T1/T2 (artigos) e T3 de Reinaldo: analisador de logs web | T3 (Miguel): Web Log Analyzer | T3 (Eduardo): SSH LogSentinel"></span></td>
+<td></td>
+<td></td>
+<td><span class="mk a4 mk-tema" title="21/09: Três LLMs × três níveis de raciocínio gerando um analisador de logs"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a4" title="05/10: T7: LLMs tentam reproduzir os selos F e R | T6 (Reinaldo): ACM SIGSOFT × IEEE × USENIX"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a4" title="19/10: T8: execução única e registro factual compartilhado"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a4" title="26/10: T9: execução autônoma por LLM em containers"></span></td>
+<td></td>
+<td class="num">5</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="leas-fluxo-artefatos.html">Novo sistema de avaliação de artefatos com IA</a><small>Cristian, Beatriz</small></td>
+<td></td>
+<td><span class="mk a4" title="14/09: T1/T2: processo do SBSeg (Beatriz) × USENIX (Cristian)"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a4 mk-tema" title="28/09: Problemas do SBSeg 2026 e primeiro desenho do novo fluxo (Cristian)"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a4" title="05/10: Fluxo detalhado do novo sistema de avaliação | Contribuições à T7 do grupo de Eduardo e ao selo “replicado”"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a4" title="26/10: Sistema já implementado (apenas mencionado)"></span></td>
+<td></td>
+<td class="num">4</td><td class="num">5</td></tr>
+<tr><td class="mt-nome"><a href="leas-eric-andre.html">Artigos de avaliação de artefatos, GitExpert Check e auditoria de senhas</a><small>Eric, André</small></td>
+<td></td>
+<td><span class="mk a4" title="14/09: Apresentação adiada"></span></td>
+<td></td>
+<td></td>
+<td><span class="mk a4" title="21/09: T3 (Eric): GitExpert Check | T1/T2: NFDI/ICSCA 2024 e “Community Expectations for Research Artifacts” (ICSE 2020) | T3 (André): serviço de auditoria de senhas"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">2</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="cristian-jailbreak-ptbr.html">Juízes LLM para jailbreak em PT-BR</a><small>Cristian</small></td>
+<td><span class="mk a4" title="08/09: Proposta: juízes de jailbreak em PT-BR"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a4" title="06/10: Atividades 5 e 6: tradução de 30 pares e comparação de tradutores"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a4" title="27/10: Status report sem slides"></span></td>
+<td class="num">3</td><td class="num">4</td></tr>
+<tr class="grupo"><td colspan="27"><i class="dot a5"></i>Dados, previsão e negócios</td></tr>
+<tr><td class="mt-nome"><a href="diego-acoes.html">Agente de teses de investimento</a><small>Diego</small></td>
+<td><span class="mk a5 mk-tema" title="08/09: Proposta inicial: agente com consentimento para compra e venda"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="29/09: Planejamento com duas IAs e harness"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="06/10: Plataforma implementada pela IA"></span></td>
+<td></td>
+<td><span class="mk a5" title="13/10: Remarcou a apresentação"></span></td>
+<td></td>
+<td><span class="mk a5" title="16/10: Serviço que compara tese e mercado"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="27/10: Uma semana de simulação contra o S&amp;P 500"></span></td>
+<td class="num">5</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="jeorgel-pm25.html">Previsão de curto prazo de PM2.5 em Luanda</a><small>Jeorgel</small></td>
+<td><span class="mk a5" title="08/09: Proposta: previsão de curto prazo de PM2.5"></span></td>
+<td></td>
+<td><span class="mk a5" title="15/09: Viabilidade da fonte OpenWeather"></span></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="22/09: Limpeza e diagnóstico dos dados"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="29/09: Fundamentação das métricas de avaliação"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="13/10: Aplicação de preparação do dataset (primeira versão)"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="22/10: Aplicação transparente de validação e preparação"></span></td>
+<td></td>
+<td></td>
+<td class="num">4</td><td class="num">4</td></tr>
+<tr><td class="mt-nome"><a href="fernando-saude-mental.html">Sinais de depressão e ansiedade em textos (e scanner de segredos)</a><small>Fernando</small></td>
+<td><span class="mk a5" title="08/09: Proposta: IA para indícios de saúde mental em redações"></span></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="18/09: LEAS: scanner estático de segredos (atendimento individual)"></span></td>
+<td></td>
+<td><span class="mk a5" title="22/09: Redução de escopo e protótipo local"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a5 mk-aj" title="14/10: Ideia ainda genérica; virada para o levantamento de trabalhos"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="21/10: Trabalhos relacionados com o SetembroBR"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">2</td><td class="num">3</td></tr>
+<tr><td class="mt-nome"><a href="mluiza-mariana-ecommerce.html">Inteligência multidimensional para e-commerce</a><small>Maria, Mariana</small></td>
+<td></td>
+<td></td>
+<td><span class="mk a5" title="15/09: Proposta: suporte e recomendação em e-commerce"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="mk a5 mk-aj" title="20/10: Coletor próprio de avaliações e correções metodológicas"></span></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td class="num">3</td><td class="num">3</td></tr>
+</tbody></table></div></section>
+<section><h2>Projetos</h2><div class="cards">
+<a class="card a0" href="aparecido-firewall.html"><div class="chips"><span class="chip a0">Segurança e redes</span><span class="chip neutro">LIAA</span></div><h3>Faro: regras de firewall geradas com IA</h3><p class="card-al">Aparecido</p><p class="card-sub">Firewall com filtragem em camadas por listas negras em que uma IA seleciona, entre os IPs que sobram dos alertas do Suricata, candidatos a bloqueio e aplica regras no OPNsense via API.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">7 apresentações · última 20/10 · mudou de tema</span></div></a>
+<a class="card a0" href="erickson.html"><div class="chips"><span class="chip a0">Segurança e redes</span><span class="chip neutro">LIAA</span></div><h3>Detecção de tráfego malicioso com ML</h3><p class="card-al">Erickson</p><p class="card-sub">Classificador binário de fluxos de rede (benigno × ataque) sobre o CSE-CIC-IDS2018, com curadoria rigorosa do dataset e comparação de hiperparâmetros sugeridos por Claude e Gemini.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 4 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">6 apresentações · última 27/10 · mudou de tema</span></div></a>
+<a class="card a0" href="matheus-provedor.html"><div class="chips"><span class="chip a0">Segurança e redes</span><span class="chip neutro">LIAA</span></div><h3>Detecção de anomalias na rede de um provedor</h3><p class="card-al">Matheus</p><p class="card-sub">Sistema que coleta métricas da rede de um provedor de internet via Zabbix para detectar quedas, agrupar incidentes e, com IA, antecipar a degradação gradual do sinal.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">5 apresentações · última 20/10</span></div></a>
+<a class="card a0" href="elton-recon.html"><div class="chips"><span class="chip a0">Segurança e redes</span><span class="chip neutro">LIAA</span></div><h3>Recon AI</h3><p class="card-al">Elton</p><p class="card-sub">Pipeline que coleta dados de reconhecimento de baixo contato, cruza com bases de CVE e EPSS e usa LLMs para gerar hipóteses de ataque priorizadas para pentest.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">5 apresentações · última 27/10</span></div></a>
+<a class="card a0" href="adilson-douglas-incidentes.html"><div class="chips"><span class="chip a0">Segurança e redes</span><span class="chip neutro">LIAA</span></div><h3>Registro inteligente de incidentes no CESUP</h3><p class="card-al">Adilson, Douglas</p><p class="card-sub">Sistema para o data center do CESUP/UFRGS em que técnicos e sistemas de monitoramento reportam incidentes por voz, foto ou texto e a IA registra, correlaciona e prioriza os chamados.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">4 apresentações · última 27/10 · mudou de tema</span></div></a>
+<a class="card a0" href="priscila-siem.html"><div class="chips"><span class="chip a0">Segurança e redes</span><span class="chip neutro">LIAA</span></div><h3>LLMs avaliando regras de SIEM (Wazuh)</h3><p class="card-al">Priscila</p><p class="card-sub">Experimento que mede se ChatGPT, Claude e Gemini conseguem avaliar a qualidade de regras de detecção do Wazuh de forma consistente com um especialista de SOC.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">2 apresentações · última 20/10</span></div></a>
+<a class="card a0" href="beatriz-scanners.html"><div class="chips"><span class="chip a0">Segurança e redes</span><span class="chip neutro">LIAA</span></div><h3>Relatórios de scanners de vulnerabilidade para JSON</h3><p class="card-al">Beatriz</p><p class="card-sub">Extrai com LLM as vulnerabilidades de relatórios PDF de scanners (OpenVAS, Nessus, Qualys) e as normaliza num esquema JSON único para facilitar a triagem.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">2 apresentações · última 06/10</span></div></a>
+<a class="card a0" href="julio-ids2017.html"><div class="chips"><span class="chip a0">Segurança e redes</span><span class="chip neutro">LIAA</span></div><h3>Tráfego benigno ou malicioso no CIC-IDS2017</h3><p class="card-al">Júlio Bastos</p><p class="card-sub">Classifica registros de tráfego de rede como benignos ou potencialmente maliciosos com modelos clássicos de aprendizado de máquina, com a proposta de compará-los a uma LLM.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 1 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">1/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">1 apresentações · última 15/09</span></div></a>
+<a class="card a1" href="lucas-alves-atencao.html"><div class="chips"><span class="chip a1">Visão computacional e sinais</span><span class="chip neutro">LIAA</span></div><h3>App de atenção da filha durante o estudo</h3><p class="card-al">Lucas Alves</p><p class="card-sub">Aplicativo de celular, local e centrado na privacidade, que estima pela geometria do rosto se a criança está engajada nas tarefas escolares, alerta com discrição e coleta dados rotulados para comparar regras e modelos.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 4 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">7 apresentações · última 27/10</span></div></a>
+<a class="card a1" href="maria-lurdes-incendio.html"><div class="chips"><span class="chip a1">Visão computacional e sinais</span><span class="chip neutro">LIAA e LEAS</span></div><h3>Detecção de incêndios: validação de datasets de imagens</h3><p class="card-al">Maria de Lurdes Ribeiro da Rosa, Maria Eduarda</p><p class="card-sub">Validação e organização de datasets de imagens com e sem fogo para treinar, depois, um classificador de incêndios de um aplicativo Android.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">6 apresentações · última 20/10</span></div></a>
+<a class="card a1" href="carlos-vistorias.html"><div class="chips"><span class="chip a1">Visão computacional e sinais</span><span class="chip neutro">LIAA</span></div><h3>Marca, modelo e cor em fotos de vistoria veicular</h3><p class="card-al">Carlos André</p><p class="card-sub">Construção de um dataset curado de fotos reais de vistorias veiculares para treinar modelos de visão computacional que identifiquem marca, modelo e cor do veículo.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 5 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span></span><span class="med-v">5/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">5 apresentações · última 27/10</span></div></a>
+<a class="card a1" href="alisson-emg.html"><div class="chips"><span class="chip a1">Visão computacional e sinais</span><span class="chip neutro">LIAA</span></div><h3>Classificação de gestos por EMG com TinyML</h3><p class="card-al">Alisson, Gabriel Belagamba</p><p class="card-sub">Estudo de como reduzir canais e precisão numérica na classificação de gestos por eletromiografia de superfície, para embarcar o classificador num ESP32 de uma prótese transradial de baixo custo.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">4 apresentações · última 20/10</span></div></a>
+<a class="card a1" href="gian-dentia.html"><div class="chips"><span class="chip a1">Visão computacional e sinais</span><span class="chip neutro">LIAA</span></div><h3>Dentia: apoio ao diagnóstico odontológico</h3><p class="card-al">Gian Esteves Oliveira</p><p class="card-sub">Plataforma de apoio ao diagnóstico de patologias odontológicas que combina uma base estruturada de lesões, validada por especialista, com um dataset de radiografias panorâmicas em construção para classificação por imagem.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">3 apresentações · última 20/10</span></div></a>
+<a class="card a1" href="judith-smart-stock.html"><div class="chips"><span class="chip a1">Visão computacional e sinais</span><span class="chip neutro">LIAA</span></div><h3>Smart Stock Vision</h3><p class="card-al">Judith, Jamilli</p><p class="card-sub">Reconhecimento por visão computacional dos produtos retirados da prateleira, para apoiar o controle de estoque de pequenos estabelecimentos.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">3 apresentações · última 27/10</span></div></a>
+<a class="card a2" href="paulo-dislexia.html"><div class="chips"><span class="chip a2">Educação, jogos e acessibilidade</span><span class="chip neutro">LIAA</span></div><h3>Motor de dificuldade adaptativa para jogos de dislexia</h3><p class="card-al">Paulo</p><p class="card-sub">Jogo em Unity com minijogos de treino fonológico para crianças com dislexia, com calibração inicial de velocidade e motor que ajusta dificuldade, velocidade e dicas a cada rodada.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 4 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">5 apresentações · última 27/10</span></div></a>
+<a class="card a2" href="ulisses-pong.html"><div class="chips"><span class="chip a2">Educação, jogos e acessibilidade</span><span class="chip neutro">LIAA</span></div><h3>Pong com aprendizado por reforço</h3><p class="card-al">Ulisses</p><p class="card-sub">Ambiente de Pong em Python/Pygame em que um agente de aprendizado por reforço é treinado contra um oponente algorítmico que serve de baseline.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">4 apresentações · última 20/10</span></div></a>
+<a class="card a2" href="guilherme-estudos.html"><div class="chips"><span class="chip a2">Educação, jogos e acessibilidade</span><span class="chip neutro">LIAA</span></div><h3>Assistente de estudos com IA</h3><p class="card-al">Guilherme</p><p class="card-sub">Proposta de assistente que resume materiais enviados pelo aluno, gera perguntas e adapta o conteúdo conforme os erros, sem implementação apresentada.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 1 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">1/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">1 apresentações · última 15/09</span></div></a>
+<a class="card a2" href="edlin-rag-uml.html"><div class="chips"><span class="chip a2">Educação, jogos e acessibilidade</span><span class="chip neutro">LIAA</span></div><h3>Livro de UML interativo com IA</h3><p class="card-al">Edlin</p><p class="card-sub">Proposta de transformar o livro de UML usado em Análise e Projeto de Software, inicialmente pensado como base de um chatbot RAG, num site dinâmico reescrito com IA, com novos exemplos e ilustrações.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 1 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">1/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">1 apresentações · última 29/09 · mudou de tema</span></div></a>
+<a class="card a2" href="emanuel-mentoria.html"><div class="chips"><span class="chip a2">Educação, jogos e acessibilidade</span><span class="chip neutro">LIAA</span></div><h3>Mentoria</h3><p class="card-al">Emanuel</p><p class="card-sub">Plataforma agêntica de microaprendizagem adaptativa que gera trilhas, blocos e quizzes a partir do PDF do professor; na disciplina, o foco é comparar modelos para reduzir o tempo e o custo de geração.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 1 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">1/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">1 apresentações · última 08/09</span></div></a>
+<a class="card a3" href="lucas-ferreira-arandu.html"><div class="chips"><span class="chip a3">Agentes e engenharia de software com IA</span><span class="chip neutro">LIAA</span></div><h3>Arandu: plugin agêntico para Unity</h3><p class="card-al">Lucas de Medeiros Ferreira</p><p class="card-sub">Plugin que roda agentes de IA em tempo de execução dentro de jogos Unity, com harness de tools, skills e contexto, adaptador de modelos intercambiáveis e uma cena de exemplo já integrada à API do Gemini.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 5 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span></span><span class="med-v">5/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">9 apresentações · última 27/10 · mudou de tema</span></div></a>
+<a class="card a3" href="gabriel-uml.html"><div class="chips"><span class="chip a3">Agentes e engenharia de software com IA</span><span class="chip neutro">LIAA</span></div><h3>UML × IA</h3><p class="card-al">Gabriel</p><p class="card-sub">Investiga, a partir da literatura e de uma futura replicação com modelos atuais, se a IA elimina a modelagem UML ou só muda quando e por que ela é usada.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">6 apresentações · última 27/10 · mudou de tema</span></div></a>
+<a class="card a3" href="jamilli-navega.html"><div class="chips"><span class="chip a3">Agentes e engenharia de software com IA</span><span class="chip neutro">LIAA</span></div><h3>Navega</h3><p class="card-al">Jamilli, Nilmara</p><p class="card-sub">Assistente com IA que extrai de grupos de WhatsApp, Instagram e cartazes as informações de passagens fluviais no Alto Solimões (AM) e responde consultas por chat.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">3 apresentações · última 07/10 · mudou de tema</span></div></a>
+<a class="card a3" href="felipe-prd2spec.html"><div class="chips"><span class="chip a3">Agentes e engenharia de software com IA</span><span class="chip neutro">LIAA</span></div><h3>PRD2Spec</h3><p class="card-al">Felipe</p><p class="card-sub">Pipeline de agentes (enquadrar, pesquisar, escrever, revisar) que transforma pedidos do time de produto em PRDs e specs verificados contra os dados, avaliado às cegas contra um prompt único.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 4 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">3 apresentações · última 20/10</span></div></a>
+<a class="card a3" href="maicon-rag-legado.html"><div class="chips"><span class="chip a3">Agentes e engenharia de software com IA</span><span class="chip neutro">LIAA</span></div><h3>RAG local para manutenção de sistemas legados</h3><p class="card-al">Maicon</p><p class="card-sub">Assistente com RAG e modelo de linguagem pequeno rodando localmente, que cruza código-fonte, estrutura do banco e chamados para apoiar desenvolvedores de sistemas legados de uma instituição federal sem vazar dados.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 1 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">1/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">2 apresentações · última 06/10</span></div></a>
+<a class="card a3" href="eric-pedro-andre-rubrik.html"><div class="chips"><span class="chip a3">Agentes e engenharia de software com IA</span><span class="chip neutro">LIAA</span></div><h3>Rubrik Pro: gateway multimodelo</h3><p class="card-al">Eric, Pedro, André</p><p class="card-sub">Evolui o módulo de geração de rubricas do Rubrik Pro com um gateway que conecta vários modelos de IA, com fallback, chave própria do usuário e validação de esquema.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">2 apresentações · última 29/09</span></div></a>
+<a class="card a3" href="leonardo-viagem.html"><div class="chips"><span class="chip a3">Agentes e engenharia de software com IA</span><span class="chip neutro">LIAA</span></div><h3>Paradas de viagem com IA</h3><p class="card-al">Leonardo, Guilherme Vicente, Emile Dias</p><p class="card-sub">Aplicativo mobile que sugere, ao longo de uma viagem de carro, paradas (restaurantes, postos, atrações) ranqueadas por IA conforme o perfil do viajante.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">1 apresentações · última 16/10</span></div></a>
+<a class="card a3" href="eduardo-silver-bullet.html"><div class="chips"><span class="chip a3">Agentes e engenharia de software com IA</span><span class="chip neutro">LIAA</span></div><h3>Silver Bullet: apoio inteligente à gestão de projetos</h3><p class="card-al">Eduardo</p><p class="card-sub">Propõe um chat em linguagem natural e um agente autônomo, via MCP e LLM pronta, para apoiar o gerente de projetos na ferramenta Silver Bullet do grupo LESSE (alocação de recursos, riscos e prazos).</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 1 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">1/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">1 apresentações · última 15/09</span></div></a>
+<a class="card a4" href="leas-avaliacao-llm.html"><div class="chips"><span class="chip a4">Avaliação de artefatos e de LLMs</span><span class="chip neutro">LEAS</span></div><h3>LLMs como avaliadores de artefatos (T7 a T9)</h3><p class="card-al">Eduardo, Reinaldo, Miguel</p><p class="card-sub">Mede se GPT, Claude e Gemini, executando sozinhos artefatos do SBSeg/SBRC em containers, chegam aos mesmos selos que os comitês humanos, com tempo, tokens e custo medidos.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 5 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span></span><span class="med-v">5/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">8 apresentações · última 26/10 · mudou de tema</span></div></a>
+<a class="card a4" href="leas-fluxo-artefatos.html"><div class="chips"><span class="chip a4">Avaliação de artefatos e de LLMs</span><span class="chip neutro">LEAS</span></div><h3>Novo sistema de avaliação de artefatos com IA</h3><p class="card-al">Cristian, Beatriz</p><p class="card-sub">Desenha e implementa um processo e um sistema de avaliação de artefatos para o Salão de Ferramentas do SBSeg, com parecer prévio e execução por IA, triagem por hardware, checklist por selo e DOI obrigatório.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 4 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><div class="medidor mer" aria-label="Mérito: 5 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span></span><span class="med-v">5/5</span></div><span class="card-n">5 apresentações · última 26/10 · mudou de tema</span></div></a>
+<a class="card a4" href="leas-eric-andre.html"><div class="chips"><span class="chip a4">Avaliação de artefatos e de LLMs</span><span class="chip neutro">LEAS</span></div><h3>Artigos de avaliação de artefatos, GitExpert Check e auditoria de senhas</h3><p class="card-al">Eric, André</p><p class="card-sub">Apresenta artigos sobre processos de avaliação de artefatos e dois artefatos de segurança gerados com IA: um auditor estático de arquivos sensíveis em repositórios Git e um serviço de auditoria de senhas.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">4 apresentações · última 21/09</span></div></a>
+<a class="card a4" href="cristian-jailbreak-ptbr.html"><div class="chips"><span class="chip a4">Avaliação de artefatos e de LLMs</span><span class="chip neutro">LIAA</span></div><h3>Juízes LLM para jailbreak em PT-BR</h3><p class="card-al">Cristian</p><p class="card-sub">Reproduz em português brasileiro a avaliação de juízes LLM que classificam respostas a ataques de jailbreak, traduzindo datasets públicos rotulados em inglês.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">3 apresentações · última 27/10</span></div></a>
+<a class="card a5" href="diego-acoes.html"><div class="chips"><span class="chip a5">Dados, previsão e negócios</span><span class="chip neutro">LIAA</span></div><h3>Agente de teses de investimento</h3><p class="card-al">Diego</p><p class="card-sub">Agente que lê notícias financeiras, monta teses de compra, venda ou manutenção e opera ações em simulação, medindo o resultado contra o mercado e o S&amp;P 500.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 5 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span></span><span class="med-v">5/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">6 apresentações · última 27/10 · mudou de tema</span></div></a>
+<a class="card a5" href="jeorgel-pm25.html"><div class="chips"><span class="chip a5">Dados, previsão e negócios</span><span class="chip neutro">LIAA</span></div><h3>Previsão de curto prazo de PM2.5 em Luanda</h3><p class="card-al">Jeorgel</p><p class="card-sub">Previsão da concentração de PM2.5 em Luanda (Angola) para 1, 3 e 6 horas, apoiada numa aplicação própria e transparente de diagnóstico e preparação do dataset.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 4 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div><span class="card-n">6 apresentações · última 22/10</span></div></a>
+<a class="card a5" href="fernando-saude-mental.html"><div class="chips"><span class="chip a5">Dados, previsão e negócios</span><span class="chip neutro">LIAA e LEAS</span></div><h3>Sinais de depressão e ansiedade em textos (e scanner de segredos)</h3><p class="card-al">Fernando</p><p class="card-sub">Levanta trabalhos e datasets para detectar precocemente sinais de depressão e ansiedade em textos em português, depois de um começo voltado a redações de alunos; na LEAS, propôs um scanner estático de segredos.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 2 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">2/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">5 apresentações · última 21/10</span></div></a>
+<a class="card a5" href="mluiza-mariana-ecommerce.html"><div class="chips"><span class="chip a5">Dados, previsão e negócios</span><span class="chip neutro">LIAA</span></div><h3>Inteligência multidimensional para e-commerce</h3><p class="card-al">Maria Luíza, Mariana</p><p class="card-sub">Pipeline que consolida avaliações de produtos da Amazon e do Mercado Livre por aspectos e diagnostica a satisfação em diálogos de suporte, para apoiar recomendação e atendimento.</p><div class="card-rod"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 3 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><span class="card-n">2 apresentações · última 20/10</span></div></a>
+</div></section>
+<section><h2>Apresentações sem autoria confirmada</h2><ul class="avulsas">
+<li><b>15/09 · 03:14:32</b> · Vistoria veicular com IA para concessão de crédito em banco. O aluno, que diz trabalhar em um banco, propôs automatizar a análise hoje manual das fotos e documentos enviados por clientes que dão o veículo em garantia de empréstimo. A prova de conceito juntaria OCR do CRLV, leitura da placa, validação de cor e modelo pela foto panorâmica e leitura do painel/odômetro, com índice de confiança (compatível, divergente ou inconclusivo), em uma amostra de 30 a 50 veículos; a arquitetura previa interface web, API em Laravel/PHP, consulta à tabela FIPE e um Lambda em Python. O professor questionou a escolha de Laravel &quot;por conforto&quot;, pediu que todo o projeto seja feito por IA, inclusive a escolha das tecnologias, e que se construa um conjunto de dados rotulado; disse ainda que o problema se parece com o do Carlos André. <em>Autor provável: Diego (aluno).</em> <span class="nota">No fim da mesma aula (04:18:06), o professor lista quem apresentou: &quot;Elton apresentou, Eduardo apresentou, París e o Jeorgel apresentaram, Diego também&quot;. A única outra fala do Diego nessa gravação (01:23:38) é um comentário, sem projeto, de modo que a apresentação contada como dele deve ser esta. Além disso, em 08/09 o Diego disse trabalhar na IBM prestando serviço para o Itaú, compatível com &quot;eu trabalho em um banco&quot;. O Carlos André fica descartado: saiu antes, segundo o próprio professor, e em 22/09 se refere a este como &quot;trabalho de um outro colega&quot;. Confiança moderada: o Diego volta ao projeto de ações em 29/09, sem mencionar a vistoria.</span> — relacionado a <a href="diego-acoes.html">Agente de teses de investimento</a></li>
+<li><b>06/10 · 02:06:30</b> · Aluno sem apresentação, com código quebrado. Quando o professor pergunta quem mais vai apresentar, um aluno diz que teve progresso no projeto, mas não tem &quot;nenhuma grande apresentação de slide&quot; e que, programando durante a aula, acabou quebrando o código. Não apresenta; em seguida o Diego apresenta a plataforma de ações. No fim da aula (02:16:50), o professor lista quem apresentará em outro dia: Jeorgel, Maicon, Adilson, Ulisses, Fernando e Maria. <em>Autor provável: Ulisses.</em> <span class="nota">O Ulisses está entre os que o professor diz, no fim da mesma aula, que apresentarão em outro dia, o que é coerente com quem não pôde apresentar. A forma de falar lembra a dele em 29/09 (&quot;não sinto como transformaria isso num slide grande&quot;, preferindo mostrar o código funcionando). Na aula seguinte (13/10, 01:55:02), o aluno do jogo com aprendizado por reforço, provavelmente o Ulisses, conta que recuperou uma versão guardada &quot;em caso de emergência&quot; num arquivo .rar, e o professor exige versionamento no GitHub com releases &quot;para voltar uma versão&quot;, o que sugere que o código havia quebrado. Confiança baixa a moderada, pois não há nome dito no trecho.</span> — relacionado a <a href="ulisses-pong.html">Pong com aprendizado por reforço</a></li>
+</ul></section>
+</main>
+<script>
+(() => {
+  const svg = document.querySelector('svg.mapa');
+  if (!svg) return;
+  const edges = [...svg.querySelectorAll('.aresta')];
+  svg.querySelectorAll('.no').forEach(n => {
+    const id = n.dataset.id;
+    n.addEventListener('mouseenter', () => {
+      svg.classList.add('foco');
+      const viz = new Set([id]);
+      edges.forEach(ed => {
+        const on = ed.dataset.a === id || ed.dataset.b === id;
+        ed.classList.toggle('on', on);
+        if (on) { viz.add(ed.dataset.a); viz.add(ed.dataset.b); }
+      });
+      svg.querySelectorAll('.no').forEach(m => m.classList.toggle('on', viz.has(m.dataset.id)));
+    });
+    n.addEventListener('mouseleave', () => {
+      svg.classList.remove('foco');
+      svg.querySelectorAll('.on').forEach(x => x.classList.remove('on'));
+    });
+  });
+})();
+</script>
+<footer class="rodape">Análise gerada a partir das transcrições automáticas das aulas e atendimentos de LIAA e LEAS (Unipampa, 2026/2), de 08/09 a 27/10/2026. As avaliações são uma leitura assistida por IA e devem ser revisadas pelo professor.</footer>
+</body>
+</html>
