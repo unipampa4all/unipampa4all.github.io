@@ -248,3 +248,11 @@ svg.ds-fluxo, svg.c4v { display: block; width: 100%; height: auto; }
 .ds-code { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; overflow-x: auto; line-height: 1.5; margin: 10px 0 14px; }
 .ds-sec ul.pend li, .ds-sec ul.li-pos li, .ds-sec ul.li-at li { color: var(--ink-2); }
 .ds-sec ul.pend li b, .ds-sec ul.li-pos li b, .ds-sec ul.li-at li b { color: var(--ink); }
+
+/* Músicas */
+.mus-intro { color: var(--ink-2); font-size: 14px; margin: -6px 0 14px; }
+.musicas { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
+.musica { margin: 0; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--c); border-radius: 12px; padding: 12px 14px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; }
+.musica figcaption { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mus-ver { color: var(--ink-3); font-size: 13px; }
+.musica audio { width: 100%; height: 36px; }
