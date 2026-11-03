@@ -224,23 +224,15 @@ svg.c4 { display: block; width: 100%; height: auto; text-rendering: geometricPre
 .ds-fig figcaption { font-size: 15px; color: #30343c; margin: 0 0 12px; max-width: 900px; }
 .ds-fig figcaption b { color: #15171c; }
 .ds-rolagem { overflow-x: auto; }
-svg.ds-fluxo { display: block; width: 100%; height: auto; text-rendering: geometricPrecision; }
-.ds-tit { font-weight: 700; font-size: 15px; fill: #15171c; }
-.ds-sub { font-size: 12.5px; fill: #4a4f59; }
-.ds-num { font-weight: 700; font-size: 12px; fill: #ffffff; }
-.ds-fase { font-weight: 700; font-size: 12px; letter-spacing: .08em; }
-.ds-seta { fill: none; stroke: #6b7079; stroke-width: 1.6; }
-.ds-volta { fill: none; stroke: #c2410c; stroke-width: 1.8; stroke-dasharray: 6 4; }
-.ds-rot-volta { font-style: italic; font-weight: 500; font-size: 13px; fill: #c2410c; }
-.ds-rot-sim { font-weight: 700; font-size: 12.5px; fill: #2e7d4f; }
-@media (max-width: 720px) { .ds-fig { padding: 14px 12px 10px; } svg.ds-fluxo { min-width: 860px; } }
+svg.ds-fluxo, svg.c4v { display: block; width: 100%; height: auto; }
+@media (max-width: 720px) { .ds-fig { padding: 14px 12px 10px; } svg.ds-fluxo, svg.c4v { min-width: 860px; } }
 .ds-fase-tit { font-size: 13px; font-weight: 700; color: var(--c); text-transform: uppercase; letter-spacing: .07em; margin: 22px 0 8px; }
 .ds-etapas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .ds-etapa.ds-larga { grid-column: 1 / -1; }
 @media (max-width: 640px) { .ds-etapas { grid-template-columns: 1fr; } }
 .ds-etapa { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--c); border-radius: 12px; padding: 14px 16px; }
 .ds-etapa h4 { margin: 0 0 6px; font-size: 15.5px; line-height: 1.35; }
-.ds-etapa h4 span { color: var(--c); margin-right: 6px; font-variant-numeric: tabular-nums; }
+.ds-etapa h4 span { color: var(--c); font-variant-numeric: tabular-nums; }
 .ds-etapa p { margin: 0; font-size: 14.5px; color: var(--ink-2); }
 .ds-etapa p.ds-pronto { margin-top: 8px; font-size: 13.5px; color: var(--ink-3); }
 .ds-etapa p.ds-pronto b { color: var(--ink-2); }
