@@ -220,7 +220,7 @@ svg.c4 { display: block; width: 100%; height: auto; text-rendering: geometricPre
 .ds-sec pre code { background: none; padding: 0; font-size: 13.5px; }
 .ds-indice { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; list-style: none; }
 .ds-indice a { display: inline-block; font-size: 13.5px; padding: 3px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink-2); }
-.ds-fig { width: min(1200px, calc(100vw - 32px)); margin: 18px 0 24px 50%; transform: translateX(-50%); background: #ffffff; color: #30343c; border: 1px solid #dcd9d0; border-radius: 12px; padding: 18px 20px 12px; box-shadow: var(--shadow); }
+.ds-fig { --w: min(1200px, calc(100vw - 32px)); width: var(--w); margin: 18px 0 24px calc((100% - var(--w)) / 2); background: #ffffff; color: #30343c; border: 1px solid #dcd9d0; border-radius: 12px; padding: 18px 20px 12px; box-shadow: var(--shadow); }
 .ds-fig figcaption { font-size: 15px; color: #30343c; margin: 0 0 12px; max-width: 900px; }
 .ds-fig figcaption b { color: #15171c; }
 .ds-rolagem { overflow-x: auto; }
@@ -235,7 +235,9 @@ svg.ds-fluxo { display: block; width: 100%; height: auto; text-rendering: geomet
 .ds-rot-sim { font-weight: 700; font-size: 12.5px; fill: #2e7d4f; }
 @media (max-width: 720px) { .ds-fig { padding: 14px 12px 10px; } svg.ds-fluxo { min-width: 860px; } }
 .ds-fase-tit { font-size: 13px; font-weight: 700; color: var(--c); text-transform: uppercase; letter-spacing: .07em; margin: 22px 0 8px; }
-.ds-etapas { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.ds-etapas { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ds-etapa.ds-larga { grid-column: 1 / -1; }
+@media (max-width: 640px) { .ds-etapas { grid-template-columns: 1fr; } }
 .ds-etapa { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--c); border-radius: 12px; padding: 14px 16px; }
 .ds-etapa h4 { margin: 0 0 6px; font-size: 15.5px; line-height: 1.35; }
 .ds-etapa h4 span { color: var(--c); margin-right: 6px; font-variant-numeric: tabular-nums; }

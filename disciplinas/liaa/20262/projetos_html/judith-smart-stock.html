@@ -33,6 +33,142 @@
 <section class="duas"><div><h2>Estado atual</h2><p>Na última apresentação efetiva (29/09), o projeto tinha um conjunto de cerca de 5 mil imagens de 10 produtos, majoritariamente comerciais, e a tarefa combinada era treinar um YOLO de classificação para aprender o processo. Em 27/10 a Judith não chegou a apresentar, e não há evidência nas gravações de que o treino tenha sido feito nem de que o dataset de retiradas reais tenha começado. O projeto está, portanto, parado na etapa de construção e validação do dataset.</p></div>
 <div><h2>Pendências combinadas</h2><ul class="pend"><li>Apresentar e descrever os datasets usados (SKU-110K, RPC, fotos próprias), combinado em 08/09</li><li>Mostrar como foi feita a seleção das 5 mil imagens</li><li>Treinar um YOLO para classificar os 10 produtos com as imagens existentes</li><li>Planejar a coleta de imagens reais de pessoas retirando produtos da prateleira, com anotação manual</li></ul></div>
 </section>
+<section id="dataset" class="ds-sec"><h2>Guia: como construir um bom dataset de imagens</h2>
+<p class="lead">O professor resumiu o ponto central em 29/09: num projeto de IA, quase todo o tempo vai para o conjunto de dados, e treinar é a parte fácil. Este guia transforma isso num roteiro aplicado ao Smart Stock Vision: as etapas, quantas imagens coletar, como revisar, como preparar e como saber se o dataset vai funcionar na loja de verdade.</p>
+<ul class="ds-indice"><li><a href="#ds-fluxo">Fluxograma</a></li><li><a href="#ds-etapas">Etapas</a></li><li><a href="#ds-quantas">Quantas fotos por classe?</a></li><li><a href="#ds-fundo">Fundo branco?</a></li><li><a href="#ds-revisar">Como revisar</a></li><li><a href="#ds-preparar">Técnicas de preparação</a></li><li><a href="#ds-util">Útil na prática</a></li></ul>
+
+<h3 id="ds-fluxo">Pipeline sugerido</h3>
+<figure class="ds-fig"><figcaption><b>Do problema ao dataset versionado.</b> As fases A e B montam o conjunto de dados. Na fase C, o modelo serve de instrumento para achar os defeitos do próprio dataset. O laço tracejado é a parte que mais ensina, e cada volta gera uma nova versão (v1, v2, …).</figcaption><div class="ds-rolagem"><svg class="ds-fluxo" font-family="Inter, system-ui, -apple-system, Helvetica, Arial, sans-serif" viewBox="0 0 1160 562" role="img" aria-labelledby="ds-t ds-d"><title id="ds-t">Pipeline de criação e preparação do dataset de imagens</title><desc id="ds-d">Onze etapas em três fases. Fase A: definir o problema, planejar a variação, coletar na loja, limpar e deduplicar. Fase B: anotar com guia, revisar anotações, dividir por grupo, preparar e aumentar. Fase C: treinar a baseline, avaliar no teste real e decidir se atinge o critério de aceite. Se sim, congelar a versão. Se não, analisar os erros e voltar à coleta ou à revisão.</desc>
+<defs><marker id="dsSeta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6b7079"/></marker><marker id="dsSetaV" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c2410c"/></marker></defs>
+<rect x="20" y="16" width="1120" height="146" rx="14" fill="#eef7f5"/><rect x="20" y="192" width="1120" height="146" rx="14" fill="#eff3fc"/><rect x="20" y="368" width="1120" height="180" rx="14" fill="#fcf4ea"/>
+<text x="1124" y="40" text-anchor="end" class="ds-fase" fill="#138a7e">FASE A · PLANEJAR E COLETAR</text><text x="1124" y="216" text-anchor="end" class="ds-fase" fill="#2f5bd3">FASE B · ROTULAR E ORGANIZAR</text><text x="1124" y="392" text-anchor="end" class="ds-fase" fill="#b86a12">FASE C · TREINAR, AVALIAR E DECIDIR</text>
+<g><rect x="40" y="52" width="240" height="92" rx="10" fill="#fff" stroke="#138a7e" stroke-width="1.5"/><circle cx="62" cy="76" r="12" fill="#138a7e"/><text x="62" y="80.5" text-anchor="middle" class="ds-num">1</text><text x="82" y="81" class="ds-tit">Definir o problema</text><text x="56" y="108" class="ds-sub">o que entra, o que sai, classes</text><text x="56" y="127" class="ds-sub">+ classe “nenhum produto”</text></g>
+<g><rect x="320" y="52" width="240" height="92" rx="10" fill="#fff" stroke="#138a7e" stroke-width="1.5"/><circle cx="342" cy="76" r="12" fill="#138a7e"/><text x="342" y="80.5" text-anchor="middle" class="ds-num">2</text><text x="362" y="81" class="ds-tit">Planejar a variação</text><text x="336" y="108" class="ds-sub">luz, ângulo, posição, pessoa,</text><text x="336" y="127" class="ds-sub">mão cobrindo a embalagem</text></g>
+<g><rect x="600" y="52" width="240" height="92" rx="10" fill="#fff" stroke="#138a7e" stroke-width="1.5"/><circle cx="622" cy="76" r="12" fill="#138a7e"/><text x="622" y="80.5" text-anchor="middle" class="ds-num">3</text><text x="642" y="81" class="ds-tit">Coletar na loja</text><text x="616" y="108" class="ds-sub">câmera real, 2 a 5 quadros</text><text x="616" y="127" class="ds-sub">por retirada; web só de apoio</text></g>
+<g><rect x="880" y="52" width="240" height="92" rx="10" fill="#fff" stroke="#138a7e" stroke-width="1.5"/><circle cx="902" cy="76" r="12" fill="#138a7e"/><text x="902" y="80.5" text-anchor="middle" class="ds-num">4</text><text x="922" y="81" class="ds-tit">Limpar e deduplicar</text><text x="896" y="108" class="ds-sub">fora: borradas, escuras e</text><text x="896" y="127" class="ds-sub">quase duplicadas (hash)</text></g>
+<g><rect x="40" y="228" width="240" height="92" rx="10" fill="#fff" stroke="#2f5bd3" stroke-width="1.5"/><circle cx="62" cy="252" r="12" fill="#2f5bd3"/><text x="62" y="256.5" text-anchor="middle" class="ds-num">5</text><text x="82" y="257" class="ds-tit">Anotar com guia</text><text x="56" y="284" class="ds-sub">guia de casos-limite;</text><text x="56" y="303" class="ds-sub">pré-anotar e corrigir à mão</text></g>
+<g><rect x="320" y="228" width="240" height="92" rx="10" fill="#fff" stroke="#2f5bd3" stroke-width="1.5"/><circle cx="342" cy="252" r="12" fill="#2f5bd3"/><text x="342" y="256.5" text-anchor="middle" class="ds-num">6</text><text x="362" y="257" class="ds-tit">Revisar anotações</text><text x="336" y="284" class="ds-sub">galeria por classe, 2ª revisão</text><text x="336" y="303" class="ds-sub">em amostra, erros do modelo</text></g>
+<g><rect x="600" y="228" width="240" height="92" rx="10" fill="#fff" stroke="#2f5bd3" stroke-width="1.5"/><circle cx="622" cy="252" r="12" fill="#2f5bd3"/><text x="622" y="256.5" text-anchor="middle" class="ds-num">7</text><text x="642" y="257" class="ds-tit">Dividir por grupo</text><text x="616" y="284" class="ds-sub">treino, validação e teste por</text><text x="616" y="303" class="ds-sub">sessão, dia ou pessoa</text></g>
+<g><rect x="880" y="228" width="240" height="92" rx="10" fill="#fff" stroke="#2f5bd3" stroke-width="1.5"/><circle cx="902" cy="252" r="12" fill="#2f5bd3"/><text x="902" y="256.5" text-anchor="middle" class="ds-num">8</text><text x="922" y="257" class="ds-tit">Preparar e aumentar</text><text x="896" y="284" class="ds-sub">formato YOLO, tamanho fixo;</text><text x="896" y="303" class="ds-sub">aumento de dados só no treino</text></g>
+<g><rect x="40" y="404" width="240" height="92" rx="10" fill="#fff" stroke="#b86a12" stroke-width="1.5"/><circle cx="62" cy="428" r="12" fill="#b86a12"/><text x="62" y="432.5" text-anchor="middle" class="ds-num">9</text><text x="82" y="433" class="ds-tit">Treinar a baseline</text><text x="56" y="460" class="ds-sub">modelo pré-treinado pequeno,</text><text x="56" y="479" class="ds-sub">configuração registrada</text></g>
+<g><rect x="320" y="404" width="240" height="92" rx="10" fill="#fff" stroke="#b86a12" stroke-width="1.5"/><circle cx="342" cy="428" r="12" fill="#b86a12"/><text x="342" y="432.5" text-anchor="middle" class="ds-num">10</text><text x="362" y="433" class="ds-tit">Avaliar no teste real</text><text x="336" y="460" class="ds-sub">F1 por classe, matriz de</text><text x="336" y="479" class="ds-sub">confusão, olhar cada erro</text></g>
+<g><path d="M610 450 L720 404 L830 450 L720 496 Z" fill="#fff" stroke="#b86a12" stroke-width="1.5"/><text x="720" y="446" text-anchor="middle" class="ds-tit" font-size="14">Atinge o critério</text><text x="720" y="465" text-anchor="middle" class="ds-tit" font-size="14">de aceite?</text></g>
+<g><rect x="880" y="404" width="240" height="92" rx="10" fill="#fff" stroke="#2e7d4f" stroke-width="2"/><circle cx="902" cy="428" r="12" fill="#2e7d4f"/><text x="902" y="432.5" text-anchor="middle" class="ds-num">11</text><text x="922" y="433" class="ds-tit">Congelar a versão</text><text x="896" y="460" class="ds-sub">dataset v1 + datasheet:</text><text x="896" y="479" class="ds-sub">origem, contagens, licença</text></g>
+<path class="ds-seta" d="M280 98 H318" marker-end="url(#dsSeta)"/><path class="ds-seta" d="M560 98 H598" marker-end="url(#dsSeta)"/><path class="ds-seta" d="M840 98 H878" marker-end="url(#dsSeta)"/>
+<path class="ds-seta" d="M1000 144 V179 H160 V226" marker-end="url(#dsSeta)"/>
+<path class="ds-seta" d="M280 274 H318" marker-end="url(#dsSeta)"/><path class="ds-seta" d="M560 274 H598" marker-end="url(#dsSeta)"/><path class="ds-seta" d="M840 274 H878" marker-end="url(#dsSeta)"/>
+<path class="ds-seta" d="M1000 320 V355 H160 V402" marker-end="url(#dsSeta)"/>
+<path class="ds-seta" d="M280 450 H318" marker-end="url(#dsSeta)"/><path class="ds-seta" d="M560 450 H608" marker-end="url(#dsSeta)"/><path class="ds-seta" d="M830 450 H878" marker-end="url(#dsSeta)"/><text x="854" y="441" text-anchor="middle" class="ds-rot-sim">sim</text>
+<path class="ds-volta" d="M720 496 V526 H28 V30 H720 V50" marker-end="url(#dsSetaV)"/><text x="732" y="515" class="ds-rot-volta" font-weight="700">não</text><text x="48" y="519" class="ds-rot-volta">analise os erros: falta de variação ou volume → volte à coleta (3); rótulo errado → volte à revisão (6)</text>
+</svg></div></figure>
+
+<h3 id="ds-etapas">As etapas, uma a uma</h3>
+<p>Cada etapa tem um critério de "pronto". Só avance quando ele for atendido; pular etapas costuma custar uma volta inteira no laço.</p>
+<p class="ds-fase-tit a1">Fase A · Planejar e coletar</p>
+<div class="ds-etapas">
+<div class="ds-etapa a1"><h4><span>1</span>Definir o problema</h4><p>Escreva em uma frase o que o modelo recebe e o que devolve, por exemplo: "quadro da câmera fixa sobre a prateleira → qual dos 10 produtos está na mão do cliente". Feche a lista de classes e inclua as que o mundo real vai trazer: "nenhum produto" (mão vazia, prateleira) e, se possível, "outro produto". Decida entre classificação (um rótulo por imagem) e detecção (uma caixa por produto).</p><p class="ds-pronto"><b>Pronto quando:</b> há uma lista de classes com foto de referência de cada uma e a tarefa está escolhida.</p></div>
+<div class="ds-etapa a1"><h4><span>2</span>Planejar a variação</h4><p>Antes de fotografar, monte a matriz do que muda no uso real: iluminação (manhã, tarde, luz artificial), posição do produto na prateleira, pessoas diferentes, mão cobrindo parte da embalagem, versões e tamanhos da embalagem. O dataset precisa cobrir as células dessa matriz, não só ter muitas fotos.</p><p class="ds-pronto"><b>Pronto quando:</b> cada classe tem uma meta de coleta por combinação de condições.</p></div>
+<div class="ds-etapa a1"><h4><span>3</span>Coletar na loja</h4><p>Use a câmera e a posição que serão usadas de verdade. Grave vídeos curtos de retiradas e extraia de 2 a 5 quadros por retirada (entrada da mão, pega, saída), em vez de centenas de quadros quase iguais. Imagens da internet e de bases públicas entram só como complemento. Registre cada sessão numa planilha (arquivo, data, sessão, pessoa, condição).</p><p class="ds-pronto"><b>Pronto quando:</b> todas as células da matriz atingiram a meta.</p></div>
+<div class="ds-etapa a1"><h4><span>4</span>Limpar e deduplicar</h4><p>Descarte imagens borradas, escuras, cortadas e aquelas em que nem uma pessoa conseguiria dizer o produto. Remova duplicatas e quase duplicatas com hash perceptual, inclusive as que vieram de bases diferentes.</p><p class="ds-pronto"><b>Pronto quando:</b> não sobra nenhum par de imagens quase idênticas nem imagem inutilizável.</p></div>
+</div>
+<p class="ds-fase-tit a0">Fase B · Rotular e organizar</p>
+<div class="ds-etapas">
+<div class="ds-etapa a0"><h4><span>5</span>Anotar com guia</h4><p>Escreva um guia curto antes de anotar: o que conta como visível (por exemplo, mais de 50% da embalagem), como tratar produto coberto pela mão, caixa justa ao contorno. Use pré-anotação automática (um modelo já treinado ou um LLM multimodal) e corrija à mão no CVAT, no Label Studio ou no Roboflow.</p><p class="ds-pronto"><b>Pronto quando:</b> todas as imagens têm rótulo e o guia cobre os casos difíceis que apareceram.</p></div>
+<div class="ds-etapa a0"><h4><span>6</span>Revisar as anotações</h4><p>Olhe a galeria de cada classe de uma vez: intrusos e rótulos trocados saltam aos olhos. Uma segunda pessoa revisa uma amostra de cerca de 10% e mede a concordância. Depois da primeira baseline, revise as imagens em que o modelo erra com confiança alta, porque muitas delas são rótulos errados.</p><p class="ds-pronto"><b>Pronto quando:</b> a concordância na amostra passa de 95% e as divergências foram resolvidas.</p></div>
+<div class="ds-etapa a0"><h4><span>7</span>Dividir por grupo</h4><p>Separe treino, validação e teste (por exemplo, 70/15/15) por sessão de gravação, dia ou pessoa, nunca imagem a imagem: quadros do mesmo vídeo em treino e teste inflam o resultado. Reserve um teste congelado só com imagens reais da loja, que não é usado para ajustar nada.</p><p class="ds-pronto"><b>Pronto quando:</b> nenhuma sessão aparece em mais de uma divisão.</p></div>
+<div class="ds-etapa a0"><h4><span>8</span>Preparar e aumentar</h4><p>Organize no formato do YOLO, padronize o tamanho de entrada e aplique aumento de dados apenas no treino, sempre depois da divisão. Confira a contagem por classe em cada divisão.</p><p class="ds-pronto"><b>Pronto quando:</b> a estrutura de pastas foi validada e as contagens batem com a planilha.</p></div>
+</div>
+<p class="ds-fase-tit a2">Fase C · Treinar, avaliar e decidir</p>
+<div class="ds-etapas">
+<div class="ds-etapa a2"><h4><span>9</span>Treinar a baseline</h4><p>Faça ajuste fino de um modelo pré-treinado pequeno, como o <code>yolo11n-cls</code>, e registre semente, versão do dataset e parâmetros. A baseline não é o produto final: ela existe para revelar os problemas do dataset.</p><p class="ds-pronto"><b>Pronto quando:</b> o treino é reproduzível por outra pessoa.</p></div>
+<div class="ds-etapa a2"><h4><span>10</span>Avaliar no teste real</h4><p>Calcule F1 por classe e a matriz de confusão, e olhe as imagens erradas uma a uma. Classifique cada erro: rótulo errado, falta de variação, classes parecidas demais ou imagem ruim. Cada tipo de erro aponta para uma etapa diferente do laço.</p><p class="ds-pronto"><b>Pronto quando:</b> cada erro tem uma causa provável anotada.</p></div>
+<div class="ds-etapa a2 ds-larga"><h4><span>11</span>Decidir e congelar</h4><p>Se o critério de aceite (definido antes, por exemplo F1 ≥ 0,90 em todas as classes no teste real) foi atingido, congele a versão e documente num datasheet: origem, datas, câmera, contagens por classe e divisão, licenças e guia de anotação. Se não foi, volte à coleta ou à revisão conforme o tipo de erro.</p><p class="ds-pronto"><b>Pronto quando:</b> existe uma pasta versionada imutável (v1) com README.</p></div>
+</div>
+
+<h3 id="ds-quantas">Quantas fotos por classe?</h3>
+<div class="ds-resp"><p><b>Resposta curta:</b> para aprender o processo com ajuste fino de um modelo pré-treinado, de 100 a 200 imagens variadas por classe já bastam; para um resultado sério, de 300 a 500; para produção, mais de mil. Mais importante que o número é cobrir a matriz de variação e conter situações distintas, não arquivos: mil quadros de um mesmo vídeo de 30 segundos valem quase o mesmo que 30 fotos.</p></div>
+<div class="ds-tab-box"><table class="ds-tab"><thead><tr><th>Objetivo</th><th>Classificação (um produto por imagem)</th><th>Detecção (caixas)</th></tr></thead><tbody>
+<tr><td>Aprender o processo</td><td>100–200 imagens por classe</td><td>200–300 imagens por classe</td></tr>
+<tr><td>Baseline séria do projeto</td><td>300–500 imagens por classe</td><td>500–1.000 imagens e 1.500 ou mais objetos anotados por classe</td></tr>
+<tr><td>Rumo a produção</td><td>1.000 ou mais por classe</td><td>1.500 ou mais imagens e cerca de 10 mil objetos por classe (recomendação da documentação da Ultralytics)</td></tr>
+<tr><td>Teste congelado</td><td>50–100 imagens reais por classe</td><td>50–100 imagens reais por classe</td></tr>
+</tbody></table></div>
+<ul class="pend">
+<li><b>Equilíbrio:</b> a maior classe não deve ter mais que duas ou três vezes o tamanho da menor. Desequilíbrio maior faz o modelo "chutar" a classe dominante.</li>
+<li><b>Imagens de fundo:</b> na detecção, inclua de 0 a 10% de imagens sem nenhum produto (prateleira, mão vazia) para reduzir falsos positivos.</li>
+<li><b>Classes parecidas pedem mais:</b> dois sabores do mesmo produto, que só mudam a cor do rótulo, precisam de mais exemplos do que produtos de formatos diferentes.</li>
+</ul>
+<p><b>Exemplo para o Smart Stock Vision:</b> 4 pessoas × 3 condições de luz × 2 posições na prateleira × 5 retiradas = 120 retiradas por produto. Extraindo 3 quadros por retirada, são 360 imagens por classe, vindas de 120 situações distintas. Com 10 produtos e a classe "nenhum produto", dá cerca de 4 mil imagens, o mesmo volume que já existe hoje, só que do cenário certo. São 1.200 retiradas de uns 10 segundos, ou seja, 3 a 4 horas de gravação.</p>
+
+<h3 id="ds-fundo">Posso usar fundo branco nas imagens?</h3>
+<div class="ds-resp"><p><b>Pode, como complemento e com um papel bem definido. Não como base do treino e nunca no teste.</b> Um modelo treinado só com produto isolado em fundo branco aprende um atalho ("produto inteiro, centralizado e bem iluminado") e erra na loja, onde há mão, oclusão, reflexo e prateleira cheia. O dataset RPC, citado pela Judith em 08/09, foi construído justamente assim: treino com produtos isolados em fundo limpo e teste com cenas reais de caixa, e essa diferença de domínio é o desafio que ele propõe.</p></div>
+<div class="duas"><div><h4>Quando ajuda</h4><ul class="li-pos"><li><b>Catálogo de referência:</b> frente, verso e laterais de cada produto, para o guia de anotação e para conferência.</li><li><b>Recortes para composição:</b> recortar o produto e colar sobre fotos reais da prateleira (copy-paste), gerando variações baratas.</li><li><b>Busca por similaridade:</b> embeddings de referência para reconhecer produto novo com poucos exemplos.</li></ul></div><div><h4>Quando atrapalha</h4><ul class="li-at"><li>Quando passa de 10 a 20% do treino: o modelo aprende o fundo, não o produto.</li><li>Quando entra no teste: a métrica fica otimista e esconde a queda na loja.</li><li>Quando substitui a coleta real: nenhuma quantidade de fundo branco ensina como a mão cobre a embalagem.</li></ul></div></div>
+
+<h3 id="ds-revisar">Como revisar as imagens</h3>
+<ul class="pend">
+<li><b>Contagem:</b> tabela de imagens por classe e por divisão. Desequilíbrios e classes esquecidas aparecem aqui primeiro.</li>
+<li><b>Galeria por classe:</b> uma grade de miniaturas por classe (FiftyOne ou uma página HTML simples). Rótulos trocados aparecem em segundos.</li>
+<li><b>Duplicatas:</b> hash perceptual (<code>imagehash</code>) ou similaridade de embeddings (CLIP), conferindo também entre treino e teste.</li>
+<li><b>Qualidade técnica:</b> desfoque pela variância do Laplaciano (OpenCV) e exposição pelo histograma, com um limiar conferido à mão.</li>
+<li><b>Rótulos:</b> segunda revisão em amostra de 10%, medindo concordância; caixas justas e casos-limite seguindo o guia.</li>
+<li><b>Revisão guiada pelo modelo:</b> liste as imagens com maior perda ou em que o modelo discorda do rótulo com confiança alta (a biblioteca <code>cleanlab</code> automatiza isso).</li>
+<li><b>Privacidade e licença:</b> borrar rostos de clientes, ter autorização de quem foi gravado e do dono da loja (LGPD) e registrar a licença das imagens públicas.</li>
+</ul>
+<p>Um ponto de partida para a triagem automática (desfoque e quase duplicatas), antes da revisão manual:</p>
+<pre class="ds-code"><code>from pathlib import Path
+import cv2, imagehash
+from PIL import Image
+
+LIMIAR_NITIDEZ = 80   # ajuste olhando algumas imagens descartadas
+DIST_MAX_HASH = 6     # até 6 bits de diferença = quase iguais
+
+vistas = {}
+for p in sorted(Path("bruto").rglob("*.jpg")):
+    nitidez = cv2.Laplacian(cv2.imread(str(p), 0), cv2.CV_64F).var()
+    h = imagehash.phash(Image.open(p))
+    igual = next((q for q, hq in vistas.items() if h - hq &lt;= DIST_MAX_HASH), None)
+    if nitidez &lt; LIMIAR_NITIDEZ:
+        print(f"{p}: borrada ({nitidez:.0f})")
+    elif igual:
+        print(f"{p}: quase igual a {igual}")
+    else:
+        vistas[p] = h</code></pre>
+
+<h3 id="ds-preparar">Técnicas para preparar o conjunto de dados</h3>
+<div class="ds-tab-box"><table class="ds-tab"><thead><tr><th>Técnica</th><th>Para quê</th><th>Cuidado</th></tr></thead><tbody>
+<tr><td>Divisão por grupo</td><td>Evitar vazamento entre treino e teste</td><td>Fazer antes de qualquer aumento de dados</td></tr>
+<tr><td>Redimensionar e padronizar</td><td>Entrada uniforme (224 px na classificação, 640 px na detecção)</td><td>Manter a proporção (letterbox), sem esticar a imagem</td></tr>
+<tr><td>Brilho, contraste e saturação</td><td>Simular a iluminação variável da loja</td><td>Não exagerar na matiz quando produtos só diferem pela cor</td></tr>
+<tr><td>Pequena rotação, escala e translação</td><td>Câmera e posição do produto variam um pouco</td><td>Rotações grandes e giro vertical não acontecem na prateleira</td></tr>
+<tr><td>Desfoque de movimento</td><td>A retirada é um gesto rápido</td><td>Intensidade moderada</td></tr>
+<tr><td>Apagamento aleatório (random erasing)</td><td>Simular a mão cobrindo parte da embalagem</td><td>Não apagar sempre a parte que identifica o produto</td></tr>
+<tr><td>Espelhamento horizontal</td><td>Dobrar a variação de pose</td><td>Inverte textos e logotipos; compare com e sem</td></tr>
+<tr><td>Mosaic e copy-paste</td><td>Mais contexto e mais objetos por imagem na detecção</td><td>Já vêm no YOLO; o copy-paste pode usar os recortes de fundo branco</td></tr>
+<tr><td>Balanceamento</td><td>Evitar classe dominante</td><td>Coletar mais da classe pequena é melhor que duplicar; se não der, pesos por classe</td></tr>
+</tbody></table></div>
+<p>Estrutura de pastas esperada pelo YOLO de classificação (cada subpasta é uma classe):</p>
+<pre class="ds-code"><code>produtos/
+├── train/
+│   ├── refri_lata/       img_0001.jpg ...
+│   ├── biscoito_recheado/
+│   ├── ...
+│   └── nenhum_produto/
+├── val/                  (mesmas subpastas)
+└── test/                 (só imagens reais da loja, congelado)
+
+yolo classify train data=produtos model=yolo11n-cls.pt epochs=50 imgsz=224</code></pre>
+<p>Para detecção, a estrutura muda para <code>images/</code> e <code>labels/</code> (um <code>.txt</code> por imagem com classe e caixa) mais um arquivo <code>data.yaml</code> com os caminhos e os nomes das classes.</p>
+
+<h3 id="ds-util">Como garantir que o dataset será útil na prática</h3>
+<ul class="pend">
+<li><b>Critério de aceite antes de treinar:</b> por exemplo, F1 ≥ 0,90 em todas as classes no teste real. Defina também qual erro custa mais (deixar de registrar uma retirada ou registrar uma que não houve).</li>
+<li><b>Teste que imita o uso:</b> mesma câmera, mesma posição, mas dias, horários e pessoas diferentes dos usados no treino.</li>
+<li><b>Medir a distância de domínio:</b> treinar só com as fotos comerciais e testar nas fotos da loja. O tamanho da queda é o argumento, com números, para investir na coleta real.</li>
+<li><b>Olhar os erros, não só a métrica:</b> uma acurácia de 95% pode esconder uma classe com 50%.</li>
+<li><b>Piloto curto na loja:</b> rodar o modelo por alguns dias, guardar os casos de erro e de baixa confiança e realimentar o dataset (aprendizado ativo).</li>
+<li><b>Versionar e documentar:</b> v1, v2 e assim por diante, cada uma com datasheet e com os resultados da baseline. Assim dá para dizer o que melhorou e por quê.</li>
+</ul>
+</section>
 <section><h2>Caminhos futuros sugeridos</h2><div class="sugs">
 <div class="sug"><span class="sug-n">1</span><h3>Baseline de classificação com YOLO e protocolo honesto</h3><p>Treinar o YOLO de classificação nos 10 produtos com divisão treino, validação e teste feita antes de qualquer aumento de dados e sem fotos quase duplicadas entre as divisões. Reportar F1 por classe e matriz de confusão, e não só acurácia. Esse resultado curto já é uma entrega concreta para a próxima aula.</p></div>
 <div class="sug"><span class="sug-n">2</span><h3>Teste de domínio: comercial × foto real</h3><p>Separar um conjunto de teste só com as cerca de 900 fotos próprias tiradas na loja e medir a queda de desempenho do modelo treinado com fotos comerciais. Esse experimento mostra com números o alerta do professor e justifica investir na coleta real.</p></div>
