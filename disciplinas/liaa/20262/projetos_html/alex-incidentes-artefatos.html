@@ -1,0 +1,57 @@
+<!doctype html><meta charset="utf-8">
+<html lang="pt-BR">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Base sintética de incidentes como artefato reprodutível · LIAA/LEAS</title>
+<meta name="description" content="Estuda a avaliação de artefatos como autor, revisor e analista: análise do MedTracker (SBRC 2026), relato da experiência no comitê de artefatos e uma base sintética de 600 incidentes de segurança, anonimizada com IA e revisão humana, para tornar reprodutível um classificador de incidentes.">
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="pag"><nav class="migalha"><a href="index.html">← Mapa dos projetos</a></nav>
+<header class="topo">
+<div class="chips"><span class="chip a4">Avaliação de artefatos e de LLMs</span><span class="chip neutro">LEAS</span></div>
+<h1>Base sintética de incidentes como artefato reprodutível</h1>
+
+<p class="sub">Estuda a avaliação de artefatos como autor, revisor e analista: análise do MedTracker (SBRC 2026), relato da experiência no comitê de artefatos e uma base sintética de 600 incidentes de segurança, anonimizada com IA e revisão humana, para tornar reprodutível um classificador de incidentes.</p>
+
+<p class="alunos">Alex Sandre Pinheiro Severo</p>
+</header>
+<section class="kpis">
+<div class="kpi"><b>1</b><span>apresentação</span></div>
+<div class="kpi"><b>16/11</b><span>período</span></div>
+<div class="kpi"><b>0 · 0</b><span>mudanças de tema · ajustes de escopo</span></div>
+<div class="kpi kpi-med"><div class="medidor prog" aria-label="Progresso: 3 de 5"><span class="med-rot">Progresso</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span><span class="pt"></span></span><span class="med-v">3/5</span></div><div class="medidor mer" aria-label="Mérito: 4 de 5"><span class="med-rot">Mérito</span><span class="pts"><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt on"></span><span class="pt"></span></span><span class="med-v">4/5</span></div></div>
+</section>
+<section>
+<h2>Resumo</h2>
+<p class="lead">Alex, mestrando que trabalha com classificação de incidentes de segurança, entrou nas apresentações em 16/11 com as tarefas 1 a 3 da LEAS reunidas numa história só: estudar o artefato de outra equipe (MedTracker, SBRC 2026), viver o processo como revisor do comitê de artefatos e construir o próprio artefato. Como a base real de incidentes da dissertação não pode ser publicada, ele criou uma base sintética de 600 incidentes, anonimizada com IA e revisão humana, para que o classificador possa receber o selo de reprodutibilidade. O próximo passo é submeter esse artefato ao sistema de avaliação de Cristhian.</p>
+<div class="tags"><span class="tag">avaliação de artefatos</span><span class="tag">selo R</span><span class="tag">dados sintéticos</span><span class="tag">anonimização</span><span class="tag">incidentes de segurança</span><span class="tag">NIST</span></div></section>
+<section>
+<h2>Linha do tempo</h2><ol class="tl">
+<li class="tl-item"><div class="tl-marca"></div><div class="tl-cab"><span class="tl-data">seg 16/11</span><span class="tl-fonte" title="2026-11-16_13h25_LEAS_2026_2_A1_202_parte1.txt">LEAS 2026 2 A1 202 · 00:21:22</span></div><h3>Tarefa 4 (tarefas 1 a 3): MedTracker, comitê de artefatos e base sintética de incidentes</h3><p><b>Apresentado:</b> Na tarefa 1, Alex analisou o MedTracker (Salão de Ferramentas do SBRC 2026), que localiza equipamentos num hospital universitário com tags BLE, ESP32, MQTT e a planta do prédio (84,5% de acerto no andar e 81% na sala); o artefato não recebeu o selo R porque os dados do experimento por andar não estão no repositório e o README não diz o resultado esperado nem liga os comandos aos números do artigo. Na tarefa 2, relatou a experiência como revisor de quatro artefatos (dois em 2025 e dois em 2026): revisão single-blind no HotCRP em duas rodadas com réplica, selos D e S decididos pela leitura e F e R pela execução, que esbarra em GPU, armazenamento e conectividade; para ele, o gargalo é a comunicação, e propôs troca entre os dois revisores desde a primeira rodada. Na tarefa 3, construiu um mock de 600 incidentes (50 em cada uma de 12 categorias baseadas no NIST, com dados de três origens), porque a base real de um CSIRT regional, rotulada por especialistas, é só pseudoanonimizada e não pode ser publicada: o texto foi preservado, os identificadores viraram valores sintéticos com mapeamento protegido por HMAC e quase 600 termos duvidosos passaram por revisão humana, com zero identificadores reais, mais de 40 testes e 94,8% de concordância com a categoria original (a primeira versão, que reescrevia o texto, perdia mais de 10% da categorização). Quatro rodadas de revisão por IA acharam o que os testes não viam (17 problemas na primeira, quatro deles impeditivos; uma correção que quebrou o teste mínimo no Linux; datas reais e um e-mail real aprovados pelo verificador), porque um verificador escrito pela mesma IA herda os pontos cegos do gerador. Na autoavaliação, F (teste mínimo sem rede, hashes conferidos), S (modular, documentado, CI em duas versões) e R (quatro de cinco reivindicações de ponta a ponta) foram dados como atendidos, e D ficou pendente de autorizações de compliance.</p><p><b>Feedback:</b> O professor disse que o passo final na disciplina é organizar como artefato o pipeline de geração do mock ou o framework de classificação de incidentes (são dois artefatos distintos) e submetê-lo ao sistema de avaliação de artefatos de Cristhian, mesmo sem estar 100% pronto, para obter feedback dos selos. A validação do mock com três LLMs e as demais entregas vão além da disciplina. A conversa sobre os dados da dissertação, ligados à RNP, ficou para uma reunião à parte.</p><p class="combinado"><b>Combinado:</b> Submeter um dos artefatos (ou os dois) ao sistema de Cristhian e participar da avaliação dos artefatos dos colegas nas últimas semanas.</p></li>
+</ol></section>
+<section class="duas"><div>
+<h2>Estado atual</h2>
+<p>A base sintética de 600 incidentes está no GitHub, ainda privada por questões de compliance a alinhar com o orientador, com testes, documentação e duas versões. As tarefas 5 a 10 envolvem validar o mock com três LLMs. Para a disciplina, falta organizar um dos artefatos (pipeline do mock ou framework de classificação) e submetê-lo ao sistema de Cristhian.</p></div>
+<div>
+<h2>Pendências combinadas</h2><ul class="pend">
+<li>Organizar o pipeline do mock ou o framework de classificação como artefato</li>
+<li>Submeter o artefato ao sistema de avaliação de Cristhian</li>
+<li>Participar como revisor dos artefatos dos colegas</li>
+<li>Resolver o compliance para tornar o repositório público (selo D)</li>
+<li>Reunião com o professor sobre os dados da dissertação</li></ul></div>
+</section>
+<section><h2>Trechos marcantes</h2><div class="cits">
+<figure class="cit"><blockquote>“Tudo que é experimento é um software, é um artefato.”</blockquote><figcaption>16/11 · 00:45:10</figcaption></figure>
+</div></section>
+<section>
+<h2>Relações com outros projetos</h2><ul class="rels">
+<li><a href="leas-fluxo-artefatos.html"><span class="dot a4"></span>Novo sistema de avaliação de artefatos com IA</a> <span class="rel-tipo">colaboração possível</span><span class="rel-mot">O artefato de Alex será submetido ao sistema de Cristhian na simulação final da disciplina, e a proposta dele de troca entre revisores desde a primeira rodada dialoga com o desenho do sistema.</span></li>
+<li><a href="adilson-douglas-incidentes.html"><span class="dot a0"></span>Registro inteligente de incidentes no CESUP</a> <span class="rel-tipo">mesmo tema</span><span class="rel-mot">O professor indicou o trabalho de Alex sobre classificação de incidentes como referência para esse projeto.</span></li>
+</ul></section>
+<section class="duas notas"><div><h3>Tecnologias, modelos e dados citados</h3><p class="tecs"><span class="tag">HotCRP</span><span class="tag">BLE</span><span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">NIST (categorias de incidentes)</span><span class="tag">HMAC</span><span class="tag">GitHub</span><span class="tag">CI</span></p></div><div><h3>Incertezas da transcrição</h3><ul class="inc"><li>“HMAC” e “CSIRT” aparecem como “HMEC” e “CCIRT” no Whisper, e o MedTracker como “Mad Tracker”.</li><li>A menção aos dados da RNP (00:47:42) parece ser de Alex, mas a autoria não é certa.</li></ul></div></section>
+</main>
+<footer class="rodape">Análise gerada a partir das transcrições automáticas das aulas e atendimentos de LIAA e LEAS (Unipampa, 2026/2), de 08/09 a 16/11/2026, e das legendas automáticas do Meet nas aulas de 10/11 a 16/11/2026. As avaliações são uma leitura assistida por IA e devem ser revisadas pelo professor.</footer>
+</body>
+</html>
