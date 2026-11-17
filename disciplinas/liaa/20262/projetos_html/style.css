@@ -76,6 +76,10 @@ section { margin: 40px 0; }
 .pt { width: 16px; height: 7px; border-radius: 4px; background: var(--surface-2); border: 1px solid var(--line); }
 .prog .pt.on { background: var(--accent); border-color: var(--accent); }
 .mer .pt.on { background: var(--a2); border-color: var(--a2); }
+.sprog .pt.on { background: var(--a1); border-color: var(--a1); }
+.squal .pt.on { background: var(--a3); border-color: var(--a3); }
+.svid .pt.on { background: var(--a4); border-color: var(--a4); }
+.kpi-med .med-rot, .card-rod .med-rot, .aval-meds .med-rot { min-width: 118px; }
 .med-v { font-weight: 600; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 
 /* mudanças de rumo */
@@ -123,6 +127,9 @@ section { margin: 40px 0; }
 @media (max-width: 720px) { .aval { grid-template-columns: 1fr; } }
 .aval-bloco { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
 .aval-bloco p { margin: 10px 0 0; font-size: 15px; color: var(--ink-2); }
+.aval-site { grid-column: 1 / -1; }
+.aval-site h3 { font-size: 15px; margin-bottom: 10px; }
+.aval-meds { display: grid; gap: 6px; }
 .li-pos, .li-at { padding-left: 0; list-style: none; }
 .li-pos li, .li-at li { padding: 4px 0 4px 22px; position: relative; font-size: 15px; }
 .li-pos li::before { content: "+"; position: absolute; left: 4px; color: var(--pos); font-weight: 700; }
