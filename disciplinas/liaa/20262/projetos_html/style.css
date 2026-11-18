@@ -283,3 +283,12 @@ svg.ds-fluxo, svg.c4v { display: block; width: 100%; height: auto; }
 .destaque-texto p { margin: 0 0 10px; color: var(--ink-2); }
 .destaque-como { font-size: 14px; }
 @media (min-width: 900px) { .destaque-grade { grid-template-columns: 3fr 2fr; } }
+/* musica-projeto:inicio */
+.site-mus { margin: 8px 0 0; padding-top: 8px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+.site-mus figcaption { font-size: 14px; color: var(--ink-2); }
+.site-mus figcaption b { color: var(--ink); }
+.site-mus audio, .musica-proj audio { width: 100%; height: 36px; }
+.musica-proj .letra { white-space: pre-line; color: var(--ink-2); font-size: 15px; line-height: 1.6; margin: 8px 0 0; }
+.musica-proj .letra .secao { display: block; margin-top: 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-3); }
+.musica-proj summary { cursor: pointer; font-weight: 600; margin-top: 8px; }
+/* musica-projeto:fim */

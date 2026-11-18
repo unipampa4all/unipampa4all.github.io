@@ -1,0 +1,17 @@
+{
+  "titulo": "Atlas de Evidências",
+  "legenda": "Gentle contemporary MPB ballad, warm and hopeful, intimate male lead vocals singing in Brazilian Portuguese, fingerpicked nylon acoustic guitar, soft Rhodes piano, light brushed drums, upright bass, subtle string pad in the chorus, emotional yet uplifting, spacious acoustic production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 84,
+  "tom": "D major",
+  "compasso": "4",
+  "duracao": 180,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Uma MPB acolhedora sobre o Atlas de Evidências, que liga 33 estudos de IA e saúde mental, e o artefatos.lab, que separa evidência de parecer.",
+  "estilo": "MPB acústica",
+  "descricao": "MPB acústica e acolhedora sobre o Atlas de Evidências, a ciência em conexões para detectar sinais de depressão e ansiedade em textos."
+}

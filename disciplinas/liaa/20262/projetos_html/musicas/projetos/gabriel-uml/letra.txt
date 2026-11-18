@@ -1,0 +1,49 @@
+[Intro - distorted guitars and fast punk drums]
+
+[Verse 1]
+Comecei com uma ferramenta, PlantUML na mão
+Descrevia o sistema e saía o diagrama então
+Mas a pergunta veio forte e não quis mais se calar:
+Se a IA escreve tudo, ainda vale modelar?
+
+[Pre-Chorus]
+Requisito, diagrama, código no final
+Três caixinhas na tela e uma dúvida fatal
+
+[Chorus]
+Precisa de UML? Gabriel quer saber
+Se a IA apaga o desenho ou só muda o porquê
+O Designer traça o fluxo e o Coder vem programar
+Passou no teste de primeira? É isso que vai contar
+
+[Verse 2]
+Três artigos na balança, três IAs dando nota
+Oitenta e oito, oitenta e três, cinquenta e cinco na derrota
+Não foi o primeiro da lista, mas o StructGen é o meu
+Diagrama de atividade guiando o código que nasceu
+
+[Pre-Chorus]
+Requisito, diagrama, código no final
+Três caixinhas na tela e uma dúvida fatal
+
+[Chorus]
+Precisa de UML? Gabriel quer saber
+Se a IA apaga o desenho ou só muda o porquê
+O Designer traça o fluxo e o Coder vem programar
+Passou no teste de primeira? É isso que vai contar
+
+[Bridge - half-time, palm-muted guitars]
+Gerar, testar, reparar, e o ciclo volta a girar
+Maior número par da lista, ou None se não achar
+Python três ponto oito ou três ponto dez? Vou conferir
+Sem experimento rodado, ninguém pode concluir
+
+[Chorus]
+Precisa de UML? Gabriel quer saber
+Se a IA apaga o desenho ou só muda o porquê
+O Designer traça o fluxo e o Coder vem programar
+Passou no teste de primeira? É isso que vai contar
+
+[Outro - gang vocals]
+Precisa de UML? Precisa de UML?
+Do requisito ao código, a replicação vai responder!

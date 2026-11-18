@@ -1,0 +1,17 @@
+{
+  "titulo": "Linha do Reconhecimento",
+  "legenda": "Dark cyberpunk synthwave, tense and nocturnal mood like a night train crossing the city, male lead vocals singing in Brazilian Portuguese, pulsing analog bass, motorik driving drum groove, retro 80s synth leads, gated reverb snare, arpeggiated synth breakdown, atmospheric pads, hacker movie soundtrack vibe, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 112,
+  "tom": "A minor",
+  "compasso": "4",
+  "duracao": 180,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Synthwave noturno que percorre a linha do ReconAI, estação por estação, do reconhecimento passivo às hipóteses de ataque geradas por modelos locais.",
+  "estilo": "Synthwave",
+  "descricao": "Synthwave sombrio sobre o ReconAI, a linha do reconhecimento passivo em que dez mil nomes viram meia dúzia de hipóteses com evidência."
+}

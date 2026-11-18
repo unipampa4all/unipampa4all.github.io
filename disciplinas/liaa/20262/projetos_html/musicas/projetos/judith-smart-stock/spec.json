@@ -1,0 +1,17 @@
+{
+  "titulo": "Olho na Prateleira",
+  "legenda": "Upbeat Brazilian forró pé de serra, joyful and danceable, female lead vocals singing in Brazilian Portuguese, bright accordion (sanfona) lead, zabumba, triangle, acoustic guitar and warm bass, festive northeastern Brazilian groove, catchy sing-along chorus, accordion solo in the bridge, warm organic production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 122,
+  "tom": "G major",
+  "compasso": "4",
+  "duracao": 180,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Forró festivo sobre o SmartStock Vision, que ensina o YOLO a reconhecer, foto a foto, os produtos que saem da prateleira de uma loja sem funcionários.",
+  "estilo": "Forró pé de serra",
+  "descricao": "Forró com sanfona e zabumba sobre o SmartStock Vision e o YOLO reconhecendo Coca, água, Oreo e amendoim na prateleira."
+}

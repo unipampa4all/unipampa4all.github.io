@@ -1,0 +1,17 @@
+{
+  "titulo": "Precisa de UML?",
+  "legenda": "Energetic Brazilian pop punk, fast and fun, male lead vocals singing in Brazilian Portuguese with gang vocal shouts, driving distorted power-chord guitars, punchy fast drums, melodic bass lines, half-time breakdown bridge, catchy singalong chorus, tight modern rock production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 172,
+  "tom": "G major",
+  "compasso": "4",
+  "duracao": 180,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um pop punk acelerado sobre a pergunta se a IA torna a UML dispensável e sobre replicar o StructGen, com Designer, Coder e Pass@1.",
+  "estilo": "Pop punk",
+  "descricao": "Pop punk acelerado sobre se a IA ainda precisa de UML e a replicação do StructGen, do requisito ao código."
+}

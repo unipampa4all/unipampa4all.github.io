@@ -1,0 +1,49 @@
+[Intro - bright electric guitars and handclaps]
+
+[Verse 1]
+Tem relatório do OpenVAS, tem Nessus, tem Qualys também
+Cada scanner fala uma língua e ninguém se entende bem
+Summary aqui, synopsis lá, a mesma falha com outro nome
+E a fila de triagem cresce enquanto o tempo some
+
+[Pre-Chorus]
+Mandar pra nuvem? Nem pensar, o mapa do ataque tá ali
+O modelo mora em casa, e o segredo fica aqui
+
+[Chorus]
+Ô, Mulita Mineradora, cava fundo no relatório
+Sete scanners diferentes, um JSON só no repertório
+Noventa e sete por cento das falhas vêm pra luz
+Beatriz e Guilherme, e o caos se reduz
+
+[Verse 2]
+Lê, segmenta e extrai, consolida e exporta
+Cinco etapas no caminho, só numa a IA bate à porta
+Sem ajuste, trinta e quatro falhas que o modelo inventou
+Com ajuste fino em casa, só quatro, e o resto ele achou
+
+[Pre-Chorus]
+Às vezes escreve o número do bloco no lugar
+Um campo melhora, outro piora, e a gente volta a treinar
+
+[Chorus]
+Ô, Mulita Mineradora, cava fundo no relatório
+Sete scanners diferentes, um JSON só no repertório
+Noventa e sete por cento das falhas vêm pra luz
+Beatriz e Guilherme, e o caos se reduz
+
+[Bridge - stripped down, then build]
+Tatu de herói, capivara de patrão
+Stop motion no Google Flow virou novo padrão
+Scanner novo? Uma configuração e um prompt na mão
+Sai em JSON, sai em planilha, do PDF à solução
+
+[Chorus]
+Ô, Mulita Mineradora, cava fundo no relatório
+Sete scanners diferentes, um JSON só no repertório
+Noventa e sete por cento das falhas vêm pra luz
+Beatriz e Guilherme, e o caos se reduz
+
+[Outro - guitars and handclaps]
+Do PDF do scanner a dados estruturados
+Com o modelo em casa e os segredos bem guardados

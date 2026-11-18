@@ -1,0 +1,17 @@
+{
+  "titulo": "Arandu (O Jogo é Quem Dispõe)",
+  "legenda": "Upbeat synthwave with chiptune elements, energetic and adventurous retro gaming mood, male lead vocals singing in Brazilian Portuguese, 8-bit arpeggios, analog synth pads, pulsing bass synth, punchy gated drums, bright lead synth hooks, catchy anthemic chorus, polished modern production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 118,
+  "tom": "A minor",
+  "compasso": "4",
+  "duracao": 180,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "O Arandu, plugin em que o modelo de linguagem propõe e o código do jogo Unity decide, cantado como synthwave com sons de videogame antigo.",
+  "estilo": "Synthwave com chiptune",
+  "descricao": "Synthwave com chiptune sobre o Arandu, plugin de agentes de IA para Unity em que o modelo propõe e o jogo decide."
+}

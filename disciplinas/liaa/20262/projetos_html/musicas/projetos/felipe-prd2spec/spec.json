@@ -1,0 +1,17 @@
+{
+  "titulo": "Todo número com dono",
+  "legenda": "Smooth Brazilian bossa nova, relaxed and witty, male lead vocals singing in Brazilian Portuguese with a soft intimate croon, nylon-string guitar with syncopated bossa comping, brushed drums, warm upright bass, Rhodes electric piano, light flute counter-melody, airy jazzy harmony, warm analog production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 128,
+  "tom": "G major",
+  "compasso": "4",
+  "duracao": 180,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "O lema do PRD2Spec, todo número com dono, cantado com a calma irônica da bossa nova: 0 números sem fonte contra 436 do prompt direto.",
+  "estilo": "Bossa nova",
+  "descricao": "Bossa nova com violão e flauta sobre o PRD2Spec, em que todo número tem dono: fonte, escopo, grão e data."
+}

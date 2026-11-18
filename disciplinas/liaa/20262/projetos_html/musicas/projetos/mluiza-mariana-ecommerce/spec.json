@@ -1,0 +1,17 @@
+{
+  "titulo": "A Nota Diz 4,3",
+  "legenda": "Bright modern Brazilian synth-pop with female lead vocals singing in Brazilian Portuguese and layered female harmonies in the chorus, shimmering analog synth pads, plucky arpeggios, punchy electronic drums and deep synth bass, confident and playful mood, filtered breakdown in the bridge, catchy hook, polished pop production, high fidelity, professional mix.",
+  "idioma": "pt",
+  "bpm": 118,
+  "tom": "F# minor",
+  "compasso": "4",
+  "duracao": 180,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "O Multidimensional Ecom AI, que lê avaliações da Amazon e do Mercado Livre para mostrar o que a nota média esconde, vira synth-pop de vitrine digital, com o slogan do site como refrão.",
+  "estilo": "Synth-pop",
+  "descricao": "Synth-pop com voz feminina sobre ler os comentários das avaliações e descobrir o que a nota média de um produto esconde."
+}
