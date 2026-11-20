@@ -1,0 +1,17 @@
+{
+  "titulo": "Milonga da Buraqueira (doze corujas)",
+  "legenda": "Southern Brazilian milonga, gaucho nativist folk, melancholic yet warm and storytelling mood, male lead vocals singing in Brazilian Portuguese, nylon-string guitar playing a steady milonga bass pattern, bandoneon melodies and a short bandoneon solo, subtle upright bass, sparse bombo leguero percussion, intimate acoustic production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 88,
+  "tom": "E minor",
+  "compasso": "4",
+  "duracao": 240,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Nova versão da milonga do BuraqueiraBench, agora com as doze corujas do guia de campo: as quatro do plano e as oito que entraram em 17/11.",
+  "estilo": "Milonga nativista",
+  "descricao": "Milonga com violão e bandoneón sobre o BuraqueiraBench: doze corujas brasileiras, quatro do plano e oito novas, julgando ataques traduzidos para o português."
+}
