@@ -1,0 +1,17 @@
+{
+  "titulo": "Tese na Mesa",
+  "legenda": "Brazilian trap rap, confident and focused mood with a financial-thriller edge, male lead vocals rapping in Brazilian Portuguese with a catchy melodic hook, deep 808 bass, crisp hi-hat rolls, dark analog synth pads, ticking arpeggiated synth like a stock ticker, half-time breakdown in the bridge, modern polished hip-hop production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 140,
+  "tom": "F minor",
+  "compasso": "4",
+  "duracao": 180,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um trap sobre um agente de IA que lê notícias, monta teses e opera ações em simulação contra o mercado.",
+  "estilo": "Trap",
+  "descricao": "Trap com 808 e sintetizadores sobre um agente de IA que lê notícias e opera ações em simulação."
+}
