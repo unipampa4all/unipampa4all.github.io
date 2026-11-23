@@ -1,0 +1,48 @@
+[Intro - tense palm-muted electric guitar riff, ticking hi-hat, pulsing bass]
+
+[Verse 1]
+Tem senha esquecida no fundo da pasta
+Tem token perdido num commit qualquer
+Tem chave privada que o tempo não gasta
+Esperando a mão errada que vier
+Eu vim de outro rumo, não era o meu chão
+Mas abri o terminal e escrevi em Python
+Um cão farejador que percorre o porão
+E guarda o que encontra sem soltar um som
+
+[Pre-Chorus]
+Sete regras de vigia na porta
+Dezesseis testes na máquina virtual
+Ele aponta a linha, o arquivo, a rota
+Mas nunca mostra o valor real
+
+[Chorus - full band, distorted guitars, driving drums]
+SecurePath, passa a lanterna no código
+Acha a chave antes que alguém a leve embora
+Diz onde está, mas não revela o segredo
+Quem vigia o cofre não abre o cofre agora
+
+[Verse 2]
+O professor perguntou: por que só sete?
+Pergunta pra máquina, não aceita o que ela diz
+Fui atrás dos vazamentos que a notícia repete
+Das chaves da nuvem expostas na raiz
+Cada regra nova nasce de um tropeço
+De alguém que confiou e deixou a porta aberta
+Aprendi que a pressa sempre cobra o preço
+De quem não questiona a resposta que parece certa
+
+[Bridge - half-time, clean guitar arpeggio, building drums]
+Roda aqui na minha máquina, nada vai pra rede
+Varre o diretório inteiro, sem barulho e sem alarde
+Se encontrar alguma chave, eu fico sabendo
+Antes que outro descubra, antes que seja tarde
+
+[Chorus - full band, distorted guitars, driving drums]
+SecurePath, passa a lanterna no código
+Acha a chave antes que alguém a leve embora
+Diz onde está, mas não revela o segredo
+Quem vigia o cofre não abre o cofre agora
+
+[Outro - riff returns, band stops, single guitar rings out]
+Diz onde está, mas não revela o segredo

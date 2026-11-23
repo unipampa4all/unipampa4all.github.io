@@ -1,0 +1,17 @@
+{
+  "titulo": "Quem Vigia o Cofre",
+  "legenda": "Tense alternative rock, urgent and driving, male lead vocals singing in Brazilian Portuguese, palm-muted electric guitar riff in the verses, wide distorted guitars and crash cymbals in the chorus, punchy bass, tight live drums, clean arpeggiated guitar in a half-time bridge, gritty yet melodic, modern rock production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 128,
+  "tom": "E minor",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um rock alternativo sobre o SecurePath CLI, o farejador em Python que acha senhas, tokens e chaves esquecidas e aponta onde estão sem nunca mostrar o segredo.",
+  "estilo": "Rock alternativo",
+  "descricao": "Rock alternativo e tenso sobre o SecurePath CLI, o scanner estático que encontra credenciais vazadas sem revelar os valores."
+}
