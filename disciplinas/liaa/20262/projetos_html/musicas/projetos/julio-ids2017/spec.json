@@ -1,0 +1,17 @@
+{
+  "titulo": "Benigno ou Malicioso",
+  "legenda": "Fast melodic hardcore punk, urgent and defiant yet hopeful mood, male lead vocals singing in Brazilian Portuguese with shouted gang vocals on the chorus, distorted power-chord electric guitars, driving punk bass, fast snare-heavy drums with double-time beats, half-time breakdown in the bridge, raw garage energy, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 176,
+  "tom": "E major",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um hardcore melódico de coro gritado sobre classificar cada linha do CIC-IDS2017 e o chamado para o projeto voltar à roda.",
+  "estilo": "Hardcore melódico",
+  "descricao": "Hardcore melódico com coro gritado sobre o CIC-IDS2017, a floresta aleatória contra o modelo bobo e a meta de noventa por cento."
+}

@@ -1,0 +1,17 @@
+{
+  "titulo": "Três Juízes",
+  "legenda": "Danceable synthpop, sleek nocturnal and confident mood, female lead vocals singing in Brazilian Portuguese, pulsing analog synth arpeggios, punchy four-on-the-floor drum machine, gated snare, rubbery synth bass, bright synth lead hooks, vocoder harmonies and handclaps in the breakdown, glossy eighties-inspired modern production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 118,
+  "tom": "A minor",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Três modelos de linguagem julgam vinte regras do Wazuh com uma única rubrica, e no fim a palavra final é de um especialista humano de SOC.",
+  "estilo": "Synthpop dançante",
+  "descricao": "Synthpop dançante sobre três juízes de silício avaliando regras do Wazuh, com rubrica congelada, regras mutantes e o olhar de gente no veredito."
+}

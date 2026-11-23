@@ -1,0 +1,17 @@
+{
+  "titulo": "Dez Mil Partidas",
+  "legenda": "Chiptune pop punk, fast energetic and playful mood, male lead vocals singing in Brazilian Portuguese, 8-bit square wave leads and arpeggios, fast palm-muted power chords, punchy punk drums with snare rolls, driving bass, gang vocals in a half-time breakdown, arcade bleeps, retro video game atmosphere, tight modern production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 176,
+  "tom": "E major",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um agente de aprendizado por reforço joga Pong contra um oponente que só segue a bola, vence quarenta e um por cento e precisa provar em dez mil partidas se a técnica serve.",
+  "estilo": "Chiptune pop punk",
+  "descricao": "Chiptune pop punk de fliperama sobre um agente que treina Pong partida após partida, atrás da meta que separa quarenta e um por cento da vitória de verdade."
+}

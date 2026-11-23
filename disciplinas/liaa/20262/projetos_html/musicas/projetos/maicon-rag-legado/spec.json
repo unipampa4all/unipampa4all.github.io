@@ -1,0 +1,17 @@
+{
+  "titulo": "A Porteira do Legado",
+  "legenda": "Traditional Argentine and southern Brazilian chamamé missioneiro in triple meter, nostalgic yet hopeful storytelling mood, male lead vocals singing in Brazilian Portuguese with a deep warm voice, chromatic accordion (acordeona) leading lyrical melodies and fills, nylon-string guitar playing the chamamé rhythm with bass runs, second guitar arpeggios, upright bass, a sapucai shout before the last chorus, intimate acoustic production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 118,
+  "tom": "A minor",
+  "compasso": "3",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um sistema antigo de repartição pública, sem documento e de porteira trancada, aberto por um modelo pequeno que mora dentro de casa e não deixa nenhum dado sair.",
+  "estilo": "Chamamé missioneiro",
+  "descricao": "Chamamé com acordeona e violão sobre o RAG local do Maicon, que cruza código, banco e chamados de sistemas legados com um modelo pequeno, sem vazar dados."
+}

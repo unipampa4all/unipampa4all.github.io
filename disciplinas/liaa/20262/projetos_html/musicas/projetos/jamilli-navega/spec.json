@@ -1,0 +1,17 @@
+{
+  "titulo": "Banzeiro do Solimões",
+  "legenda": "Amazonian toada de boi-bumbá with modern pop production, festive and epic mood, female lead vocals singing in Brazilian Portuguese, powerful tribal drum ensemble, palminhas, rattles and shakers, big call and response choir, soaring synth strings, electric bass, bright keyboard riffs, arena-style build to a massive chorus, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 128,
+  "tom": "D minor",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Os anúncios de barcos espalhados entre Manaus e Tabatinga, que o Navega da Jamilli lê e organiza, viram toada de boi-bumbá no banzeiro do Solimões.",
+  "estilo": "Toada de boi-bumbá",
+  "descricao": "Toada de boi-bumbá com produção pop sobre o Navega, que lê os anúncios fluviais do Alto Solimões e não inventa o que a fonte não contou."
+}

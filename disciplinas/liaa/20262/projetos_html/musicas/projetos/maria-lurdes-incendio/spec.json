@@ -1,0 +1,17 @@
+{
+  "titulo": "Antes do Fogo",
+  "legenda": "Epic cinematic rock anthem, urgent and determined mood, powerful female lead vocals singing in Brazilian Portuguese, soaring orchestral strings, low taiko drums, layered distorted electric guitars, driving bass, wordless choir in the chorus, half-time bridge with a melodic guitar solo, huge dynamic build from quiet verse to massive chorus, wide stereo, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 126,
+  "tom": "D minor",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um aplicativo que chamaria os bombeiros deu um passo atrás para revisar, imagem por imagem, o dataset da NASA de 2018, porque oitenta por cento do trabalho está nos dados.",
+  "estilo": "Rock épico cinematográfico",
+  "descricao": "Rock épico com cordas, tambores graves e guitarras sobre a revisão, imagem por imagem, do dataset que um dia vai ensinar um aplicativo a reconhecer o fogo."
+}

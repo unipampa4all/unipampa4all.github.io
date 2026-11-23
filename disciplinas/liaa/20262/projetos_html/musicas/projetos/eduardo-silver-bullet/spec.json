@@ -1,0 +1,17 @@
+{
+  "titulo": "Bala de Prata",
+  "legenda": "Cinematic spaghetti western rock, tense and heroic mood, male lead vocals singing in Brazilian Portuguese with a deep baritone voice, lonely whistled melody, twangy reverb-drenched baritone electric guitar, tremolo picking, acoustic guitar strumming, galloping bass and tom-tom drums, distant trumpet, sparse whistle bridge, wide desert reverb, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 112,
+  "tom": "A minor",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "O agente do Eduardo chega ao Silver Bullet como pistoleiro de faroeste, com cinquenta ferramentas no tambor, desmentindo de leve o velho aviso de que não existe bala de prata.",
+  "estilo": "Rock de faroeste",
+  "descricao": "Rock de faroeste com assobio e guitarra twang sobre o agente de cinquenta ferramentas que apoia o gerente de projetos no Silver Bullet."
+}

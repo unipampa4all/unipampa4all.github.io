@@ -1,0 +1,17 @@
+{
+  "titulo": "A Doma do Bagual",
+  "legenda": "Fast festive Brazilian gaúcho vanerão (vaneira) dance music from Rio Grande do Sul, joyful CTG ballroom mood, male lead vocals singing in Brazilian Portuguese with a strong southern accent and shouted ad libs, button accordion (gaita ponto) leading bright melodies and a virtuosic accordion solo, steel-string acoustic guitar strumming, walking electric bass, driving drums with bass drum and snare in a two-step pulse, live band production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 134,
+  "tom": "A major",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "O BagualCTA, sistema batizado com o cavalo xucro do pampa, em que a IA monta primeiro cada artefato numa máquina limpa antes de dois revisores cegos decidirem os selos.",
+  "estilo": "Vanerão gaúcho",
+  "descricao": "Vanerão de baile com gaita sobre o BagualCTA, o sistema de avaliação de artefatos em que a IA executa cada artefato numa máquina virtual limpa antes da revisão humana cega."
+}

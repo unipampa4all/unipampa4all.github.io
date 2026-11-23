@@ -1,0 +1,17 @@
+{
+  "titulo": "Onde É Que a Gente Para?",
+  "legenda": "Upbeat Brazilian sertanejo universitário road trip song, carefree and sunny mood, male lead vocals singing in Brazilian Portuguese with a warm nasal sertanejo timbre and doubled harmonies in the chorus, bright steel-string acoustic guitar riff, accordion hook, viola caipira accents, punchy bass, pop drums with handclaps, stripped acoustic bridge that builds back, polished radio-ready production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 96,
+  "tom": "G major",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Uma viagem de carro saindo de Alegrete, com um aplicativo que só sugere paradas que existem de verdade e deixa o motorista decidir a hora de parar.",
+  "estilo": "Sertanejo universitário",
+  "descricao": "Sertanejo universitário de estrada sobre o aplicativo de paradas de viagem que ranqueia restaurantes, postos e atrações com IA, só a partir de lugares reais."
+}

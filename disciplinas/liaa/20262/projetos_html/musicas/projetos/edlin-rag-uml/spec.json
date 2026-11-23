@@ -1,0 +1,17 @@
+{
+  "titulo": "Vira a Página",
+  "legenda": "Warm indie pop with Brazilian MPB influence, tender and hopeful mood, soft female lead vocals singing in Brazilian Portuguese, nylon string acoustic guitar, Rhodes electric piano, brushed drums, light bossa groove and hand percussion in the bridge, round warm bass, gentle sing-along chorus, intimate acoustic production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 100,
+  "tom": "G major",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um livro de UML difícil que sai da estante e vira site vivo, com exemplos novos e exercícios, cantado como indie pop com MPB.",
+  "estilo": "Indie pop com MPB",
+  "descricao": "Indie pop com violão de náilon e Rhodes sobre o livro de UML que vira site interativo, onde o diagrama de classes ganha cor para explicar."
+}

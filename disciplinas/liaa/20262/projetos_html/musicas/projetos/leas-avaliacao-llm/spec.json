@@ -1,0 +1,17 @@
+{
+  "titulo": "Executar Muda o Veredito",
+  "legenda": "Classic southern Brazilian rock in the gaucho rock tradition, ironic storytelling chronicle mood, male lead vocals singing in Brazilian Portuguese with group harmony backing vocals, jangly electric guitars, warm Hammond organ with a short organ solo, melodic bass, steady mid-tempo rock drums, singalong chorus, vintage analog warmth, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 126,
+  "tom": "A major",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Uma crônica irônica de rock gaúcho sobre três LLMs de toga que executam o Foremost-NG num contêiner e contrariam o comitê.",
+  "estilo": "Rock gaúcho",
+  "descricao": "Rock gaúcho de crônica irônica sobre Claude, GPT e Gemini executando o Foremost-NG: nove cadeias, trinta e nove dólares e o selo que o contêiner não deu."
+}

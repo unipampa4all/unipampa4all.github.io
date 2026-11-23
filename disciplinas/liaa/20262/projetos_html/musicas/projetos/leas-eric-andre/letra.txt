@@ -1,0 +1,47 @@
+[Intro - roots reggae one drop, deep bass, organ bubble, skank guitar, melodica]
+
+[Verse 1]
+Desci de São Borja pra Alegrete na estrada
+Com um repositório falso e uma pasta envenenada
+Um ponto env comitado, uma chave de servidor
+E um banquinho local esquecido pelo programador
+Em três milissegundos a ferramenta reparou
+Três segredos expostos, e o alarme disparou
+
+[Pre-Chorus]
+Antes do push, irmão, confere a bagagem
+Que o mundo inteiro clona tudo na passagem
+
+[Chorus]
+Não sobe pro Git, não, não sobe não
+Senha no repositório é segredo na multidão
+Tira do índice, troca a chave, fecha o portão
+Põe a regra no gitignore antes do push, irmão
+
+[Verse 2]
+O André cuida da senha com hash e com sal
+Pergunta se ela vazou sem contar o principal
+Só cinco letras do hash saem pela janela
+O resto fica em casa, e ninguém sabe dela
+
+[Chorus]
+Não sobe pro Git, não, não sobe não
+Senha no repositório é segredo na multidão
+Tira do índice, troca a chave, fecha o portão
+Põe a regra no gitignore antes do push, irmão
+
+[Bridge - dub breakdown, heavy echo and spring reverb on voices, bass and drums only]
+Um pedido por módulo, e a casa se arrumou
+Trinta e dois testes num piscar, e tudo passou
+Rodamos o nosso artefato como um avaliador
+Faltava um import, e o teste nem começou
+
+[Chorus]
+Não sobe pro Git, não, não sobe não
+Senha no repositório é segredo na multidão
+Tira do índice, troca a chave, fecha o portão
+Põe a regra no gitignore antes do push, irmão
+
+[Outro - dub echoes, melodica, bass fading]
+Artefato bom é o que outra pessoa consegue rodar
+Não sobe pro Git, irmão, não sobe, não

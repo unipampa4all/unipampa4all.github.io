@@ -1,0 +1,17 @@
+{
+  "titulo": "Não Sobe pro Git",
+  "legenda": "Roots reggae with dub influences, laid-back but conscious and warning mood, two male lead vocals trading verses and harmonizing on the chorus, singing in Brazilian Portuguese, one-drop drums, deep round bass, offbeat skank guitar, bubbling organ, melodica lines, dub breakdown with heavy echo and spring reverb, warm analog production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 74,
+  "tom": "G minor",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um reggae roots com dub em que a dupla avisa que segredo não sobe pro Git e ainda audita o próprio artefato.",
+  "estilo": "Reggae roots com dub",
+  "descricao": "Reggae roots com dub sobre o GitExpert Check e a auditoria de senhas: o ponto env comitado, a chave do servidor e o hash que só mostra cinco letras."
+}

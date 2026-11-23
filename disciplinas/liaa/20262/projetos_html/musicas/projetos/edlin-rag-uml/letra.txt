@@ -1,0 +1,45 @@
+[Intro - nylon guitar, soft Rhodes, light brushed drums]
+
+[Verse 1]
+Análise e Projeto e um livro quase sem fim,
+caixinha, seta e losango olhando de volta pra mim;
+eu queria um robozinho que respondesse com a seção,
+a página e o parágrafo citados na palma da mão.
+
+[Pre-Chorus]
+Mas o professor falou: pergunta ao arquivo qualquer modelo faz,
+reescreve o livro inteiro, passo a passo, e vê o que ele traz.
+
+[Chorus]
+Vira a página, que o livro quer dançar,
+o diagrama de classes ganha cor pra explicar;
+cada seta, cada caixa, um exemplo novo no lugar,
+e o que eu não entendia agora sabe conversar.
+
+[Verse 2]
+Começo por um capítulo, o de classes, devagar,
+um exemplo de outro mundo, uma feira, um pomar;
+um exercício no final com a resposta pra conferir,
+e a minha dificuldade vira mapa pra quem vai seguir.
+
+[Chorus]
+Vira a página, que o livro quer dançar,
+o diagrama de classes ganha cor pra explicar;
+cada seta, cada caixa, um exemplo novo no lugar,
+e o que eu não entendia agora sabe conversar.
+
+[Bridge - bossa groove, hand percussion, warm bass]
+Um pra muitos, associação, cardinalidade e herança,
+a máquina erra a seta, e a correção vira lembrança;
+toda semana uma página nova pra mostrar,
+o livro sai da estante e aprende a respirar.
+
+[Chorus]
+Vira a página, que o livro quer dançar,
+o diagrama de classes ganha cor pra explicar;
+cada seta, cada caixa, um exemplo novo no lugar,
+e o que eu não entendia agora sabe conversar.
+
+[Outro - nylon guitar and Rhodes, soft humming]
+Vira a página, vira a página,
+eu vou junto aprender.

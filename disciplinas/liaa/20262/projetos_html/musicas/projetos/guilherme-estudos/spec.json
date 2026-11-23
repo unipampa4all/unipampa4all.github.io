@@ -1,0 +1,17 @@
+{
+  "titulo": "Joga a Linha",
+  "legenda": "Mellow lo-fi boom bap hip hop, late-night study mood, reflective and hopeful, male lead vocals rapping in Brazilian Portuguese with a clear rhythmic flow and a sung melodic chorus, dusty sampled drums, vinyl crackle, warm Rhodes chords, deep round bass, soft jazzy guitar licks, subtle turntable scratches, head-nodding groove, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 88,
+  "tom": "F minor",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "O assistente de estudos do Guilherme e a provocação do professor, explicar com pesca para quem gosta de pescar, viram um rap de madrugada.",
+  "estilo": "Rap boom bap lo-fi",
+  "descricao": "Rap boom bap com base lo-fi sobre um assistente que resume a apostila, faz perguntas e explica com pesca para quem gosta de rio."
+}

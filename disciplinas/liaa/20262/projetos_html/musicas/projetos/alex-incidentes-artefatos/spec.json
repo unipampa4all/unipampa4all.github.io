@@ -1,0 +1,17 @@
+{
+  "titulo": "O Relato Ficou",
+  "legenda": "Gritty blues rock with a heavy swaggering groove, defiant and smoky mood, raspy male lead vocals singing in Brazilian Portuguese, electric slide guitar riffs, crunchy overdriven rhythm guitar, wailing harmonica, Hammond organ, stomping kick and snare, walking bass, half-time bridge with slide guitar solo, live band feel, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 96,
+  "tom": "E minor",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Seiscentos incidentes reais que viram base publicável trocando só o que identifica, cantados como um blues de quem revisa e é revisado.",
+  "estilo": "Blues rock",
+  "descricao": "Blues rock com guitarra slide e gaita sobre o Mock600, onde o que identifica saiu, o relato ficou e o classificador nem percebeu a troca."
+}

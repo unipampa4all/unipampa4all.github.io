@@ -1,0 +1,17 @@
+{
+  "titulo": "Rubrik Pro no Salão",
+  "legenda": "Upbeat Brazilian forró universitário, festive and playful mood, male lead vocals singing in Brazilian Portuguese with a trio of male backing vocals shouting the hook, bright piano accordion riffs, driving zabumba, steady triangle, acoustic guitar and electric bass, accordion solo, danceable dance-hall groove, crisp modern production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 124,
+  "tom": "D major",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Um gateway que põe Gemini, Anthropic, OpenAI e OpenRouter para dançar no mesmo salão e entrega a rubrica de TCC em menos de quinze segundos.",
+  "estilo": "Forró universitário",
+  "descricao": "Forró universitário com sanfona, zabumba e triângulo sobre o gateway multimodelo que gera rubricas de TCC no Rubrik Pro."
+}
