@@ -1,0 +1,46 @@
+[Intro - fast overdriven guitar riff, synth strings swell, driving double-time drums]
+
+[Verse 1]
+Começa com dois hosts e um fio entre os dois
+Um bit é zero ou um, o resto vem depois
+A letra A são oito bits, zero, um, cinco zeros e um
+No livro saiu um C, a nota corrigiu sem drama algum
+
+[Pre-Chorus]
+O pacote se perde, duplica, chega fora de ordem
+Sequência, confirmação e um relógio que não dorme
+Pede, aceita, confirma: três vias, um aperto de mão
+E os bytes correm soltos pela conexão
+
+[Chorus]
+Salto a salto, salto a salto, vou chegar
+Cada roteador desconta um do meu tempo de vida
+Ninguém sabe a estrada inteira, só o próximo lugar
+Rede de redes, o mundo numa só batida
+
+[Verse 2]
+Pergunto um nome, o DNS desce a árvore pela raiz
+Treze servidores no topo, ponto bê-erre, chego onde eu quis
+De trinta em trinta segundos o vizinho conta o que viu
+Se a métrica chega a dezesseis, o destino sumiu
+
+[Chorus]
+Salto a salto, salto a salto, vou chegar
+Cada roteador desconta um do meu tempo de vida
+Ninguém sabe a estrada inteira, só o próximo lugar
+Rede de redes, o mundo numa só batida
+
+[Bridge - half-time breakdown with palm-muted guitars, then soaring guitar solo]
+Abro o Wireshark, vejo a conversa acontecer
+O traceroute acende os saltos até você
+Quarenta e três capítulos e um glossário na mão
+Dez pontos de primeira, medalha em cada lição
+
+[Chorus]
+Salto a salto, salto a salto, vou chegar
+Cada roteador desconta um do meu tempo de vida
+Ninguém sabe a estrada inteira, só o próximo lugar
+Rede de redes, o mundo numa só batida
+
+[Outro - key change up, full band, final riff and big cymbal hit]
+De dois hosts à Internet, salto a salto eu cheguei

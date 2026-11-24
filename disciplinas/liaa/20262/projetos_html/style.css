@@ -294,3 +294,20 @@ svg.ds-fluxo, svg.c4v { display: block; width: 100%; height: auto; }
 .site-mus .site-mus-ant { font-size: 13px; color: var(--ink-3); margin: 2px 0 0; }
 .musica-proj .musica-ver { font-size: 16px; margin: 16px 0 4px; }
 /* musica-projeto:fim */
+
+/* Avaliação por capítulo (páginas de material didático, ex.: RC) */
+.prio { padding-left: 22px; }
+.prio li { padding: 4px 0; font-size: 15px; }
+.tab-rol { overflow-x: auto; margin: 8px 0 18px; }
+.tab-caps { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 640px; }
+.tab-caps th, .tab-caps td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+.tab-caps thead th { color: var(--ink-3); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; }
+.tab-caps th[scope="row"] { white-space: nowrap; font-weight: 600; }
+.tab-caps .num { text-align: right; white-space: nowrap; }
+.tab-caps .nt { text-align: center; font-weight: 700; }
+.tab-caps .n5 { color: var(--pos); }
+.tab-caps .n2, .tab-caps .n1, .tab-caps .n0 { color: var(--warn); }
+.cap-det { border-bottom: 1px solid var(--line); padding: 8px 0; }
+.cap-det summary { cursor: pointer; }
+.cap-det .cap-nt { color: var(--ink-3); font-size: 14px; margin-left: 6px; }
+.cap-det > p { margin: 10px 0; }

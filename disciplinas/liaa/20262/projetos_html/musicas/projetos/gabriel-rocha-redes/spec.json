@@ -1,0 +1,17 @@
+{
+  "titulo": "Salto a Salto",
+  "legenda": "Energetic J-rock anime opening theme, uplifting and determined shonen mood, male lead vocals singing in Brazilian Portuguese, fast overdriven electric guitar riffs with tight palm-muting, melodic bass runs, driving double-time drums, soaring synth strings, half-time breakdown into a shredding guitar solo, final key change on the last chorus, polished punchy production, high fidelity, professional mix",
+  "idioma": "pt",
+  "bpm": 168,
+  "tom": "B minor",
+  "compasso": "4",
+  "duracao": 210,
+  "passos": 60,
+  "guidance": 7.0,
+  "dit": "acestep-v15-xl-sft",
+  "lm": "acestep-5Hz-lm-4B",
+  "letra_por": "Claude (claude-opus-5-5)",
+  "inspiracao": "Uma abertura de anime que segue um pacote do fio entre dois hosts até a Internet, salto a salto, com o tempo de vida descontado em cada roteador do material de Redes de Computadores.",
+  "estilo": "Rock de abertura de anime",
+  "descricao": "Rock no estilo abertura de anime sobre o material de Redes de Computadores: bits, aperto de mão em três vias, DNS, RIP, traceroute e quarenta e três capítulos com medalhas."
+}
