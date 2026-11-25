@@ -1,0 +1,9 @@
+Olá, Gabriel! Parabéns pelo material de Redes de Computadores, ficou um trabalho de muita qualidade: o livro inteiro em português, com simuladores e Python no navegador. 👏
+
+*Urgente:* a chave da OpenRouter que esteve em assets/tutor-config.js ainda aparece no histórico público do repositório. Revogue essa chave agora em openrouter.ai/settings/keys e não coloque a chave nova no JavaScript do site.
+
+*Avaliação:* progresso do site 5/5, qualidade do site 4/5, vídeo 0/5 (ainda não há vídeo). A correção mais importante é embaralhar as alternativas dos quizzes, porque hoje a resposta certa é quase sempre a primeira.
+
+O projeto também ganhou uma música, "Salto a Salto", que toca na página da avaliação: https://unipampa4all.github.io/disciplinas/liaa/20262/projetos_html/gabriel-rocha-redes.html
+
+Mandei os detalhes por e-mail: como resolver a questão da chave, a avaliação completa e as seis sugestões. Continue assim! 🚀
